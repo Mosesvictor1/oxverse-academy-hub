@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Clock, Award, GraduationCap, Check } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-import { getCourse } from "@/lib/courses";
+import { getCourse, type Course } from "@/lib/courses";
 import { useState } from "react";
 
 export const Route = createFileRoute("/courses/$slug")({
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/courses/$slug")({
 const tabs = ["Overview", "Curriculum", "Projects", "Requirements", "Schedule", "Career Path", "FAQs"] as const;
 
 function CourseDetail() {
-  const { course } = Route.useLoaderData();
+  const { course } = Route.useLoaderData() as { course: Course };
   const [tab, setTab] = useState<(typeof tabs)[number]>("Overview");
 
   return (
