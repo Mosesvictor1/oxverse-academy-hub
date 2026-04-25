@@ -54,10 +54,10 @@ export function Header() {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link
-            to="/courses"
+            to="/applications"
             className="text-sm font-medium text-ink-muted hover:text-ink transition"
           >
-            Login
+            My applications
           </Link>
           <Link
             to="/contact"
