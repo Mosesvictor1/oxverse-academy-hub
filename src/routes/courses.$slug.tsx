@@ -84,7 +84,7 @@ function CourseDetail() {
                 <p className="text-sm text-ink-muted">Tuition</p>
                 <p className="mt-1 font-display text-4xl font-bold tracking-tighter">{course.price}</p>
                 <p className="mt-1 text-xs text-ink-muted">Installment plans available</p>
-                <Link to="/contact" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition">
+                <Link to="/enroll/$slug" params={{ slug: course.slug }} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition">
                   Enroll Now <ArrowRight className="size-4" />
                 </Link>
                 <div className="mt-6 pt-6 border-t border-border space-y-3 text-sm">
@@ -225,7 +225,7 @@ function CourseDetail() {
         <div className="mx-auto max-w-5xl px-6 py-20 text-center">
           <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tighter">Ready to start?</h2>
           <p className="mt-4 text-background/70 max-w-xl mx-auto">Reserve your seat in the next cohort. Limited to 25 students.</p>
-          <Link to="/contact" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background text-foreground px-7 py-4 font-semibold hover:bg-primary hover:text-primary-foreground transition">
+          <Link to="/enroll/$slug" params={{ slug: course.slug }} className="mt-8 inline-flex items-center gap-2 rounded-full bg-background text-foreground px-7 py-4 font-semibold hover:bg-primary hover:text-primary-foreground transition">
             Enroll Now <ArrowRight className="size-4" />
           </Link>
         </div>

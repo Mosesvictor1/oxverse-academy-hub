@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnrollSlugRouteImport } from './routes/enroll.$slug'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
 
 const EventsRoute = EventsRouteImport.update({
@@ -25,6 +27,11 @@ const CoursesRoute = CoursesRouteImport.update({
   path: '/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplicationsRoute = ApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -33,6 +40,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnrollSlugRoute = EnrollSlugRouteImport.update({
+  id: '/enroll/$slug',
+  path: '/enroll/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesSlugRoute = CoursesSlugRouteImport.update({
@@ -44,38 +56,68 @@ const CoursesSlugRoute = CoursesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications': typeof ApplicationsRoute
   '/courses': typeof CoursesRouteWithChildren
   '/events': typeof EventsRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/enroll/$slug': typeof EnrollSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications': typeof ApplicationsRoute
   '/courses': typeof CoursesRouteWithChildren
   '/events': typeof EventsRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/enroll/$slug': typeof EnrollSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications': typeof ApplicationsRoute
   '/courses': typeof CoursesRouteWithChildren
   '/events': typeof EventsRoute
   '/courses/$slug': typeof CoursesSlugRoute
+  '/enroll/$slug': typeof EnrollSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/courses' | '/events' | '/courses/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/applications'
+    | '/courses'
+    | '/events'
+    | '/courses/$slug'
+    | '/enroll/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/courses' | '/events' | '/courses/$slug'
-  id: '__root__' | '/' | '/about' | '/courses' | '/events' | '/courses/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/applications'
+    | '/courses'
+    | '/events'
+    | '/courses/$slug'
+    | '/enroll/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/applications'
+    | '/courses'
+    | '/events'
+    | '/courses/$slug'
+    | '/enroll/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ApplicationsRoute: typeof ApplicationsRoute
   CoursesRoute: typeof CoursesRouteWithChildren
   EventsRoute: typeof EventsRoute
+  EnrollSlugRoute: typeof EnrollSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/applications': {
+      id: '/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof ApplicationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -106,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enroll/$slug': {
+      id: '/enroll/$slug'
+      path: '/enroll/$slug'
+      fullPath: '/enroll/$slug'
+      preLoaderRoute: typeof EnrollSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses/$slug': {
@@ -132,8 +188,10 @@ const CoursesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ApplicationsRoute: ApplicationsRoute,
   CoursesRoute: CoursesRouteWithChildren,
   EventsRoute: EventsRoute,
+  EnrollSlugRoute: EnrollSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
