@@ -16,7 +16,21 @@ export type Course = {
   faqs: { q: string; a: string }[];
   instructor: { name: string; role: string; bio: string };
   emoji: string;
+  image: string;
+  tools: string[];
+  testimonials?: { name: string; role: string; quote: string }[];
 };
+
+import frontendImg from "@/assets/courses/frontend.jpg";
+import backendImg from "@/assets/courses/backend.jpg";
+import fullstackImg from "@/assets/courses/fullstack.jpg";
+import uiuxImg from "@/assets/courses/uiux.jpg";
+import graphicsImg from "@/assets/courses/graphics.jpg";
+import mobileImg from "@/assets/courses/mobile.jpg";
+import aiImg from "@/assets/courses/ai.jpg";
+import dataImg from "@/assets/courses/data.jpg";
+import web3Img from "@/assets/courses/web3.jpg";
+import marketingImg from "@/assets/courses/marketing.jpg";
 
 export const courses: Course[] = [
   {
