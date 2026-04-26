@@ -23,7 +23,7 @@ export type Course = {
 
 import frontendImg from "@/assets/courses/frontend.jpg";
 import backendImg from "@/assets/courses/backend.jpg";
-import fullstackImg from "@/assets/courses/fullstack.jpg";
+import fullstackImg from "@/assets/courses/frontend.jpg";
 import uiuxImg from "@/assets/courses/uiux.jpg";
 import graphicsImg from "@/assets/courses/graphics.jpg";
 import mobileImg from "@/assets/courses/mobile.jpg";
