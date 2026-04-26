@@ -1,7 +1,7 @@
 export type IntakeDate = {
   id: string;
   label: string;
-  starts: string; // ISO date
+  starts: string;
   seatsLeft: number;
 };
 
@@ -12,14 +12,38 @@ export type Application = {
   intakeId: string;
   intakeLabel: string;
   schedule: string;
-  fullName: string;
+  classTime: string;
+
+  // Step 1 — Personal
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
-  city: string;
-  experience: "None" | "Beginner" | "Intermediate" | "Advanced";
+  gender: "Male" | "Female" | "Prefer not to say";
+  address: string;
+
+  // Step 2 — Education
+  educationLevel: "Secondary" | "Diploma" | "Undergraduate" | "Graduate" | "Postgraduate" | "Other";
+  school: string;
+  employmentStatus: "Student" | "Employed" | "Self-employed" | "Unemployed" | "Other";
+  skillLevel: "None" | "Beginner" | "Intermediate" | "Advanced";
+
+  // Step 4 — Goals
   motivation: string;
-  hearAbout: string;
+  careerGoals: string;
+  expectations: string;
+
+  // Step 5 — Documents (filenames only — no upload backend)
+  passportPhotoName?: string;
+  idDocumentName?: string;
+
   status: "submitted" | "under_review" | "approved" | "waitlisted";
+  onboarding: {
+    welcomeRead: boolean;
+    paymentPlanChosen: boolean;
+    communityJoined: boolean;
+    orientationConfirmed: boolean;
+  };
   submittedAt: string;
 };
 
@@ -30,7 +54,9 @@ export const INTAKES: IntakeDate[] = [
   { id: "2026-09-08", label: "September 8, 2026", starts: "2026-09-08", seatsLeft: 25 },
 ];
 
-const KEY = "oxverse.applications.v1";
+export const CLASS_TIMES = ["Morning (9am – 12pm)", "Afternoon (1pm – 4pm)", "Evening (5pm – 8pm)"] as const;
+
+const KEY = "oxverse.applications.v2";
 
 export function getApplications(): Application[] {
   if (typeof window === "undefined") return [];
@@ -45,6 +71,12 @@ export function saveApplication(app: Application) {
   if (typeof window === "undefined") return;
   const all = getApplications();
   all.unshift(app);
+  localStorage.setItem(KEY, JSON.stringify(all));
+}
+
+export function updateApplication(id: string, patch: Partial<Application>) {
+  if (typeof window === "undefined") return;
+  const all = getApplications().map((a) => (a.id === id ? { ...a, ...patch } : a));
   localStorage.setItem(KEY, JSON.stringify(all));
 }
 
