@@ -9,22 +9,58 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EnrollSlugRouteImport } from './routes/enroll.$slug'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
 
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesRoute = CoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplicationsRoute = ApplicationsRouteImport.update({
@@ -57,8 +93,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/applications': typeof ApplicationsRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/courses': typeof CoursesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
 }
@@ -66,8 +108,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/applications': typeof ApplicationsRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/courses': typeof CoursesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
 }
@@ -76,8 +124,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/applications': typeof ApplicationsRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
   '/courses': typeof CoursesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
   '/events': typeof EventsRoute
+  '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
+  '/testimonials': typeof TestimonialsRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
 }
@@ -87,8 +141,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/applications'
+    | '/blog'
+    | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/events'
+    | '/faq'
+    | '/gallery'
+    | '/testimonials'
     | '/courses/$slug'
     | '/enroll/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -96,8 +156,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/applications'
+    | '/blog'
+    | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/events'
+    | '/faq'
+    | '/gallery'
+    | '/testimonials'
     | '/courses/$slug'
     | '/enroll/$slug'
   id:
@@ -105,8 +171,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/applications'
+    | '/blog'
+    | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/events'
+    | '/faq'
+    | '/gallery'
+    | '/testimonials'
     | '/courses/$slug'
     | '/enroll/$slug'
   fileRoutesById: FileRoutesById
@@ -115,13 +187,40 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ApplicationsRoute: typeof ApplicationsRoute
+  BlogRoute: typeof BlogRoute
+  ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
   EventsRoute: typeof EventsRoute
+  FaqRoute: typeof FaqRoute
+  GalleryRoute: typeof GalleryRoute
+  TestimonialsRoute: typeof TestimonialsRoute
   EnrollSlugRoute: typeof EnrollSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -129,11 +228,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/courses': {
       id: '/courses'
       path: '/courses'
       fullPath: '/courses'
       preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/applications': {
@@ -189,10 +309,25 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ApplicationsRoute: ApplicationsRoute,
+  BlogRoute: BlogRoute,
+  ContactRoute: ContactRoute,
   CoursesRoute: CoursesRouteWithChildren,
+  DashboardRoute: DashboardRoute,
   EventsRoute: EventsRoute,
+  FaqRoute: FaqRoute,
+  GalleryRoute: GalleryRoute,
+  TestimonialsRoute: TestimonialsRoute,
   EnrollSlugRoute: EnrollSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

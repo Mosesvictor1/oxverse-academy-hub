@@ -16,7 +16,21 @@ export type Course = {
   faqs: { q: string; a: string }[];
   instructor: { name: string; role: string; bio: string };
   emoji: string;
+  image: string;
+  tools: string[];
+  testimonials?: { name: string; role: string; quote: string }[];
 };
+
+import frontendImg from "@/assets/courses/frontend.jpg";
+import backendImg from "@/assets/courses/backend.jpg";
+import fullstackImg from "@/assets/courses/fullstack.jpg";
+import uiuxImg from "@/assets/courses/uiux.jpg";
+import graphicsImg from "@/assets/courses/graphics.jpg";
+import mobileImg from "@/assets/courses/mobile.jpg";
+import aiImg from "@/assets/courses/ai.jpg";
+import dataImg from "@/assets/courses/data.jpg";
+import web3Img from "@/assets/courses/web3.jpg";
+import marketingImg from "@/assets/courses/marketing.jpg";
 
 export const courses: Course[] = [
   {
@@ -51,6 +65,8 @@ export const courses: Course[] = [
     ],
     instructor: { name: "Adaeze Okonkwo", role: "Senior Frontend Engineer", bio: "Ex-Spotify, 9+ years shipping React at scale." },
     emoji: "💻",
+    image: frontendImg,
+    tools: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind", "Git", "Vercel"],
   },
   {
     slug: "backend-development",
@@ -75,6 +91,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Do I need to know frontend?", a: "Helpful but not required." }],
     instructor: { name: "Tunde Adeyemi", role: "Staff Backend Engineer", bio: "Built payments infra at two African fintechs." },
     emoji: "⚙️",
+    image: backendImg,
+    tools: ["Node.js", "TypeScript", "PostgreSQL", "Prisma", "REST", "GraphQL", "Docker", "Redis", "AWS"],
   },
   {
     slug: "full-stack-development",
@@ -99,6 +117,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Is this too much for a beginner?", a: "No — pacing is calibrated for absolute beginners." }],
     instructor: { name: "Nneka Eze", role: "Principal Engineer", bio: "10+ years across YC startups and African unicorns." },
     emoji: "🚀",
+    image: fullstackImg,
+    tools: ["React", "Next.js", "Node.js", "PostgreSQL", "Prisma", "TypeScript", "Docker", "Vercel", "AWS"],
   },
   {
     slug: "ui-ux-design",
@@ -123,6 +143,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Do I need to draw well?", a: "Not at all — UI design is more about systems than illustration." }],
     instructor: { name: "Chiamaka Onyeka", role: "Senior Product Designer", bio: "Ex-Paystack, design lead on multiple products." },
     emoji: "🎨",
+    image: uiuxImg,
+    tools: ["Figma", "FigJam", "Notion", "Maze", "Principle", "Adobe XD"],
   },
   {
     slug: "graphics-design",
@@ -146,6 +168,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Will I learn motion?", a: "We cover motion basics in After Effects." }],
     instructor: { name: "Ibrahim Yusuf", role: "Creative Director", bio: "Branded for 30+ African startups." },
     emoji: "✏️",
+    image: graphicsImg,
+    tools: ["Adobe Illustrator", "Photoshop", "InDesign", "After Effects", "Procreate"],
   },
   {
     slug: "mobile-development",
@@ -170,6 +194,8 @@ export const courses: Course[] = [
     faqs: [{ q: "iOS or Android?", a: "Both — React Native ships to both." }],
     instructor: { name: "Femi Bakare", role: "Mobile Lead", bio: "Shipped 12+ apps with 5M+ downloads." },
     emoji: "📱",
+    image: mobileImg,
+    tools: ["React Native", "Expo", "TypeScript", "Xcode", "Android Studio", "Firebase"],
   },
   {
     slug: "artificial-intelligence",
@@ -194,6 +220,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Do I need a math degree?", a: "No — applied focus, no PhD math required." }],
     instructor: { name: "Dr. Kunle Akinola", role: "AI Researcher", bio: "PhD ML, ex-DeepMind collaborator." },
     emoji: "🧠",
+    image: aiImg,
+    tools: ["Python", "PyTorch", "OpenAI", "LangChain", "Pinecone", "Hugging Face", "FastAPI"],
   },
   {
     slug: "data-analysis",
@@ -218,6 +246,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Will I touch ML?", a: "Lightly — focus is analysis & insights." }],
     instructor: { name: "Halima Sani", role: "Lead Data Analyst", bio: "8 years across fintech & telecom." },
     emoji: "📊",
+    image: dataImg,
+    tools: ["Excel", "SQL", "Python", "Pandas", "Power BI", "Looker Studio", "Tableau"],
   },
   {
     slug: "web3-blockchain",
@@ -242,6 +272,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Is this risky?", a: "We use testnets — no real funds required." }],
     instructor: { name: "Chinedu Obi", role: "Smart Contract Engineer", bio: "Audited contracts for 20+ DeFi protocols." },
     emoji: "⛓️",
+    image: web3Img,
+    tools: ["Solidity", "Hardhat", "Ethers.js", "Wagmi", "Viem", "RainbowKit", "Foundry"],
   },
   {
     slug: "digital-marketing",
@@ -266,6 +298,8 @@ export const courses: Course[] = [
     faqs: [{ q: "Will I run real ads?", a: "Yes — with a small budget on real campaigns." }],
     instructor: { name: "Zainab Lawal", role: "Head of Growth", bio: "Scaled 4 startups from 0 to $1M ARR." },
     emoji: "📈",
+    image: marketingImg,
+    tools: ["Google Ads", "Meta Ads", "GA4", "SEMrush", "Ahrefs", "Mailchimp", "HubSpot"],
   },
 ];
 
