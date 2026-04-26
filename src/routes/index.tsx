@@ -4,9 +4,9 @@ import { ArrowRight, ArrowUpRight, Sparkles, Cpu, Users, Trophy, Zap, Graduation
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
 import { courses } from "@/lib/courses";
-import heroImg from "@/assets/hero-student.jpg";
+import heroImg from "@/assets/hero-oxverse-student.jpg";
 import campusImg from "@/assets/campus.jpg";
-import abstractImg from "@/assets/abstract-purple.jpg";
+import abstractImg from "@/assets/promo-student-1.jpg";
 import studentsImg from "@/assets/students-group.jpg";
 import {
   Accordion, AccordionItem, AccordionTrigger, AccordionContent,
@@ -87,7 +87,7 @@ function Hero() {
               className="mt-10 flex flex-wrap items-center gap-4"
             >
               <Link
-                to="/contact"
+                to="/courses"
                 className="group inline-flex items-center gap-2 rounded-full bg-ink text-background px-7 py-4 text-base font-semibold hover:bg-primary transition-colors"
               >
                 Enroll Now
@@ -511,7 +511,7 @@ function FinalCTA() {
           Limited seats per cohort. Apply today and join Africa's most ambitious tech academy.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Link to="/contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-8 py-4 text-base font-semibold hover:bg-primary transition-colors">
+          <Link to="/courses" className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-8 py-4 text-base font-semibold hover:bg-primary transition-colors">
             Enroll Now <ArrowRight className="size-4" />
           </Link>
           <Link to="/events" className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-8 py-4 text-base font-semibold hover:border-ink transition">
