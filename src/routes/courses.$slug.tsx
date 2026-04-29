@@ -108,9 +108,9 @@ function CourseDetail() {
                 <img src={course.image} alt={course.title} className="absolute inset-0 size-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 glass rounded-2xl p-4">
-                  <p className="text-xs text-ink-muted">Tuition</p>
-                  <p className="font-display text-3xl font-bold tracking-tighter">{course.price}</p>
-                  <p className="text-xs text-ink-muted">Installment plans available</p>
+                  <p className="text-xs text-ink-muted">Next intake</p>
+                  <p className="font-display text-2xl font-bold tracking-tight">Limited seats</p>
+                  <Link to="/waitlist" className="mt-2 inline-flex text-xs font-semibold text-primary hover:underline">Join the waitlist →</Link>
                 </div>
               </div>
             </motion.div>
