@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
+import { SITE } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -48,15 +49,16 @@ export function Footer() {
                 <li><Link to="/testimonials" className="hover:text-ink">Testimonials</Link></li>
                 <li><Link to="/faq" className="hover:text-ink">FAQ</Link></li>
                 <li><Link to="/contact" className="hover:text-ink">Contact</Link></li>
+                <li><Link to="/waitlist" className="hover:text-ink">Join waitlist</Link></li>
               </ul>
             </div>
             <div>
               <p className="font-display font-semibold mb-4">Visit</p>
               <ul className="space-y-2 text-sm text-ink-muted">
-                <li>15 Innovation Way</li>
-                <li>Lekki, Lagos</li>
-                <li>+234 800 OXVERSE</li>
-                <li>hello@oxverse.academy</li>
+                <li>No 82, Century Bus Stop</li>
+                <li>Ago Palace Way, Okota, Lagos</li>
+                <li>{SITE.phoneDisplay}</li>
+                <li>{SITE.email}</li>
               </ul>
             </div>
           </div>
