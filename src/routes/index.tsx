@@ -175,11 +175,11 @@ function Hero() {
 function Marquee() {
   const items = ["React", "TypeScript", "Node.js", "PostgreSQL", "Figma", "Python", "AI/ML", "Solidity", "AWS", "Next.js", "Docker", "Kubernetes"];
   return (
-    <section className="border-y border-border py-10 overflow-hidden bg-muted/30">
+    <section className="border-y border-primary/30 py-10 overflow-hidden bg-primary text-primary-foreground">
       <div className="flex gap-12 animate-[scroll_40s_linear_infinite]" style={{ animationName: "scroll" }}>
         {[...items, ...items, ...items].map((item, i) => (
-          <div key={i} className="font-display text-2xl md:text-3xl font-semibold text-ink-muted whitespace-nowrap shrink-0">
-            {item} <span className="mx-6 text-primary">✦</span>
+          <div key={i} className="font-display text-2xl md:text-3xl font-semibold text-primary-foreground/90 whitespace-nowrap shrink-0">
+            {item} <span className="mx-6 text-primary-foreground/60">✦</span>
           </div>
         ))}
       </div>
@@ -196,7 +196,15 @@ function Stats() {
     { v: 18, s: "", l: "Industry partners" },
   ];
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
+    <section className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-primary to-purple-700 text-primary-foreground">
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+      <div className="relative mx-auto max-w-7xl px-6 py-24">
+      <div className="max-w-2xl mb-14">
+        <SectionEyebrow><span className="text-primary-foreground/80">By the numbers</span></SectionEyebrow>
+        <h2 className="mt-6 font-display text-4xl md:text-5xl font-bold tracking-tighter text-balance">
+          Outcomes that <span className="italic">speak louder</span> than promises.
+        </h2>
+      </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((s, i) => (
           <motion.div
@@ -205,14 +213,15 @@ function Stats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="border-l-2 border-primary pl-6"
+            className="border-l-2 border-primary-foreground/40 pl-6"
           >
-            <p className="font-display text-5xl md:text-6xl font-bold tracking-tighter">
+            <p className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-primary-foreground">
               <AnimatedNumber value={s.v} suffix={s.s} />
             </p>
-            <p className="mt-2 text-ink-muted">{s.l}</p>
+            <p className="mt-2 text-primary-foreground/75">{s.l}</p>
           </motion.div>
         ))}
+      </div>
       </div>
     </section>
   );
@@ -268,8 +277,11 @@ function FeaturedCourses() {
         <div>
           <SectionEyebrow>Featured Courses</SectionEyebrow>
           <h2 className="mt-6 font-display text-4xl md:text-5xl font-bold tracking-tighter text-balance">
-            Pick the path that builds your future.
+            Pick the path that <span className="gradient-text">builds your future.</span>
           </h2>
+          <p className="mt-4 max-w-xl text-ink-muted text-pretty">
+            Six flagship programs — from frontend engineering to AI — designed to take you from curious beginner to hireable professional.
+          </p>
         </div>
         <Link to="/courses" className="group inline-flex items-center gap-2 font-semibold hover:text-primary transition">
           View all 10 courses <ArrowUpRight className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -288,19 +300,33 @@ function FeaturedCourses() {
             <Link
               to="/courses/$slug"
               params={{ slug: c.slug }}
-              className="group block h-full rounded-3xl border border-border bg-background p-8 hover:border-primary hover:shadow-xl hover:shadow-primary/5 transition-all"
+              className="group block h-full rounded-3xl border border-border bg-card overflow-hidden hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/15 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-start justify-between">
-                <div className="size-14 rounded-2xl bg-purple-50 inline-flex items-center justify-center text-3xl">
-                  {c.emoji}
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={c.image}
+                  alt={c.title}
+                  loading="lazy"
+                  className="absolute inset-0 size-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+                <div className="absolute top-4 left-4 right-4 flex items-start justify-between">
+                  <span className="inline-flex items-center rounded-full bg-background/95 backdrop-blur px-3 py-1 text-[11px] font-semibold text-primary uppercase tracking-wider">
+                    {c.category}
+                  </span>
+                  <span className="size-9 rounded-full bg-background/95 backdrop-blur grid place-items-center text-lg">{c.emoji}</span>
                 </div>
-                <ArrowUpRight className="size-5 text-ink-muted group-hover:text-primary group-hover:rotate-12 transition-all" />
               </div>
-              <h3 className="mt-8 font-display text-2xl font-semibold tracking-tight">{c.title}</h3>
-              <p className="mt-3 text-ink-muted text-pretty">{c.short}</p>
-              <div className="mt-8 flex items-center gap-3 text-xs">
-                <span className="rounded-full bg-muted px-3 py-1 font-medium">{c.duration}</span>
-                <span className="rounded-full bg-muted px-3 py-1 font-medium">{c.level}</span>
+              <div className="p-7">
+                <h3 className="font-display text-2xl font-semibold tracking-tight group-hover:text-primary transition-colors">{c.title}</h3>
+                <p className="mt-3 text-ink-muted text-pretty line-clamp-2">{c.short}</p>
+                <div className="mt-6 pt-5 border-t border-border flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="rounded-full bg-muted px-3 py-1 font-medium text-ink-muted">{c.duration}</span>
+                    <span className="rounded-full bg-muted px-3 py-1 font-medium text-ink-muted">{c.level}</span>
+                  </div>
+                  <ArrowUpRight className="size-5 text-ink-muted group-hover:text-primary group-hover:rotate-12 transition-all" />
+                </div>
               </div>
             </Link>
           </motion.div>
@@ -499,22 +525,21 @@ function FAQ() {
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-border">
-      <div className="absolute inset-0 grid-pattern opacity-50" />
-      <div className="absolute inset-0 radial-purple" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary via-purple-700 to-purple-900 text-primary-foreground">
+      <div className="absolute inset-0 grid-pattern opacity-15" />
       <div className="relative mx-auto max-w-5xl px-6 py-24 lg:py-32 text-center">
         <img src={abstractImg} alt="" className="mx-auto size-32 mb-10 rounded-3xl shadow-2xl shadow-primary/30" loading="lazy" width={400} height={400} />
         <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance">
-          Your next chapter <br />starts here.
+          Your next chapter <br /><span className="italic font-light">starts here.</span>
         </h2>
-        <p className="mt-6 text-lg text-ink-muted max-w-xl mx-auto text-pretty">
+        <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl mx-auto text-pretty">
           Limited seats per cohort. Apply today and join Africa's most ambitious tech academy.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Link to="/courses" className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-8 py-4 text-base font-semibold hover:bg-primary transition-colors">
+          <Link to="/courses" className="inline-flex items-center gap-2 rounded-full bg-background text-foreground px-8 py-4 text-base font-semibold hover:bg-background/90 transition-colors">
             Enroll Now <ArrowRight className="size-4" />
           </Link>
-          <Link to="/events" className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-8 py-4 text-base font-semibold hover:border-ink transition">
+          <Link to="/events" className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/40 px-8 py-4 text-base font-semibold hover:bg-primary-foreground/10 transition">
             Visit our campus
           </Link>
         </div>
