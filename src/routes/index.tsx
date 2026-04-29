@@ -525,22 +525,21 @@ function FAQ() {
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-border">
-      <div className="absolute inset-0 grid-pattern opacity-50" />
-      <div className="absolute inset-0 radial-purple" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary via-purple-700 to-purple-900 text-primary-foreground">
+      <div className="absolute inset-0 grid-pattern opacity-15" />
       <div className="relative mx-auto max-w-5xl px-6 py-24 lg:py-32 text-center">
         <img src={abstractImg} alt="" className="mx-auto size-32 mb-10 rounded-3xl shadow-2xl shadow-primary/30" loading="lazy" width={400} height={400} />
         <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance">
-          Your next chapter <br />starts here.
+          Your next chapter <br /><span className="italic font-light">starts here.</span>
         </h2>
-        <p className="mt-6 text-lg text-ink-muted max-w-xl mx-auto text-pretty">
+        <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl mx-auto text-pretty">
           Limited seats per cohort. Apply today and join Africa's most ambitious tech academy.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Link to="/courses" className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-8 py-4 text-base font-semibold hover:bg-primary transition-colors">
+          <Link to="/courses" className="inline-flex items-center gap-2 rounded-full bg-background text-foreground px-8 py-4 text-base font-semibold hover:bg-background/90 transition-colors">
             Enroll Now <ArrowRight className="size-4" />
           </Link>
-          <Link to="/events" className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-8 py-4 text-base font-semibold hover:border-ink transition">
+          <Link to="/events" className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/40 px-8 py-4 text-base font-semibold hover:bg-primary-foreground/10 transition">
             Visit our campus
           </Link>
         </div>
