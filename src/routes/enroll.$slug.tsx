@@ -302,7 +302,6 @@ function EnrollPage() {
               <p className="mt-1 font-display text-xl font-bold">{course.title}</p>
               <p className="mt-2 text-sm text-ink-muted">{course.short}</p>
               <div className="mt-5 pt-5 border-t border-border space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-ink-muted">Tuition</span><span className="font-semibold">{course.price}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Duration</span><span className="font-medium">{course.duration}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Intake</span><span className="font-medium">{intake.label}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Format</span><span className="font-medium">In-person, Lagos</span></div>
