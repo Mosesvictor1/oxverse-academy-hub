@@ -276,7 +276,7 @@ function EnrollPage() {
               </div>
               <div className="mt-8 grid sm:grid-cols-2 gap-4">
                 <NextStep title="What happens next" body="Admissions emails you within 48 hours with a confirmation and payment plan options." />
-                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — 15 Innovation Way, Lekki, Lagos.`} />
+                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.`} />
                 <NextStep title="Join the community" body="Connect with your cohort on WhatsApp before classes start." cta={{ label: "Join WhatsApp group", href: "https://chat.whatsapp.com" }} />
                 <NextStep title="Student dashboard" body="Track your application and complete onboarding tasks." cta={{ label: "Go to dashboard", to: "/dashboard", state: appId }} />
               </div>
