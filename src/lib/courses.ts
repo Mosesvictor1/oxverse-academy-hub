@@ -6,7 +6,6 @@ export type Course = {
   description: string;
   duration: string;
   schedule: string[];
-  price: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   outcomes: string[];
   curriculum: { module: string; topics: string[] }[];
