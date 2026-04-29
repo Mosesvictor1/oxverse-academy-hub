@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WaitlistRouteImport } from './routes/waitlist'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -23,6 +24,11 @@ import { Route as CoursesIndexRouteImport } from './routes/courses.index'
 import { Route as EnrollSlugRouteImport } from './routes/enroll.$slug'
 import { Route as CoursesSlugRouteImport } from './routes/courses.$slug'
 
+const WaitlistRoute = WaitlistRouteImport.update({
+  id: '/waitlist',
+  path: '/waitlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
@@ -84,9 +90,9 @@ const EnrollSlugRoute = EnrollSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesSlugRoute = CoursesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CoursesRoute,
+  id: '/courses/$slug',
+  path: '/courses/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/testimonials': typeof TestimonialsRoute
+  '/waitlist': typeof WaitlistRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
   '/courses/': typeof CoursesIndexRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/testimonials': typeof TestimonialsRoute
+  '/waitlist': typeof WaitlistRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
   '/courses': typeof CoursesIndexRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/testimonials': typeof TestimonialsRoute
+  '/waitlist': typeof WaitlistRoute
   '/courses/$slug': typeof CoursesSlugRoute
   '/enroll/$slug': typeof EnrollSlugRoute
   '/courses/': typeof CoursesIndexRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/testimonials'
+    | '/waitlist'
     | '/courses/$slug'
     | '/enroll/$slug'
     | '/courses/'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/testimonials'
+    | '/waitlist'
     | '/courses/$slug'
     | '/enroll/$slug'
     | '/courses'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/testimonials'
+    | '/waitlist'
     | '/courses/$slug'
     | '/enroll/$slug'
     | '/courses/'
@@ -194,12 +206,21 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  WaitlistRoute: typeof WaitlistRoute
+  CoursesSlugRoute: typeof CoursesSlugRoute
   EnrollSlugRoute: typeof EnrollSlugRoute
   CoursesIndexRoute: typeof CoursesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/waitlist': {
+      id: '/waitlist'
+      path: '/waitlist'
+      fullPath: '/waitlist'
+      preLoaderRoute: typeof WaitlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/testimonials': {
       id: '/testimonials'
       path: '/testimonials'
@@ -286,10 +307,10 @@ declare module '@tanstack/react-router' {
     }
     '/courses/$slug': {
       id: '/courses/$slug'
-      path: '/$slug'
+      path: '/courses/$slug'
       fullPath: '/courses/$slug'
       preLoaderRoute: typeof CoursesSlugRouteImport
-      parentRoute: typeof CoursesRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -305,6 +326,8 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
   TestimonialsRoute: TestimonialsRoute,
+  WaitlistRoute: WaitlistRoute,
+  CoursesSlugRoute: CoursesSlugRoute,
   EnrollSlugRoute: EnrollSlugRoute,
   CoursesIndexRoute: CoursesIndexRoute,
 }
