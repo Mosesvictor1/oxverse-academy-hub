@@ -236,22 +236,26 @@ function CourseDetail() {
 
           {tab === "Tuition" && (
             <div className="max-w-3xl">
-              <h2 className="font-display text-3xl font-bold tracking-tight">Investment & plans</h2>
+              <h2 className="font-display text-3xl font-bold tracking-tight">Tuition & plans</h2>
               <div className="mt-6 rounded-3xl border border-border p-8 bg-gradient-to-br from-background to-purple-50">
-                <p className="text-sm text-ink-muted">Total tuition</p>
-                <p className="mt-1 font-display text-5xl font-bold tracking-tighter">{course.price}</p>
-                <p className="mt-2 text-sm text-ink-muted">Includes all materials, mentorship, and certificate.</p>
+                <p className="font-display text-2xl font-bold">Talk to admissions for tuition details</p>
+                <p className="mt-2 text-ink-muted">We don't publish tuition online. Reach out via WhatsApp or apply — our admissions team will share the full breakdown, scholarships, and flexible payment plans.</p>
                 <div className="mt-6 grid sm:grid-cols-3 gap-3">
-                  {["Pay in full (5% off)", "2 installments", "Up to 4 installments"].map((p) => (
+                  {["Pay in full discount", "2 installments", "Up to 4 installments"].map((p) => (
                     <div key={p} className="rounded-xl border border-border p-4 text-sm">
                       <p className="font-semibold">{p}</p>
-                      <p className="text-ink-muted text-xs mt-1">No interest, no fees.</p>
+                      <p className="text-ink-muted text-xs mt-1">No interest, no hidden fees.</p>
                     </div>
                   ))}
                 </div>
-                <Link to="/enroll/$slug" params={{ slug: course.slug }} className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
-                  Apply now <ArrowRight className="size-4" />
-                </Link>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link to="/enroll/$slug" params={{ slug: course.slug }} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
+                    Apply now <ArrowRight className="size-4" />
+                  </Link>
+                  <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 font-semibold hover:border-ink transition">
+                    Talk to admissions
+                  </Link>
+                </div>
               </div>
             </div>
           )}
