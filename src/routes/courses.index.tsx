@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { courses } from "@/lib/courses";
 
-export const Route = createFileRoute("/courses")({
+export const Route = createFileRoute("/courses/")({
   head: () => ({
     meta: [
       { title: "Courses — OxVerse Academy" },
@@ -73,7 +73,6 @@ function CoursesPage() {
           </p>
         </div>
       </section>
-
       <section className="mx-auto max-w-7xl px-6 pb-24">
         <div className="rounded-3xl border border-border bg-background p-5 lg:p-6 sticky top-20 z-30 backdrop-blur supports-[backdrop-filter]:bg-background/85 shadow-sm">
           <div className="flex flex-col gap-4">
@@ -191,7 +190,7 @@ function CoursesPage() {
         </div>
       </section>
     </SiteLayout>
-  );
+  )
 }
 
 function FilterPills<T extends string>({ label, options, value, onChange }: {
