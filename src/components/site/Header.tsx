@@ -62,10 +62,10 @@ export function Header() {
             My applications
           </Link>
           <Link
-            to="/contact"
+            to="/waitlist"
             className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-5 py-2.5 text-sm font-semibold hover:bg-primary transition-colors"
           >
-            Enroll Now
+            Join Waitlist
           </Link>
         </div>
 
@@ -95,11 +95,11 @@ export function Header() {
               </Link>
             ))}
             <Link
-              to="/contact"
+              to="/waitlist"
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-full bg-ink text-background px-5 py-3 text-sm font-semibold"
             >
-              Enroll Now
+              Join Waitlist
             </Link>
           </div>
         </div>
