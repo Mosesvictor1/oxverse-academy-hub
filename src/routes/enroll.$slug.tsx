@@ -276,7 +276,7 @@ function EnrollPage() {
               </div>
               <div className="mt-8 grid sm:grid-cols-2 gap-4">
                 <NextStep title="What happens next" body="Admissions emails you within 48 hours with a confirmation and payment plan options." />
-                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — 15 Innovation Way, Lekki, Lagos.`} />
+                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.`} />
                 <NextStep title="Join the community" body="Connect with your cohort on WhatsApp before classes start." cta={{ label: "Join WhatsApp group", href: "https://chat.whatsapp.com" }} />
                 <NextStep title="Student dashboard" body="Track your application and complete onboarding tasks." cta={{ label: "Go to dashboard", to: "/dashboard", state: appId }} />
               </div>
@@ -302,7 +302,6 @@ function EnrollPage() {
               <p className="mt-1 font-display text-xl font-bold">{course.title}</p>
               <p className="mt-2 text-sm text-ink-muted">{course.short}</p>
               <div className="mt-5 pt-5 border-t border-border space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-ink-muted">Tuition</span><span className="font-semibold">{course.price}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Duration</span><span className="font-medium">{course.duration}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Intake</span><span className="font-medium">{intake.label}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Format</span><span className="font-medium">In-person, Lagos</span></div>

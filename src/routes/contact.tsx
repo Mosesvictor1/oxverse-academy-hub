@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { SITE, whatsappLink } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -24,9 +25,10 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-2 gap-12">
         <div className="space-y-6">
           {[
-            { i: MapPin, t: "Campus", v: "15 Innovation Way, Lekki, Lagos" },
-            { i: Phone, t: "Phone", v: "+234 800 OXVERSE" },
-            { i: Mail, t: "Email", v: "hello@oxverse.academy" },
+            { i: MapPin, t: "Campus", v: SITE.address },
+            { i: Phone, t: "Phone", v: SITE.phoneDisplay },
+            { i: MessageCircle, t: "WhatsApp", v: SITE.phoneDisplay },
+            { i: Mail, t: "Email", v: SITE.email },
           ].map((c) => (
             <div key={c.t} className="rounded-2xl border border-border p-6 flex items-start gap-4">
               <c.i className="size-6 text-primary mt-1" />
@@ -36,6 +38,13 @@ function ContactPage() {
               </div>
             </div>
           ))}
+          <a
+            href={whatsappLink("Hi OxVerse, I'd like to learn more.")}
+            target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 font-semibold hover:opacity-90 transition"
+          >
+            <MessageCircle className="size-4" /> Chat on WhatsApp
+          </a>
         </div>
         <form
           onSubmit={(e) => { e.preventDefault(); setSent(true); }}

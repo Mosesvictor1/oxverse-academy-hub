@@ -66,7 +66,7 @@ function Dashboard() {
         <p><strong>Reference:</strong> ${active.id}</p>
         <p><strong>Cohort start:</strong> ${active.intakeLabel}</p>
         <p><strong>Schedule:</strong> ${active.schedule} — ${active.classTime}</p>
-        <p><strong>Campus:</strong> 15 Innovation Way, Lekki, Lagos</p>
+        <p><strong>Campus:</strong> No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos</p>
       </div>
       <p>Please complete the onboarding tasks in your student dashboard to confirm your seat.</p>
       <p>Welcome to OxVerse. Build something great.</p>
@@ -149,7 +149,7 @@ function Dashboard() {
           <div className="rounded-3xl bg-ink text-background p-7">
             <p className="font-display text-lg font-bold">Class resumption</p>
             <p className="mt-2 font-display text-3xl font-bold tracking-tighter">{active.intakeLabel}</p>
-            <p className="mt-1 text-sm text-background/70">15 Innovation Way, Lekki, Lagos</p>
+            <p className="mt-1 text-sm text-background/70">No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos</p>
           </div>
           <button onClick={downloadAdmissionLetter} className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 font-semibold hover:opacity-90 transition">
             <Download className="size-4" /> Download admission letter

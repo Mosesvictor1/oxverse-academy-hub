@@ -21,7 +21,7 @@ const categories = ["All", "Engineering", "Design", "Data & AI", "Web3", "Market
 const levels = ["All levels", "Beginner", "Intermediate", "Advanced"] as const;
 const schedules = ["Any", "Weekday", "Weekend"] as const;
 const durations = ["Any", "≤ 3 months", "4 months", "5+ months"] as const;
-const sorts = ["Featured", "A–Z", "Duration", "Price"] as const;
+const sorts = ["Featured", "A–Z", "Duration"] as const;
 
 function CoursesPage() {
   const [q, setQ] = useState("");
@@ -47,7 +47,6 @@ function CoursesPage() {
     });
     if (sort === "A–Z") list = [...list].sort((a, b) => a.title.localeCompare(b.title));
     if (sort === "Duration") list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
-    if (sort === "Price") list = [...list].sort((a, b) => parseInt(a.price.replace(/\D/g, "")) - parseInt(b.price.replace(/\D/g, "")));
     return list;
   }, [q, cat, level, sched, dur, sort]);
 
@@ -171,7 +170,7 @@ function CoursesPage() {
                     <div className="flex items-center gap-3 text-xs text-ink-muted">
                       <span className="inline-flex items-center gap-1"><Clock className="size-3.5" />{c.duration}</span>
                       <span>•</span>
-                      <span className="font-display font-semibold text-ink">{c.price}</span>
+                      <span className="font-display font-semibold text-ink">{c.level}</span>
                     </div>
                     <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
                       View <ArrowUpRight className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
