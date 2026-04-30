@@ -40,7 +40,7 @@ export const courses: Course[] = [
     description:
       "Master the modern frontend stack — HTML, CSS, JavaScript, TypeScript, React, and Next.js — and ship production interfaces used by real users.",
     duration: "4 months",
-    schedule: ["Mon–Wed–Fri (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed–Fri (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: [
       "Build responsive, accessible interfaces from any design",
@@ -73,7 +73,7 @@ export const courses: Course[] = [
     short: "APIs, databases, auth, and scalable services with Node.js.",
     description: "Build the engines that power modern apps. Node.js, PostgreSQL, REST, GraphQL, auth, queues, and deployment.",
     duration: "4 months",
-    schedule: ["Tue–Thu (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Tue–Thu (Weekday)", "Sat (Weekend)"],
     level: "Intermediate",
     outcomes: ["Design relational schemas", "Build secure REST/GraphQL APIs", "Implement auth & authorization", "Deploy & monitor services"],
     curriculum: [
@@ -98,7 +98,7 @@ export const courses: Course[] = [
     short: "End-to-end product engineering — from pixel to production.",
     description: "The complete journey: design systems, React, TypeScript, Node.js, databases, deployment. Ship full products.",
     duration: "6 months",
-    schedule: ["Mon–Wed–Fri (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed–Fri (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: ["Ship full products solo", "Work across the stack", "Deploy to production", "Build a portfolio of 6 apps"],
     curriculum: [
@@ -123,7 +123,7 @@ export const courses: Course[] = [
     short: "Design products people love — research, wireframe, prototype, ship.",
     description: "From user research to high-fidelity systems in Figma, design at the level of top product teams.",
     duration: "3 months",
-    schedule: ["Mon–Wed (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: ["Run user research", "Build design systems", "Prototype in Figma", "Hand off to engineering"],
     curriculum: [
@@ -148,7 +148,7 @@ export const courses: Course[] = [
     short: "Branding, social, print — visual storytelling that sells.",
     description: "Master Adobe Illustrator, Photoshop, and brand systems used by world-class agencies.",
     duration: "3 months",
-    schedule: ["Mon–Wed (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: ["Build brand identities", "Design for social & print", "Master Adobe suite"],
     curriculum: [
@@ -172,7 +172,7 @@ export const courses: Course[] = [
     short: "Build iOS & Android apps with React Native & Expo.",
     description: "Ship cross-platform mobile apps to the App Store and Google Play.",
     duration: "4 months",
-    schedule: ["Tue–Thu (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Tue–Thu (Weekday)", "Sat (Weekend)"],
     level: "Intermediate",
     outcomes: ["Build native-feel apps", "Publish to stores", "Use device APIs"],
     curriculum: [
@@ -197,7 +197,7 @@ export const courses: Course[] = [
     short: "Build with LLMs, embeddings, agents, and modern AI APIs.",
     description: "Move beyond hype — build real AI features, RAG systems, and agents that ship.",
     duration: "4 months",
-    schedule: ["Mon–Wed (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed (Weekday)", "Sat (Weekend)"],
     level: "Intermediate",
     outcomes: ["Build RAG pipelines", "Fine-tune models", "Deploy AI features", "Evaluate quality"],
     curriculum: [
@@ -222,7 +222,7 @@ export const courses: Course[] = [
     short: "Turn raw data into decisions with SQL, Python, and dashboards.",
     description: "Excel → SQL → Python → BI tools. Become the analyst every team wants.",
     duration: "3 months",
-    schedule: ["Mon–Wed (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: ["Query SQL fluently", "Build dashboards", "Tell stories with data"],
     curriculum: [
@@ -247,7 +247,7 @@ export const courses: Course[] = [
     short: "Solidity, smart contracts, DeFi, and on-chain product engineering.",
     description: "Build on Ethereum & EVM chains — from smart contracts to full dApps.",
     duration: "4 months",
-    schedule: ["Tue–Thu (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Tue–Thu (Weekday)", "Sat (Weekend)"],
     level: "Advanced",
     outcomes: ["Write Solidity contracts", "Build full dApps", "Audit basics", "Deploy on mainnet"],
     curriculum: [
@@ -272,7 +272,7 @@ export const courses: Course[] = [
     short: "SEO, ads, content, and analytics — drive real growth.",
     description: "From SEO and paid ads to content strategy and analytics — full-funnel modern marketing.",
     duration: "3 months",
-    schedule: ["Mon–Wed (Weekday)", "Sat–Sun (Weekend)"],
+    schedule: ["Mon–Wed (Weekday)", "Sat (Weekend)"],
     level: "Beginner",
     outcomes: ["Run paid campaigns", "Rank on Google", "Build content engines", "Measure ROI"],
     curriculum: [

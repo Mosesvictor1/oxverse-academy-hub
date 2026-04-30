@@ -8,7 +8,7 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false);
   return (
     <SiteLayout>
-      <SEO title="Contact — OxVerse Academy" description="Visit our Lekki campus, call us, or send a message. We respond within 24 hours." />
+      <SEO title="Contact — OxVerse Academy" description="Visit our Agor campus, call us, or send a message. We respond within 24 hours." />
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-10">
         <SectionEyebrow>Contact</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Visit. Call. Write.</h1>

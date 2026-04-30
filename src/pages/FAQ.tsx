@@ -3,7 +3,7 @@ import { SEO } from "@/components/site/SEO";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 const faqs = [
-  { q: "Are classes physical or online?", a: "All OxVerse classes are physical, held at our Lekki campus in Lagos. Mentorship and study materials are accessible online." },
+  { q: "Are classes physical or online?", a: "All OxVerse classes are physical, held at our Agor campus in Lagos. Mentorship and study materials are accessible online." },
   { q: "How do I apply?", a: "Pick a course, click Enroll Now, and complete the 7-step application. Our admissions team responds within 48 hours." },
   { q: "Do you offer payment plans?", a: "Yes — installment plans up to 4 months are available. Details shared after admission." },
   { q: "Will I get a certificate?", a: "Every graduate receives an OxVerse Certificate of Completion plus a portfolio review." },

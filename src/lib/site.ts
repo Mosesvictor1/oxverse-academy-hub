@@ -1,7 +1,7 @@
 export const SITE = {
-  phone: "+2349138691147",
-  phoneDisplay: "+234 913 869 1147",
-  whatsapp: "2349138691147",
+  phone: "+2348148462776",
+  phoneDisplay: "+234 8148462776",
+  whatsapp: "2348148462776",
   email: "hello@oxverse.academy",
   address: "No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.",
   addressShort: "Okota, Lagos",

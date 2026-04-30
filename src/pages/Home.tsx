@@ -15,7 +15,7 @@ import {
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
 import { courses } from "@/lib/courses";
-import heroImg from "@/assets/hero-oxverse-student.jpg";
+import heroImg from "@/assets/hero-oxverse-student2.png";
 import campusImg from "@/assets/campus.jpg";
 import abstractImg from "@/assets/promo-student-1.jpg";
 import studentsImg from "@/assets/students-group.jpg";
@@ -35,8 +35,8 @@ function HomePage() {
       <WhyOxVerse />
       <FeaturedCourses />
       <Campus />
-      <Projects />
-      <Testimonials />
+      {/* <Projects /> */}
+      {/* <Testimonials /> */}
       <Careers />
       <FAQ />
       <FinalCTA />
@@ -49,8 +49,8 @@ function Hero() {
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
       <div className="absolute inset-0 radial-purple" />
-      <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-28">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
+      <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 ">
+        <div className="grid lg:grid-cols-12 gap-1 items-center">
           <div className="lg:col-span-7">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -114,7 +114,7 @@ function Hero() {
                 ))}
               </div>
               <p>
-                <span className="text-ink font-semibold">2,400+</span> students transformed
+                <span className="text-ink font-semibold">50+</span> students transformed
               </p>
             </motion.div>
           </div>
@@ -125,15 +125,14 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl shadow-primary/20">
+            <div className="relative rounded-3xl shadow-2xl shadow-primary/20 overflow-hidden">
               <img
                 src={heroImg}
                 alt="Student learning at OxVerse Academy"
-                className="absolute inset-0 size-full object-cover"
+                className="w-full h-auto object-contain bg-background"
                 width={1024}
                 height={1280}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
             </div>
 
             <motion.div
@@ -157,11 +156,11 @@ function Hero() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="absolute -right-4 top-12 glass rounded-2xl p-4 shadow-xl"
+              className="absolute -right-4 top-1 glass rounded-2xl p-4 shadow-xl"
             >
               <div className="flex items-center gap-2 text-sm">
                 <span className="size-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="font-medium">Live: 6 cohorts in session</span>
+                <span className="font-medium">Live: 4 cohorts in session</span>
               </div>
             </motion.div>
           </motion.div>
@@ -212,10 +211,9 @@ function Marquee() {
 
 function Stats() {
   const stats = [
-    { v: 2400, s: "+", l: "Students trained" },
-    { v: 92, s: "%", l: "Job placement" },
-    { v: 45, s: "+", l: "Industry instructors" },
-    { v: 18, s: "", l: "Industry partners" },
+    { v: 50, s: "+", l: "Students trained" },
+    { v: 75, s: "%", l: "Job placement" },
+    { v: 5, s: "+", l: "Industry instructors" },
   ];
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-primary to-purple-700 text-primary-foreground">
@@ -281,7 +279,7 @@ function WhyOxVerse() {
     {
       icon: MapPin,
       title: "Lagos-based",
-      desc: "Physical classes in Lekki. In-person mentorship that compounds.",
+      desc: "No 82, Century Bus Stop Ago Palace Way, Okota, Lagos",
     },
   ];
   return (
@@ -406,18 +404,17 @@ function Campus() {
               <span className="text-background/80">Campus Experience</span>
             </SectionEyebrow>
             <h2 className="mt-6 font-display text-4xl md:text-6xl font-bold tracking-tighter text-balance">
-              Built for deep work.
+              Built for focus.
             </h2>
             <p className="mt-6 text-background/70 text-lg max-w-md text-pretty">
-              4,000 sq ft of focused space in Lekki. Ergonomic workstations, gigabit fiber, quiet
-              pods, and a community that pushes you forward.
+              Step into a learning environment engineered for deep work and real progress. Our
+              campus in Agor combines comfort, speed, and community to help you stay consistent and
+              productive.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-6">
               {[
-                { l: "Workstations", v: "60" },
                 { l: "Mentorship hrs/mo", v: "200+" },
-                { l: "Internet", v: "1 Gbps" },
-                { l: "Open hours", v: "8am–10pm" },
+                { l: "Open hours", v: "8am–5pm" },
               ].map((s) => (
                 <div key={s.l}>
                   <p className="font-display text-3xl font-bold">{s.v}</p>
@@ -582,11 +579,12 @@ function Careers() {
           <SectionEyebrow>Career outcomes</SectionEyebrow>
           <h2 className="mt-6 font-display text-4xl md:text-5xl font-bold tracking-tighter text-balance">
             Skill that pays. <br />
-            <span className="gradient-text">For decades.</span>
+            <span className="gradient-text">For the Long Term.</span>
           </h2>
           <p className="mt-6 text-ink-muted text-lg max-w-lg text-pretty">
-            We partner with 18+ companies across Africa and globally for direct hiring, internships,
-            and real-world capstone projects. 92% of graduates land roles within 6 months.
+            We don’t just teach tech — we prepare you for real careers that last. Our programs are
+            built around practical skills, real-world projects, and industry-relevant experience
+            that employers value.
           </p>
           <div className="mt-10 grid grid-cols-2 gap-4">
             {[
@@ -615,27 +613,24 @@ function FAQ() {
   const faqs = [
     {
       q: "Is OxVerse a physical academy or online?",
-      a: "Strictly physical. All classes are held at our Lekki, Lagos campus. We believe in-person mentorship compounds faster than any online program.",
+      a: "Strictly physical. All classes are held at our Agor, Lagos campus. We believe in-person mentorship compounds faster than any online program.",
     },
-    {
-      q: "How much do courses cost?",
-      a: "Tuition ranges from ₦280,000 to ₦750,000 depending on the course. We offer installment plans and a limited number of need-based scholarships per cohort.",
-    },
+
     {
       q: "What are the entry requirements?",
-      a: "Most courses require no prior experience. You'll need a laptop (8GB RAM minimum), stable internet, and the ability to commit 12–18 hours per week.",
+      a: "Most courses require no prior experience. You'll need a laptop (8GB RAM minimum), stable internet, and the ability to commit 12–15 hours per week.",
     },
     {
       q: "Will I get a certificate?",
-      a: "Yes — every graduate receives an OxVerse Certificate of Completion plus portfolio reviews and career support.",
+      a: "Yes - every graduate receives an 0xVerse Certificate of Completion plus portfolio reviews and career support.",
     },
     {
       q: "Can I work full-time and study?",
-      a: "Yes — we offer weekend cohorts (Sat–Sun) designed for working professionals.",
+      a: "Yes - we offer weekend cohorts (Sat) designed for working professionals.",
     },
     {
       q: "Do you guarantee a job?",
-      a: "We don't guarantee jobs, but we have a 92% placement rate within 6 months and direct hiring partnerships with 18+ companies.",
+      a: "We don't guarantee jobs, but we have a 75% placement rate within 6 months of graduation. We provide career support, mentorship, and direct connections to hiring partners to maximize your chances.",
     },
   ];
   return (
@@ -678,7 +673,7 @@ function FinalCTA() {
           height={400}
         />
         <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance">
-          Your next chapter <br />
+          Your tech career <br />
           <span className="italic font-light">starts here.</span>
         </h2>
         <p className="mt-6 text-lg text-primary-foreground/80 max-w-xl mx-auto text-pretty">
