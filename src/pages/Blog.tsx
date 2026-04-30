@@ -1,15 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-
-export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: [
-      { title: "Blog — OxVerse Academy" },
-      { name: "description", content: "Stories, tutorials, and insights from Africa's premium tech academy." },
-    ],
-  }),
-  component: BlogPage,
-});
+import { SEO } from "@/components/site/SEO";
 
 const posts = [
   { slug: "1", title: "How we built a 92% placement rate", excerpt: "The OxVerse career playbook — mentorship, mock interviews, and direct hiring pipelines.", date: "Apr 12, 2026" },
@@ -17,9 +8,10 @@ const posts = [
   { slug: "3", title: "From zero to React engineer in 16 weeks", excerpt: "A week-by-week breakdown of our Frontend Development cohort.", date: "Mar 14, 2026" },
 ];
 
-function BlogPage() {
+export default function BlogPage() {
   return (
     <SiteLayout>
+      <SEO title="Blog — OxVerse Academy" description="Stories, tutorials, and insights from Africa's premium tech academy." />
       <section className="mx-auto max-w-5xl px-6 pt-24 pb-12">
         <SectionEyebrow>Blog</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Stories from the academy.</h1>

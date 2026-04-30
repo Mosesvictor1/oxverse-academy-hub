@@ -1,24 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { z } from "zod";
 import { Calendar, CheckCircle2, Circle, Clock, Download, MessageCircle, Users } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { getApplications, updateApplication, STATUS_META, type Application } from "@/lib/enrollment";
 
-export const Route = createFileRoute("/dashboard")({
-  validateSearch: z.object({ id: z.string().optional() }),
-  head: () => ({
-    meta: [
-      { title: "Student Dashboard — OxVerse Academy" },
-      { name: "description", content: "Track your application, complete onboarding, and prepare for class." },
-    ],
-  }),
-  component: Dashboard,
-});
-
-function Dashboard() {
-  const { id } = Route.useSearch();
+export default function DashboardPage() {
+  const [params] = useSearchParams();
+  const id = params.get("id") ?? undefined;
   const [apps, setApps] = useState<Application[]>([]);
   useEffect(() => { setApps(getApplications()); }, []);
 
@@ -27,6 +17,7 @@ function Dashboard() {
   if (!active) {
     return (
       <SiteLayout>
+        <SEO title="Student Dashboard — OxVerse Academy" />
         <section className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">No applications yet</h1>
           <p className="mt-3 text-ink-muted">Once you apply for a course, your dashboard appears here.</p>
@@ -47,25 +38,24 @@ function Dashboard() {
   const progress = Math.round((completed / tasks.length) * 100);
 
   function toggle(key: keyof Application["onboarding"]) {
-    const next = { ...active.onboarding, [key]: !active.onboarding[key] };
-    updateApplication(active.id, { onboarding: next });
+    const next = { ...active!.onboarding, [key]: !active!.onboarding[key] };
+    updateApplication(active!.id, { onboarding: next });
     setApps(getApplications());
   }
 
   function downloadAdmissionLetter() {
-    const html = `
-      <html><head><title>Admission Letter — OxVerse</title>
+    const html = `<html><head><title>Admission Letter — OxVerse</title>
       <style>body{font-family:Georgia,serif;max-width:720px;margin:60px auto;padding:40px;line-height:1.6;color:#1a1a2e}
       h1{font-size:28px;color:#5B21B6}.brand{font-weight:bold;color:#5B21B6;font-size:20px}.box{border:2px solid #5B21B6;padding:24px;margin:24px 0;border-radius:12px}</style>
       </head><body>
       <p class="brand">◆ OxVerse Academy</p>
       <h1>Provisional Admission Letter</h1>
-      <p>Dear ${active.firstName} ${active.lastName},</p>
-      <p>Congratulations! We are pleased to offer you provisional admission to the <strong>${active.courseTitle}</strong> program at OxVerse Academy.</p>
+      <p>Dear ${active!.firstName} ${active!.lastName},</p>
+      <p>Congratulations! We are pleased to offer you provisional admission to the <strong>${active!.courseTitle}</strong> program at OxVerse Academy.</p>
       <div class="box">
-        <p><strong>Reference:</strong> ${active.id}</p>
-        <p><strong>Cohort start:</strong> ${active.intakeLabel}</p>
-        <p><strong>Schedule:</strong> ${active.schedule} — ${active.classTime}</p>
+        <p><strong>Reference:</strong> ${active!.id}</p>
+        <p><strong>Cohort start:</strong> ${active!.intakeLabel}</p>
+        <p><strong>Schedule:</strong> ${active!.schedule} — ${active!.classTime}</p>
         <p><strong>Campus:</strong> No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos</p>
       </div>
       <p>Please complete the onboarding tasks in your student dashboard to confirm your seat.</p>
@@ -75,12 +65,13 @@ function Dashboard() {
     const blob = new Blob([html], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url; a.download = `OxVerse-Admission-${active.id}.html`; a.click();
+    a.href = url; a.download = `OxVerse-Admission-${active!.id}.html`; a.click();
     URL.revokeObjectURL(url);
   }
 
   return (
     <SiteLayout>
+      <SEO title="Student Dashboard — OxVerse Academy" description="Track your application, complete onboarding, and prepare for class." />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">
@@ -133,14 +124,6 @@ function Dashboard() {
                   </li>
                 );
               })}
-            </ul>
-          </div>
-
-          <div className="rounded-3xl border border-border bg-background p-7">
-            <p className="font-display text-xl font-bold">Announcements</p>
-            <ul className="mt-4 space-y-3 text-sm">
-              <li className="rounded-xl border border-border p-4"><strong>Orientation packets ready.</strong> <span className="text-ink-muted">Bring a laptop and a notebook on day one.</span></li>
-              <li className="rounded-xl border border-border p-4"><strong>Meet your cohort.</strong> <span className="text-ink-muted">A virtual meet-and-greet is scheduled the week before classes start.</span></li>
             </ul>
           </div>
         </motion.div>

@@ -1,19 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, ArrowRight } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-
-export const Route = createFileRoute("/events")({
-  head: () => ({
-    meta: [
-      { title: "Events — OxVerse Academy" },
-      { name: "description", content: "Bootcamps, workshops, open house events, and seminars at OxVerse Academy Lagos." },
-      { property: "og:title", content: "Events — OxVerse Academy" },
-      { property: "og:description", content: "Upcoming bootcamps, workshops, and open house events." },
-    ],
-  }),
-  component: EventsPage,
-});
+import { SEO } from "@/components/site/SEO";
 
 const events = [
   { type: "Bootcamp", title: "Weekend AI Bootcamp", date: "Mar 8–9, 2026", desc: "Build a working LLM-powered app in 48 hours.", price: "Free" },
@@ -24,9 +12,10 @@ const events = [
   { type: "Workshop", title: "Intro to Data Analysis", date: "Apr 12, 2026", desc: "Hands-on SQL & Python for absolute beginners.", price: "₦10,000" },
 ];
 
-function EventsPage() {
+export default function EventsPage() {
   return (
     <SiteLayout>
+      <SEO title="Events — OxVerse Academy" description="Bootcamps, workshops, open house events, and seminars at OxVerse Academy Lagos." />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-16 lg:pt-28">

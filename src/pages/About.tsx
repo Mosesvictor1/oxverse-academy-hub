@@ -1,26 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import campusImg from "@/assets/campus.jpg";
 import studentsImg from "@/assets/students-group.jpg";
 
-export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About OxVerse Academy — Our Story" },
-      { name: "description", content: "OxVerse Academy is a physical tech training institute building Africa's next generation of engineers, designers, and creators." },
-      { property: "og:title", content: "About OxVerse Academy" },
-      { property: "og:description", content: "Our mission, our team, and the campus where it all happens." },
-      { property: "og:image", content: campusImg },
-    ],
-  }),
-  component: AboutPage,
-});
-
-function AboutPage() {
+export default function AboutPage() {
   return (
     <SiteLayout>
+      <SEO
+        title="About OxVerse Academy — Our Story"
+        description="OxVerse Academy is a physical tech training institute building Africa's next generation of engineers, designers, and creators."
+        image={campusImg}
+      />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-60 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-16 lg:pt-28">

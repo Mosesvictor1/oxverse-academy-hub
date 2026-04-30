@@ -1,23 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { SITE, whatsappLink } from "@/lib/site";
 
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — OxVerse Academy" },
-      { name: "description", content: "Visit our Lekki campus, call us, or send a message. We respond within 24 hours." },
-    ],
-  }),
-  component: ContactPage,
-});
-
-function ContactPage() {
+export default function ContactPage() {
   const [sent, setSent] = useState(false);
   return (
     <SiteLayout>
+      <SEO title="Contact — OxVerse Academy" description="Visit our Lekki campus, call us, or send a message. We respond within 24 hours." />
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-10">
         <SectionEyebrow>Contact</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Visit. Call. Write.</h1>

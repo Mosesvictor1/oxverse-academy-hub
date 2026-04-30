@@ -1,15 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
-
-export const Route = createFileRoute("/testimonials")({
-  head: () => ({
-    meta: [
-      { title: "Testimonials — OxVerse Academy" },
-      { name: "description", content: "Hear from OxVerse graduates working at top companies across Africa and beyond." },
-    ],
-  }),
-  component: TestimonialsPage,
-});
+import { SEO } from "@/components/site/SEO";
 
 const t = [
   { name: "Tobi Adelaja", role: "Frontend Engineer @ Plana", quote: "OxVerse didn't just teach me to code — they taught me to think like an engineer. Six months in, I landed a remote role at a YC startup." },
@@ -18,9 +8,10 @@ const t = [
   { name: "Zara Mohammed", role: "AI Engineer @ InstaDeep", quote: "From total beginner to building production AI features in 4 months. OxVerse changed my life." },
 ];
 
-function TestimonialsPage() {
+export default function TestimonialsPage() {
   return (
     <SiteLayout>
+      <SEO title="Testimonials — OxVerse Academy" description="Hear from OxVerse graduates working at top companies across Africa and beyond." />
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-10">
         <SectionEyebrow>Testimonials</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Stories from our alumni.</h1>

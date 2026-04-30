@@ -1,36 +1,21 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Calendar, CheckCircle2, Clock, FileText } from "lucide-react";
-import { z } from "zod";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { getApplications, STATUS_META, type Application } from "@/lib/enrollment";
 
-const searchSchema = z.object({ id: z.string().optional() });
-
-export const Route = createFileRoute("/applications")({
-  validateSearch: searchSchema,
-  head: () => ({
-    meta: [
-      { title: "My Applications — OxVerse Academy" },
-      { name: "description", content: "Track the status of your OxVerse Academy enrollment applications." },
-    ],
-  }),
-  component: ApplicationsPage,
-});
-
-function ApplicationsPage() {
-  const { id } = Route.useSearch();
+export default function ApplicationsPage() {
+  const [params] = useSearchParams();
+  const id = params.get("id") ?? undefined;
   const [apps, setApps] = useState<Application[]>([]);
-
-  useEffect(() => {
-    setApps(getApplications());
-  }, []);
-
+  useEffect(() => { setApps(getApplications()); }, []);
   const justSubmitted = id ? apps.find((a) => a.id === id) : undefined;
 
   return (
     <SiteLayout>
+      <SEO title="My Applications — OxVerse Academy" description="Track the status of your OxVerse Academy enrollment applications." />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-5xl px-6 pt-24 pb-10">
@@ -72,7 +57,7 @@ function ApplicationsPage() {
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <p className="text-xs font-mono text-ink-muted">{a.id}</p>
-                      <Link to="/courses/$slug" params={{ slug: a.courseSlug }} className="mt-1 block font-display text-2xl font-bold hover:text-primary transition">
+                      <Link to={`/courses/${a.courseSlug}`} className="mt-1 block font-display text-2xl font-bold hover:text-primary transition">
                         {a.courseTitle}
                       </Link>
                       <div className="mt-3 flex flex-wrap gap-4 text-sm text-ink-muted">

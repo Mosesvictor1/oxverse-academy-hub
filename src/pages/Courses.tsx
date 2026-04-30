@@ -1,21 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Search, Clock, Sparkles, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
-
-export const Route = createFileRoute("/courses/")({
-  head: () => ({
-    meta: [
-      { title: "Courses — OxVerse Academy" },
-      { name: "description", content: "10 premium tech courses across Engineering, Design, Data & AI, Web3, and Marketing. Cohort-based, hands-on, taught at our Lagos campus." },
-      { property: "og:title", content: "Courses — OxVerse Academy" },
-      { property: "og:description", content: "Pick your path. Build your future." },
-    ],
-  }),
-  component: CoursesPage,
-});
 
 const categories = ["All", "Engineering", "Design", "Data & AI", "Web3", "Marketing"] as const;
 const levels = ["All levels", "Beginner", "Intermediate", "Advanced"] as const;
@@ -23,7 +12,7 @@ const schedules = ["Any", "Weekday", "Weekend"] as const;
 const durations = ["Any", "≤ 3 months", "4 months", "5+ months"] as const;
 const sorts = ["Featured", "A–Z", "Duration"] as const;
 
-function CoursesPage() {
+export default function CoursesPage() {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<(typeof categories)[number]>("All");
   const [level, setLevel] = useState<(typeof levels)[number]>("All levels");
@@ -59,6 +48,7 @@ function CoursesPage() {
 
   return (
     <SiteLayout>
+      <SEO title="Courses — OxVerse Academy" description="10 premium tech courses across Engineering, Design, Data & AI, Web3, and Marketing." />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
@@ -133,7 +123,7 @@ function CoursesPage() {
               transition={{ delay: (i % 6) * 0.04 }}
             >
               <Link
-                to="/courses/$slug" params={{ slug: c.slug }}
+                to={`/courses/${c.slug}`}
                 className="group block h-full rounded-3xl overflow-hidden border border-border bg-background hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="relative aspect-[16/11] overflow-hidden">
@@ -189,7 +179,7 @@ function CoursesPage() {
         </div>
       </section>
     </SiteLayout>
-  )
+  );
 }
 
 function FilterPills<T extends string>({ label, options, value, onChange }: {

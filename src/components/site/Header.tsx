@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -41,15 +41,18 @@ export function Header() {
 
         <nav className="hidden lg:flex items-center gap-1">
           {nav.map((n) => (
-            <Link
+            <NavLink
               key={n.to}
               to={n.to}
-              activeOptions={{ exact: n.to === "/" }}
-              className="relative px-4 py-2 text-sm font-medium text-ink-muted hover:text-ink transition-colors data-[status=active]:text-ink"
-              activeProps={{ className: "text-ink" }}
+              end={n.to === "/"}
+              className={({ isActive }) =>
+                `relative px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive ? "text-ink" : "text-ink-muted hover:text-ink"
+                }`
+              }
             >
               {n.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 

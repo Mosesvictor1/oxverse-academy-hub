@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import hero from "@/assets/hero-oxverse-student.jpg";
 import promo from "@/assets/promo-student-1.jpg";
 import campus from "@/assets/campus.jpg";
@@ -9,20 +9,11 @@ import ai from "@/assets/courses/ai.jpg";
 import uiux from "@/assets/courses/uiux.jpg";
 import data from "@/assets/courses/data.jpg";
 
-export const Route = createFileRoute("/gallery")({
-  head: () => ({
-    meta: [
-      { title: "Gallery — OxVerse Academy" },
-      { name: "description", content: "Inside our Lagos campus — students, instructors, and life at OxVerse." },
-    ],
-  }),
-  component: GalleryPage,
-});
-
-function GalleryPage() {
+export default function GalleryPage() {
   const imgs = [hero, promo, campus, students, frontend, ai, uiux, data];
   return (
     <SiteLayout>
+      <SEO title="Gallery — OxVerse Academy" description="Inside our Lagos campus — students, instructors, and life at OxVerse." />
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-10">
         <SectionEyebrow>Gallery</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Life at OxVerse.</h1>

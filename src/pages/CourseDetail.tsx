@@ -1,48 +1,10 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Calendar, Clock, Award, GraduationCap, Check, Wrench, Briefcase, Star } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { courses, getCourse, type Course } from "@/lib/courses";
+import { SEO } from "@/components/site/SEO";
+import { courses, getCourse } from "@/lib/courses";
 import { useState } from "react";
-
-export const Route = createFileRoute("/courses/$slug")({
-  loader: ({ params }) => {
-    const course = getCourse(params.slug);
-    if (!course) throw notFound();
-    return { course };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.course.title} — OxVerse Academy` },
-          { name: "description", content: loaderData.course.short },
-          { property: "og:title", content: `${loaderData.course.title} — OxVerse Academy` },
-          { property: "og:description", content: loaderData.course.short },
-          { property: "og:image", content: loaderData.course.image },
-          { name: "twitter:image", content: loaderData.course.image },
-          { name: "twitter:card", content: "summary_large_image" },
-        ]
-      : [],
-  }),
-  notFoundComponent: () => (
-    <SiteLayout>
-      <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-        <h1 className="font-display text-4xl font-bold">Course not found</h1>
-        <Link to="/courses" className="mt-6 inline-flex items-center gap-2 text-primary font-semibold">View all courses</Link>
-      </div>
-    </SiteLayout>
-  ),
-  errorComponent: ({ error, reset }) => (
-    <SiteLayout>
-      <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-        <h1 className="font-display text-3xl font-bold">Something went wrong</h1>
-        <p className="mt-3 text-ink-muted">{error.message}</p>
-        <button onClick={reset} className="mt-6 rounded-full bg-ink text-background px-6 py-3 font-semibold">Retry</button>
-      </div>
-    </SiteLayout>
-  ),
-  component: CourseDetail,
-});
 
 const tabs = ["Overview", "Curriculum", "Projects", "Requirements", "Schedule", "Tuition", "Career Path", "FAQs"] as const;
 
@@ -52,15 +14,33 @@ const sampleTestimonials = [
   { name: "Kola Ibrahim", role: "OxVerse Alum", quote: "From beginner to confident professional in months. Best decision I've made for my career." },
 ];
 
-function CourseDetail() {
-  const { course } = Route.useLoaderData() as { course: Course };
+export default function CourseDetailPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const course = slug ? getCourse(slug) : undefined;
   const [tab, setTab] = useState<(typeof tabs)[number]>("Overview");
+
+  if (!course) {
+    return (
+      <SiteLayout>
+        <SEO title="Course not found — OxVerse Academy" />
+        <div className="mx-auto max-w-2xl px-6 py-32 text-center">
+          <h1 className="font-display text-4xl font-bold">Course not found</h1>
+          <Link to="/courses" className="mt-6 inline-flex items-center gap-2 text-primary font-semibold">View all courses</Link>
+        </div>
+      </SiteLayout>
+    );
+  }
+
   const related = courses.filter((c) => c.slug !== course.slug && c.category === course.category).slice(0, 3);
   const fallbackRelated = related.length === 0 ? courses.filter((c) => c.slug !== course.slug).slice(0, 3) : related;
 
   return (
     <SiteLayout>
-      {/* HERO */}
+      <SEO
+        title={`${course.title} — OxVerse Academy`}
+        description={course.short}
+        image={course.image}
+      />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-12 lg:pt-24">
@@ -91,7 +71,7 @@ function CourseDetail() {
                 ))}
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/enroll/$slug" params={{ slug: course.slug }} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-7 py-4 font-semibold hover:bg-primary transition">
+                <Link to={`/enroll/${course.slug}`} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-7 py-4 font-semibold hover:bg-primary transition">
                   Enroll Now <ArrowRight className="size-4" />
                 </Link>
                 <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-7 py-4 font-semibold hover:border-ink transition">
@@ -118,7 +98,6 @@ function CourseDetail() {
         </div>
       </section>
 
-      {/* TABS */}
       <section className="border-y border-border sticky top-16 z-30 bg-background/90 backdrop-blur">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex gap-1 overflow-x-auto py-3 -mx-2 px-2">
@@ -249,7 +228,7 @@ function CourseDetail() {
                   ))}
                 </div>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link to="/enroll/$slug" params={{ slug: course.slug }} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
+                  <Link to={`/enroll/${course.slug}`} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
                     Apply now <ArrowRight className="size-4" />
                   </Link>
                   <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 font-semibold hover:border-ink transition">
@@ -289,7 +268,6 @@ function CourseDetail() {
         </motion.div>
       </section>
 
-      {/* TESTIMONIALS */}
       <section className="border-t border-border bg-muted/40">
         <div className="mx-auto max-w-7xl px-6 py-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tighter">From our graduates</h2>
@@ -311,7 +289,6 @@ function CourseDetail() {
         </div>
       </section>
 
-      {/* RELATED */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="flex items-end justify-between">
           <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tighter">Related courses</h2>
@@ -321,7 +298,7 @@ function CourseDetail() {
           {fallbackRelated.map((c) => (
             <Link
               key={c.slug}
-              to="/courses/$slug" params={{ slug: c.slug }}
+              to={`/courses/${c.slug}`}
               className="group block rounded-3xl overflow-hidden border border-border bg-background hover:border-primary/40 hover:-translate-y-1 transition-all"
             >
               <div className="relative aspect-[16/11] overflow-hidden">
@@ -341,7 +318,7 @@ function CourseDetail() {
         <div className="mx-auto max-w-5xl px-6 py-20 text-center">
           <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tighter">Ready to start?</h2>
           <p className="mt-4 text-background/70 max-w-xl mx-auto">Reserve your seat in the next cohort. Limited to 25 students.</p>
-          <Link to="/enroll/$slug" params={{ slug: course.slug }} className="mt-8 inline-flex items-center gap-2 rounded-full bg-background text-foreground px-7 py-4 font-semibold hover:bg-primary hover:text-primary-foreground transition">
+          <Link to={`/enroll/${course.slug}`} className="mt-8 inline-flex items-center gap-2 rounded-full bg-background text-foreground px-7 py-4 font-semibold hover:bg-primary hover:text-primary-foreground transition">
             Enroll Now <ArrowRight className="size-4" />
           </Link>
         </div>

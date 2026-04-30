@@ -1,16 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-
-export const Route = createFileRoute("/faq")({
-  head: () => ({
-    meta: [
-      { title: "FAQ — OxVerse Academy" },
-      { name: "description", content: "Answers to common questions about admissions, classes, payment plans, and more." },
-    ],
-  }),
-  component: FAQPage,
-});
 
 const faqs = [
   { q: "Are classes physical or online?", a: "All OxVerse classes are physical, held at our Lekki campus in Lagos. Mentorship and study materials are accessible online." },
@@ -21,9 +11,10 @@ const faqs = [
   { q: "Do you guarantee a job?", a: "We don't guarantee jobs, but our 92% placement rate speaks for itself. We provide CV reviews, mock interviews, and direct introductions to hiring partners." },
 ];
 
-function FAQPage() {
+export default function FAQPage() {
   return (
     <SiteLayout>
+      <SEO title="FAQ — OxVerse Academy" description="Answers to common questions about admissions, classes, payment plans, and more." />
       <section className="mx-auto max-w-3xl px-6 pt-24 pb-10">
         <SectionEyebrow>FAQ</SectionEyebrow>
         <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Common questions.</h1>

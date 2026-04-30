@@ -1,36 +1,17 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Calendar, Users, Upload, PartyPopper } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { getCourse, type Course } from "@/lib/courses";
+import { SEO } from "@/components/site/SEO";
+import { getCourse } from "@/lib/courses";
 import { INTAKES, CLASS_TIMES, saveApplication, type Application } from "@/lib/enrollment";
-
-export const Route = createFileRoute("/enroll/$slug")({
-  loader: ({ params }) => {
-    const course = getCourse(params.slug);
-    if (!course) throw notFound();
-    return { course };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [{ title: `Enroll — ${loaderData.course.title} | OxVerse Academy` },
-         { name: "description", content: `Apply for ${loaderData.course.title} at OxVerse Academy.` }]
-      : [],
-  }),
-  notFoundComponent: () => (
-    <SiteLayout><div className="mx-auto max-w-2xl px-6 py-32 text-center"><h1 className="font-display text-4xl font-bold">Course not found</h1><Link to="/courses" className="mt-6 inline-block text-primary font-semibold">View all courses</Link></div></SiteLayout>
-  ),
-  errorComponent: ({ error, reset }) => (
-    <SiteLayout><div className="mx-auto max-w-2xl px-6 py-32 text-center"><h1 className="font-display text-3xl font-bold">Something went wrong</h1><p className="mt-3 text-ink-muted">{error.message}</p><button onClick={reset} className="mt-6 rounded-full bg-ink text-background px-6 py-3 font-semibold">Retry</button></div></SiteLayout>
-  ),
-  component: EnrollPage,
-});
 
 const STEPS = ["Personal", "Education", "Course", "Goals", "Documents", "Review", "Done"] as const;
 
-function EnrollPage() {
-  const { course } = Route.useLoaderData() as { course: Course };
+export default function EnrollPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const course = slug ? getCourse(slug) : undefined;
   const navigate = useNavigate();
   const [step, setStep] = useState<number>(0);
   const [appId, setAppId] = useState<string>("");
@@ -45,11 +26,23 @@ function EnrollPage() {
     employmentStatus: "Student" as Application["employmentStatus"],
     skillLevel: "None" as Application["skillLevel"],
     intakeId: INTAKES[0].id,
-    schedule: course.schedule[0],
+    schedule: course?.schedule[0] ?? "",
     classTime: CLASS_TIMES[0] as string,
     motivation: "", careerGoals: "", expectations: "",
     passportPhotoName: "", idDocumentName: "",
   });
+
+  if (!course) {
+    return (
+      <SiteLayout>
+        <SEO title="Course not found — OxVerse Academy" />
+        <div className="mx-auto max-w-2xl px-6 py-32 text-center">
+          <h1 className="font-display text-4xl font-bold">Course not found</h1>
+          <Link to="/courses" className="mt-6 inline-block text-primary font-semibold">View all courses</Link>
+        </div>
+      </SiteLayout>
+    );
+  }
 
   const intake = INTAKES.find((i) => i.id === form.intakeId)!;
 
@@ -75,8 +68,8 @@ function EnrollPage() {
     const id = `OX-${Date.now().toString(36).toUpperCase()}`;
     const app: Application = {
       id,
-      courseSlug: course.slug,
-      courseTitle: course.title,
+      courseSlug: course!.slug,
+      courseTitle: course!.title,
       intakeId: intake.id,
       intakeLabel: intake.label,
       schedule: form.schedule,
@@ -107,10 +100,11 @@ function EnrollPage() {
 
   return (
     <SiteLayout>
+      <SEO title={`Enroll — ${course.title} | OxVerse Academy`} description={`Apply for ${course.title} at OxVerse Academy.`} />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">
-          <Link to="/courses/$slug" params={{ slug: course.slug }} className="text-sm text-ink-muted hover:text-ink">← Back to {course.title}</Link>
+          <Link to={`/courses/${course.slug}`} className="text-sm text-ink-muted hover:text-ink">← Back to {course.title}</Link>
           <h1 className="mt-4 font-display text-4xl md:text-5xl font-bold tracking-tighter">Reserve your seat</h1>
           <p className="mt-2 text-ink-muted">Apply for {course.title} — physical classes at our Lagos campus.</p>
 
@@ -278,10 +272,10 @@ function EnrollPage() {
                 <NextStep title="What happens next" body="Admissions emails you within 48 hours with a confirmation and payment plan options." />
                 <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.`} />
                 <NextStep title="Join the community" body="Connect with your cohort on WhatsApp before classes start." cta={{ label: "Join WhatsApp group", href: "https://chat.whatsapp.com" }} />
-                <NextStep title="Student dashboard" body="Track your application and complete onboarding tasks." cta={{ label: "Go to dashboard", to: "/dashboard", state: appId }} />
+                <NextStep title="Student dashboard" body="Track your application and complete onboarding tasks." cta={{ label: "Go to dashboard", to: `/dashboard?id=${appId}` }} />
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <button onClick={() => navigate({ to: "/dashboard", search: { id: appId } as never })} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
+                <button onClick={() => navigate(`/dashboard?id=${appId}`)} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
                   Open student dashboard <ArrowRight className="size-4" />
                 </button>
                 <Link to="/applications" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:border-ink transition">
@@ -365,13 +359,13 @@ function UploadField({ label, filename, onChange, accept }: { label: string; fil
     </label>
   );
 }
-function NextStep({ title, body, cta }: { title: string; body: string; cta?: { label: string; href?: string; to?: "/dashboard"; state?: string } }) {
+function NextStep({ title, body, cta }: { title: string; body: string; cta?: { label: string; href?: string; to?: string } }) {
   return (
     <div className="rounded-2xl border border-border p-5 bg-background">
       <p className="font-display text-lg font-semibold">{title}</p>
       <p className="mt-1 text-sm text-ink-muted text-pretty">{body}</p>
       {cta?.href && <a href={cta.href} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">{cta.label} <ArrowRight className="size-4" /></a>}
-      {cta?.to && <Link to={cta.to} search={{ id: cta.state } as never} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">{cta.label} <ArrowRight className="size-4" /></Link>}
+      {cta?.to && <Link to={cta.to} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">{cta.label} <ArrowRight className="size-4" /></Link>}
     </div>
   );
 }
