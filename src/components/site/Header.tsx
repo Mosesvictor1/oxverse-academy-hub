@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import oxverseLogo from "@/assets/oxverse_logo1.png";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -32,11 +33,8 @@ export function Header() {
     >
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-display font-bold">
-            O
-            <span className="absolute -inset-1 rounded-xl bg-primary/30 blur-lg opacity-0 group-hover:opacity-100 transition" />
-          </span>
-          <span className="font-display font-semibold tracking-tight text-lg">OxVerse</span>
+          <img src={oxverseLogo} alt="OxVerse Academy logo" className="h-8 w-auto" />
+          {/* <span className="sr-only">OxVerse Academy</span> */}
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
@@ -58,12 +56,12 @@ export function Header() {
 
         <div className="hidden lg:flex items-center gap-3">
           <ThemeToggle />
-          <Link
+          {/* <Link
             to="/applications"
             className="text-sm font-medium text-ink-muted hover:text-ink transition"
           >
             My applications
-          </Link>
+          </Link> */}
           <Link
             to="/waitlist"
             className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-5 py-2.5 text-sm font-semibold hover:bg-primary transition-colors"
