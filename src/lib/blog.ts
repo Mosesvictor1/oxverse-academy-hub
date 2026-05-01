@@ -12,45 +12,39 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: "1",
-    title: "How we built a 92% placement rate",
+    title: "Welcome to OxVerse Academy — why we exist",
     excerpt:
-      "The OxVerse career playbook — mentorship, mock interviews, and direct hiring pipelines.",
-    date: "Apr 12, 2026",
-    author: "OxVerse Careers Team",
-    readTime: "7 min read",
-    category: "Careers",
+      "A new tech academy in Lagos built around in-person learning, real mentorship, and shipping real software.",
+    date: "Apr 28, 2026",
+    author: "OxVerse Founding Team",
+    readTime: "5 min read",
+    category: "Announcements",
     content: [
       {
         paragraphs: [
-          "When we set our placement target at 90% three years ago, most academies in Lagos told us it was unrealistic. Today we sit consistently at 92% — and the formula isn't a secret weapon, it's a system that compounds.",
-          "This post breaks down exactly how a student goes from week one of cohort to a signed offer letter, and what we do behind the scenes to make sure the pipeline never breaks.",
+          "OxVerse Academy is officially open. We are a new tech academy based in Okota, Lagos, and we built this place because we kept meeting brilliant young Nigerians who had every ingredient to become great engineers — except a serious environment to learn in.",
+          "This post is a short introduction to who we are, what we believe, and what students can expect from our first cohorts.",
         ],
       },
       {
-        heading: "1. Mentorship from week one — not month four",
+        heading: "Why a physical academy, in 2026",
         paragraphs: [
-          "Every student is paired with a working engineer mentor on day one. Not a graduate, not a teaching assistant — a mid or senior engineer currently shipping code at a real company.",
-          "Mentors meet weekly for 45 minutes. Half the session is technical, half is career: how to talk about your work, how to read a job description, how to negotiate. By month three students already speak the language of the industry.",
+          "There is no shortage of free coding content online. What is missing is the room — instructors who can look at your screen, classmates who push you forward, and a schedule that actually gets you to the finish line.",
+          "Our entire model is built around that room. Classes happen in person, every weekday, with small cohorts so nobody gets lost in the back.",
         ],
       },
       {
-        heading: "2. Mock interviews that hurt (in a good way)",
+        heading: "What we teach",
         paragraphs: [
-          "Starting in week six, every student does one mock interview per week — DSA, system design, or behavioural — graded on a public rubric. We deliberately make them harder than the real thing.",
-          "By the time students sit in front of a real hiring manager, they've already failed and recovered from twenty interviews. The room feels familiar.",
+          "We are starting with the tracks the Lagos market needs most: Frontend Development, Backend Development, Product Design, and Data & AI fundamentals. Every track is project-driven — students ship real work, not toy exercises.",
+          "More tracks will roll out as we grow. We would rather do a few things excellently than spread thin.",
         ],
       },
       {
-        heading: "3. Direct hiring pipelines",
+        heading: "What we promise",
         paragraphs: [
-          "We have signed partnerships with 40+ companies across Lagos, Abuja, Nairobi and remote-first European startups. These partners get first look at every cohort two weeks before graduation.",
-          "The partners aren't doing us a favour — they hire from us because the bar is high and the screening is already done. That trust took years to build and we protect it ruthlessly.",
-        ],
-      },
-      {
-        heading: "What 92% actually means",
-        paragraphs: [
-          "92% of students who complete the program receive at least one offer within 90 days of graduation. The other 8% — we keep working with them until they land. Nobody is left behind, and that's the part of the playbook we're proudest of.",
+          "Honest teaching, serious mentorship, and a community that lasts long after the program ends. We are new, and we are hungry to prove ourselves to every student who trusts us with their time.",
+          "If that sounds like the kind of place you want to learn at, come visit us at No 82, Century bus stop, Ago Palace way, Okota — or join the waitlist for our next intake.",
         ],
       },
     ],
@@ -60,7 +54,7 @@ export const blogPosts: BlogPost[] = [
     title: "Why physical classrooms still win",
     excerpt:
       "In-person learning compounds. Here's what online platforms can't replicate.",
-    date: "Mar 28, 2026",
+    date: "Apr 18, 2026",
     author: "Director of Learning",
     readTime: "6 min read",
     category: "Pedagogy",
@@ -104,7 +98,7 @@ export const blogPosts: BlogPost[] = [
     title: "From zero to React engineer in 16 weeks",
     excerpt:
       "A week-by-week breakdown of our Frontend Development cohort.",
-    date: "Mar 14, 2026",
+    date: "Apr 8, 2026",
     author: "Frontend Faculty",
     readTime: "9 min read",
     category: "Curriculum",
