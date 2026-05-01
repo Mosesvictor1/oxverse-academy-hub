@@ -6,6 +6,7 @@ import CourseDetailPage from "./pages/CourseDetail";
 import EnrollPage from "./pages/Enroll";
 import EventsPage from "./pages/Events";
 import BlogPage from "./pages/Blog";
+import BlogPostPage from "./pages/BlogPost";
 import GalleryPage from "./pages/Gallery";
 import ContactPage from "./pages/Contact";
 import FAQPage from "./pages/FAQ";
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/enroll/:slug" element={<EnrollPage />} />
       <Route path="/events" element={<EventsPage />} />
       <Route path="/blog" element={<BlogPage />} />
+      <Route path="/blog/:slug" element={<BlogPostPage />} />
       <Route path="/gallery" element={<GalleryPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/faq" element={<FAQPage />} />
