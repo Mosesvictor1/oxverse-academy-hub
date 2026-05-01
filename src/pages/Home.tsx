@@ -147,7 +147,7 @@ function Hero() {
                 </div>
                 <div>
                   <p className="text-xs text-ink-muted">Placement rate</p>
-                  <p className="font-display font-bold text-xl">92%</p>
+                  <p className="font-display font-bold text-xl">75%</p>
                 </div>
               </div>
             </motion.div>
