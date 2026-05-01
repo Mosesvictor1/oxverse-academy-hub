@@ -355,7 +355,7 @@ export default function WaitlistPage() {
                 {
                   i: Sparkles,
                   t: "Early-bird perks",
-                  d: "Exclusive scholarships and payment plans.",
+                  d: "Exclusive discounts and payment plans.",
                 },
               ].map((b) => (
                 <li key={b.t} className="flex gap-3">
