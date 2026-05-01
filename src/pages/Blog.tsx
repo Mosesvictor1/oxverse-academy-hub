@@ -7,12 +7,17 @@ import { ArrowRight } from "lucide-react";
 export default function BlogPage() {
   return (
     <SiteLayout>
-      <SEO title="Blog — OxVerse Academy" description="Stories, tutorials, and insights from Africa's premium tech academy." />
+      <SEO
+        title="Blog — OxVerse Academy"
+        description="Stories, tutorials, and insights from Africa's premium tech academy."
+      />
       <section className="mx-auto max-w-5xl px-6 pt-24 pb-12">
         <SectionEyebrow>Blog</SectionEyebrow>
-        <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">Stories from the academy.</h1>
+        <h1 className="mt-6 font-display text-5xl md:text-6xl font-bold tracking-tighter">
+          Stories from the academy.
+        </h1>
       </section>
-      <section className="mx-auto max-w-5xl px-6 pb-24 grid gap-6">
+      <section className="mx-auto max-w-5xl px-6 pb-24 grid gap-6 ">
         {blogPosts.map((p) => (
           <Link
             key={p.slug}
