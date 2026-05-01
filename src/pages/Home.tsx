@@ -57,7 +57,7 @@ function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <SectionEyebrow>New cohort starting March 2026</SectionEyebrow>
+              <SectionEyebrow>New cohort starting May 2026 </SectionEyebrow>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -139,7 +139,7 @@ function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="absolute -left-6 bottom-10 glass rounded-2xl p-4 shadow-xl max-w-[220px]"
+              className="absolute -left-6 bottom-10 glass rounded-2xl p-4 shadow-xl max-w-[220px] hidden lg:block"
             >
               <div className="flex items-center gap-3">
                 <div className="size-10 rounded-xl bg-primary/15 text-primary inline-flex items-center justify-center">
@@ -156,7 +156,7 @@ function Hero() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="absolute -right-4 top-1 glass rounded-2xl p-4 shadow-xl"
+              className="absolute -right-4 top-1 glass rounded-2xl p-4 shadow-xl hidden lg:block"
             >
               <div className="flex items-center gap-2 text-sm">
                 <span className="size-2 rounded-full bg-green-500 animate-pulse" />

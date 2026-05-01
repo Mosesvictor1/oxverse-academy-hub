@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Search, Clock, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, Search, Clock, Sparkles, X, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
@@ -19,13 +26,19 @@ export default function CoursesPage() {
   const [sched, setSched] = useState<(typeof schedules)[number]>("Any");
   const [dur, setDur] = useState<(typeof durations)[number]>("Any");
   const [sort, setSort] = useState<(typeof sorts)[number]>("Featured");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filtered = useMemo(() => {
     let list = courses.filter((c) => {
-      const matchesQ = q === "" || (c.title + c.short + c.category + c.tools.join(" ")).toLowerCase().includes(q.toLowerCase());
+      const matchesQ =
+        q === "" ||
+        (c.title + c.short + c.category + c.tools.join(" "))
+          .toLowerCase()
+          .includes(q.toLowerCase());
       const matchesCat = cat === "All" || c.category === cat;
       const matchesLevel = level === "All levels" || c.level === level;
-      const matchesSched = sched === "Any" || c.schedule.some((s) => s.toLowerCase().includes(sched.toLowerCase()));
+      const matchesSched =
+        sched === "Any" || c.schedule.some((s) => s.toLowerCase().includes(sched.toLowerCase()));
       const months = parseInt(c.duration);
       const matchesDur =
         dur === "Any" ||
@@ -35,7 +48,8 @@ export default function CoursesPage() {
       return matchesQ && matchesCat && matchesLevel && matchesSched && matchesDur;
     });
     if (sort === "A–Z") list = [...list].sort((a, b) => a.title.localeCompare(b.title));
-    if (sort === "Duration") list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
+    if (sort === "Duration")
+      list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
     return list;
   }, [q, cat, level, sched, dur, sort]);
 
@@ -48,7 +62,10 @@ export default function CoursesPage() {
 
   return (
     <SiteLayout>
-      <SEO title="Courses — OxVerse Academy" description="10 premium tech courses across Engineering, Design, Data & AI, Web3, and Marketing." />
+      <SEO
+        title="Courses — OxVerse Academy"
+        description="10 premium tech courses across Engineering, Design, Data & AI, Web3, and Marketing."
+      />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
@@ -58,7 +75,8 @@ export default function CoursesPage() {
             Pick your path. <span className="gradient-text">Build your future.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-ink-muted text-pretty">
-            Cohort-based, project-driven training taught in person at our Lagos campus. Choose your level, your schedule, and your future.
+            Cohort-based, project-driven training taught in person at our Lagos campus. Choose your
+            level, your schedule, and your future.
           </p>
         </div>
       </section>
@@ -74,21 +92,40 @@ export default function CoursesPage() {
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-muted/60 focus:bg-background border border-transparent focus:border-primary outline-none transition"
               />
             </div>
-            <div className="flex flex-wrap gap-2 items-center">
-              <FilterPills label="Category" options={categories} value={cat} onChange={setCat} />
-              <Divider />
-              <FilterPills label="Level" options={levels} value={level} onChange={setLevel} />
-              <Divider />
-              <FilterPills label="Schedule" options={schedules} value={sched} onChange={setSched} />
-              <Divider />
-              <FilterPills label="Duration" options={durations} value={dur} onChange={setDur} />
-              <div className="ml-auto">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-ink hover:border-ink lg:hidden"
+              >
+                <SlidersHorizontal className="size-4" />
+                Filters
+              </button>
+
+              <div className="hidden lg:flex flex-wrap gap-2 items-center overflow-x-auto pb-1">
+                <FilterPills label="Category" options={categories} value={cat} onChange={setCat} />
+                <Divider />
+                <FilterPills label="Level" options={levels} value={level} onChange={setLevel} />
+                <Divider />
+                <FilterPills
+                  label="Schedule"
+                  options={schedules}
+                  value={sched}
+                  onChange={setSched}
+                />
+                <Divider />
+                <FilterPills label="Duration" options={durations} value={dur} onChange={setDur} />
+              </div>
+
+              <div className="ml-auto hidden lg:block">
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as typeof sort)}
                   className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
                 >
-                  {sorts.map((s) => <option key={s}>Sort: {s}</option>)}
+                  {sorts.map((s) => (
+                    <option key={s}>Sort: {s}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -96,12 +133,20 @@ export default function CoursesPage() {
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <span className="text-xs text-ink-muted">Active:</span>
                 {activeFilters.map((f) => (
-                  <span key={f} className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 text-primary px-3 py-1 text-xs font-medium">
+                  <span
+                    key={f}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 text-primary px-3 py-1 text-xs font-medium"
+                  >
                     {f}
                   </span>
                 ))}
                 <button
-                  onClick={() => { setCat("All"); setLevel("All levels"); setSched("Any"); setDur("Any"); }}
+                  onClick={() => {
+                    setCat("All");
+                    setLevel("All levels");
+                    setSched("Any");
+                    setDur("Any");
+                  }}
                   className="ml-1 inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink"
                 >
                   <X className="size-3" /> Clear
@@ -111,7 +156,82 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        <p className="mt-6 text-sm text-ink-muted">{filtered.length} course{filtered.length === 1 ? "" : "s"}</p>
+        <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <DialogContent className="max-w-md">
+            <DialogTitle>Course filters</DialogTitle>
+            <DialogDescription>
+              Adjust search, category, level, schedule, duration, and sort.
+            </DialogDescription>
+            <div className="mt-6 space-y-5">
+              <div>
+                <label className="text-sm font-medium text-ink">Search</label>
+                <div className="relative mt-2">
+                  <Search className="size-4 absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" />
+                  <input
+                    value={q}
+                    onChange={(e) => setQ(e.target.value)}
+                    placeholder="Search by course, tool, or topic…"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-border bg-muted/60 focus:bg-background outline-none transition"
+                  />
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-ink-muted font-semibold">
+                    Category
+                  </p>
+                  <FilterPills label="" options={categories} value={cat} onChange={setCat} />
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-ink-muted font-semibold">
+                    Level
+                  </p>
+                  <FilterPills label="" options={levels} value={level} onChange={setLevel} />
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-ink-muted font-semibold">
+                    Schedule
+                  </p>
+                  <FilterPills label="" options={schedules} value={sched} onChange={setSched} />
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-ink-muted font-semibold">
+                    Duration
+                  </p>
+                  <FilterPills label="" options={durations} value={dur} onChange={setDur} />
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-wider text-ink-muted font-semibold">
+                    Sort
+                  </p>
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as typeof sort)}
+                    className="mt-2 w-full rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+                  >
+                    {sorts.map((s) => (
+                      <option key={s}>Sort: {s}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-background hover:bg-primary transition"
+                >
+                  Done
+                </button>
+              </DialogClose>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        <p className="mt-6 text-sm text-ink-muted">
+          {filtered.length} course{filtered.length === 1 ? "" : "s"}
+        </p>
 
         <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((c, i) => (
@@ -138,7 +258,9 @@ export default function CoursesPage() {
                     <span className="inline-flex items-center gap-1 rounded-full bg-white/95 backdrop-blur px-3 py-1 text-[11px] font-semibold text-primary uppercase tracking-wider">
                       {c.category}
                     </span>
-                    <span className="size-9 rounded-full bg-white/95 backdrop-blur grid place-items-center text-lg shrink-0">{c.emoji}</span>
+                    <span className="size-9 rounded-full bg-white/95 backdrop-blur grid place-items-center text-lg shrink-0">
+                      {c.emoji}
+                    </span>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-1.5">
                     <Badge tone="solid">{c.level}</Badge>
@@ -153,17 +275,26 @@ export default function CoursesPage() {
                   <p className="mt-2 text-sm text-ink-muted text-pretty line-clamp-2">{c.short}</p>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {c.tools.slice(0, 4).map((t) => (
-                      <span key={t} className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-ink-muted">{t}</span>
+                      <span
+                        key={t}
+                        className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-ink-muted"
+                      >
+                        {t}
+                      </span>
                     ))}
                   </div>
                   <div className="mt-5 pt-5 border-t border-border flex items-center justify-between">
                     <div className="flex items-center gap-3 text-xs text-ink-muted">
-                      <span className="inline-flex items-center gap-1"><Clock className="size-3.5" />{c.duration}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="size-3.5" />
+                        {c.duration}
+                      </span>
                       <span>•</span>
                       <span className="font-display font-semibold text-ink">{c.level}</span>
                     </div>
                     <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                      View <ArrowUpRight className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      View{" "}
+                      <ArrowUpRight className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </span>
                   </div>
                 </div>
@@ -182,12 +313,22 @@ export default function CoursesPage() {
   );
 }
 
-function FilterPills<T extends string>({ label, options, value, onChange }: {
-  label: string; options: readonly T[]; value: T; onChange: (v: T) => void;
+function FilterPills<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: readonly T[];
+  value: T;
+  onChange: (v: T) => void;
 }) {
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
-      <span className="text-[11px] uppercase tracking-wider text-ink-muted font-semibold mr-1">{label}</span>
+      <span className="text-[11px] uppercase tracking-wider text-ink-muted font-semibold mr-1">
+        {label}
+      </span>
       {options.map((o) => (
         <button
           key={o}
@@ -211,9 +352,11 @@ function Divider() {
 
 function Badge({ children, tone }: { children: React.ReactNode; tone?: "solid" }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider backdrop-blur ${
-      tone === "solid" ? "bg-primary text-primary-foreground" : "bg-white/90 text-ink"
-    }`}>
+    <span
+      className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider backdrop-blur ${
+        tone === "solid" ? "bg-primary text-primary-foreground" : "bg-white/90 text-ink"
+      }`}
+    >
       {children}
     </span>
   );

@@ -9,6 +9,8 @@ import { courses } from "@/lib/courses";
 import { SITE, whatsappLink } from "@/lib/site";
 
 const KEY = "oxverse.waitlist.v1";
+const WAITLIST_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbzNzrXtFYODhEIk3FsL2CaLH-IXyl3zmb3uovjG7JV6sLyaQGoGslI1S1NaT7vW_k93/exec";
 
 type WaitlistEntry = {
   id: string;
@@ -42,6 +44,7 @@ function getList(): WaitlistEntry[] {
 }
 
 export default function WaitlistPage() {
+  console.log("Rendering WaitlistPage");
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -52,6 +55,8 @@ export default function WaitlistPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<WaitlistEntry | null>(null);
+  const [remoteError, setRemoteError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const totalOnList = useMemo(() => getList().length, [success]);
 
   function update<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
@@ -59,8 +64,11 @@ export default function WaitlistPage() {
     if (errors[k as string]) setErrors((e) => ({ ...e, [k as string]: "" }));
   }
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    console.log("Waitlist submit handler called", form);
+    setRemoteError("");
+    setIsSubmitting(true);
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
@@ -68,6 +76,7 @@ export default function WaitlistPage() {
         errs[String(i.path[0])] = i.message;
       });
       setErrors(errs);
+      setIsSubmitting(false);
       return;
     }
     const course = courses.find((c) => c.slug === parsed.data.courseSlug);
@@ -96,6 +105,35 @@ export default function WaitlistPage() {
     };
     list.unshift(entry);
     localStorage.setItem(KEY, JSON.stringify(list));
+    console.log("Waitlist entry saved locally:", entry);
+    try {
+      const response = await fetch(WAITLIST_ENDPOINT, {
+        method: "POST",
+       
+        body: new URLSearchParams({
+          fullName: entry.fullName,
+          email: entry.email,
+          phone: entry.phone,
+          courseSlug: entry.courseSlug,
+          courseTitle: entry.courseTitle,
+          experience: entry.experience,
+          reason: entry.reason,
+          joinedAt: entry.joinedAt,
+        }),
+      });
+      console.log("Waitlist submit response:", response);
+      if (!response.ok) {
+        throw new Error(`Waitlist submit failed: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(error);
+      setRemoteError(
+        "Your entry was saved locally, but we couldn't send it to the waitlist backend. Please try again or contact admissions.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+
     setSuccess(entry);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -122,6 +160,11 @@ export default function WaitlistPage() {
             <p className="mt-2 text-sm font-mono text-primary-foreground/60">
               Ref: {success.id.slice(0, 8).toUpperCase()}
             </p>
+            {remoteError && (
+              <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-700">
+                {remoteError}
+              </div>
+            )}
           </motion.div>
 
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
@@ -197,7 +240,11 @@ export default function WaitlistPage() {
       <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-12 gap-10">
         <div className="lg:col-span-7">
           <form
-            onSubmit={onSubmit}
+            onSubmit={(e) => {
+              console.log("form onSubmit event");
+              onSubmit(e);
+            }}
+            noValidate
             className="rounded-3xl border border-border bg-background p-8 lg:p-10 space-y-5"
           >
             <div className="grid sm:grid-cols-2 gap-4">
@@ -273,9 +320,20 @@ export default function WaitlistPage() {
             </Field>
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition"
+              disabled={isSubmitting}
+              onClick={() => console.log("submit button clicked")}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Reserve my seat <ArrowRight className="size-4" />
+              {isSubmitting ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Submitting...
+                </span>
+              ) : (
+                <>
+                  Reserve my seat <ArrowRight className="size-4" />
+                </>
+              )}
             </button>
           </form>
         </div>
