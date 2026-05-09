@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -11,12 +11,15 @@ const nav = [
   { to: "/events", label: "Events" },
   { to: "/blog", label: "Blog" },
   { to: "/gallery", label: "Gallery" },
+  { to: "/connect", label: "Connect" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const onDark = location.pathname === "/connect" && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -29,7 +32,7 @@ export function Header() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/60" : "bg-transparent"
-      }`}
+      } ${onDark ? "text-white" : ""}`}
     >
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
@@ -45,7 +48,13 @@ export function Header() {
               end={n.to === "/"}
               className={({ isActive }) =>
                 `relative px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive ? "text-ink" : "text-ink-muted hover:text-ink"
+                  onDark
+                    ? isActive
+                      ? "text-white"
+                      : "text-white/80 hover:text-white"
+                    : isActive
+                      ? "text-ink"
+                      : "text-ink-muted hover:text-ink"
                 }`
               }
             >
@@ -64,7 +73,9 @@ export function Header() {
           </Link> */}
           <Link
             to="/waitlist"
-            className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-5 py-2.5 text-sm font-semibold hover:bg-primary transition-colors"
+            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+              onDark ? "bg-white text-primary hover:bg-white/90" : "bg-ink text-background hover:bg-primary"
+            }`}
           >
             Join Waitlist
           </Link>
