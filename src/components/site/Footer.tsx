@@ -49,6 +49,7 @@ export function Footer() {
                 <li><Link to="/testimonials" className="hover:text-ink">Testimonials</Link></li>
                 <li><Link to="/faq" className="hover:text-ink">FAQ</Link></li>
                 <li><Link to="/contact" className="hover:text-ink">Contact</Link></li>
+                <li><Link to="/connect" className="hover:text-ink">Connect</Link></li>
                 <li><Link to="/waitlist" className="hover:text-ink">Join waitlist</Link></li>
               </ul>
             </div>
