@@ -28,7 +28,29 @@ export default function BlogPostPage() {
 
   return (
     <SiteLayout>
-      <SEO title={`${post.title} — OxVerse Blog`} description={post.excerpt} />
+      <SEO
+        title={`${post.title} — OxVerse Blog`}
+        description={post.excerpt}
+        type="article"
+        canonical={`https://oxverse.academy/blog/${post.slug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          author: { "@type": "Person", name: post.author },
+          publisher: {
+            "@type": "Organization",
+            name: "OxVerse Academy",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://oxverse.academy/oxverseIcon.png",
+            },
+          },
+          mainEntityOfPage: `https://oxverse.academy/blog/${post.slug}`,
+        }}
+      />
 
       <article className="mx-auto max-w-3xl px-6 pt-24 pb-16">
         <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-primary transition">
