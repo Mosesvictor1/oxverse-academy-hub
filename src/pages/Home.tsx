@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
+import { SEO } from "@/components/site/SEO";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
 import { courses } from "@/lib/courses";
 import heroImg from "@/assets/hero-oxverse-student2.png";
@@ -27,8 +28,53 @@ import {
 } from "@/components/ui/accordion";
 
 function HomePage() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      name: "OxVerse Academy",
+      alternateName: "0xVerse Academy",
+      url: "https://oxverse.academy",
+      logo: "https://oxverse.academy/oxverseIcon.png",
+      description:
+        "Africa's premium physical tech academy offering cohort-based, hands-on training in software engineering, design, AI, data, Web3, and digital marketing.",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "No 82, Century Bus Stop, Ago Palace Way, Okota",
+        addressLocality: "Lagos",
+        addressCountry: "NG",
+      },
+      telephone: "+2348148462776",
+      email: "hello@oxverse.academy",
+      sameAs: [
+        "https://www.tiktok.com/@0xverse_academy",
+        "https://x.com/0xvrs",
+        "https://www.youtube.com/@0xVerseAcademy",
+        "https://www.instagram.com/0xverse.acad",
+        "https://www.facebook.com/0xverse.acad",
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      url: "https://oxverse.academy",
+      name: "OxVerse Academy",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://oxverse.academy/courses?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ];
   return (
     <SiteLayout>
+      <SEO
+        title="OxVerse Academy — Learn Tech in Lagos. Build a Global Career."
+        description="Africa's premium physical tech academy in Lagos. Cohort-based, hands-on training in software engineering, UI/UX, AI, data, Web3, and digital marketing."
+        keywords="tech academy Lagos, coding bootcamp Nigeria, learn programming Africa, frontend bootcamp, UI UX course, AI course Lagos, Web3 academy, OxVerse"
+        canonical="https://oxverse.academy/"
+        jsonLd={jsonLd}
+      />
       <Hero />
       <Marquee />
       <Stats />
