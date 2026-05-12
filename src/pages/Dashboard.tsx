@@ -17,7 +17,7 @@ export default function DashboardPage() {
   if (!active) {
     return (
       <SiteLayout>
-        <SEO title="Student Dashboard — OxVerse Academy" />
+        <SEO title="Student Dashboard — OxVerse Academy" noIndex />
         <section className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">No applications yet</h1>
           <p className="mt-3 text-ink-muted">Once you apply for a course, your dashboard appears here.</p>
@@ -71,7 +71,7 @@ export default function DashboardPage() {
 
   return (
     <SiteLayout>
-      <SEO title="Student Dashboard — OxVerse Academy" description="Track your application, complete onboarding, and prepare for class." />
+      <SEO title="Student Dashboard — OxVerse Academy" description="Track your application, complete onboarding, and prepare for class." noIndex />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">

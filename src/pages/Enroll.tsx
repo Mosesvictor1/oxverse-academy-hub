@@ -100,7 +100,7 @@ export default function EnrollPage() {
 
   return (
     <SiteLayout>
-      <SEO title={`Enroll — ${course.title} | OxVerse Academy`} description={`Apply for ${course.title} at OxVerse Academy.`} />
+      <SEO title={`Enroll — ${course.title} | OxVerse Academy`} description={`Apply for ${course.title} at OxVerse Academy.`} noIndex />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">
