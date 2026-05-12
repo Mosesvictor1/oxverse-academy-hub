@@ -15,7 +15,7 @@ export default function ApplicationsPage() {
 
   return (
     <SiteLayout>
-      <SEO title="My Applications — OxVerse Academy" description="Track the status of your OxVerse Academy enrollment applications." />
+      <SEO title="My Applications — OxVerse Academy" description="Track the status of your OxVerse Academy enrollment applications." noIndex />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-5xl px-6 pt-24 pb-10">

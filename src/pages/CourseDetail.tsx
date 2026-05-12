@@ -82,6 +82,30 @@ export default function CourseDetailPage() {
         title={`${course.title} — OxVerse Academy`}
         description={course.short}
         image={course.image}
+        canonical={`https://oxverse.academy/courses/${course.slug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: course.title,
+          description: course.description || course.short,
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "OxVerse Academy",
+            sameAs: "https://oxverse.academy",
+          },
+          educationalLevel: course.level,
+          about: course.category,
+          url: `https://oxverse.academy/courses/${course.slug}`,
+          hasCourseInstance: {
+            "@type": "CourseInstance",
+            courseMode: "Onsite",
+            location: {
+              "@type": "Place",
+              name: "OxVerse Academy, Lagos",
+              address: "No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos, NG",
+            },
+          },
+        }}
       />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />

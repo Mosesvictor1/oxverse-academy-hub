@@ -1,0 +1,8 @@
+# OxVerse Academy — robots.txt
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /applications
+Disallow: /enroll/
+
+Sitemap: https://oxverse.academy/sitemap.xml
