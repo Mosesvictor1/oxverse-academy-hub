@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import oxverseLogo from "@/assets/oxverse_logo1.png";
+import oxverseLogoWhite from "@/assets/oxverse_logo_white.png";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -36,7 +37,8 @@ export function Header() {
     >
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <img src={oxverseLogo} alt="OxVerse Academy logo" className="h-8 w-auto" />
+          <img src={oxverseLogo} alt="OxVerse Academy logo" className="h-8 w-auto block dark:hidden" />
+          <img src={oxverseLogoWhite} alt="OxVerse Academy logo" className="h-8 w-auto hidden dark:block" />
           {/* <span className="sr-only">OxVerse Academy</span> */}
         </Link>
 
