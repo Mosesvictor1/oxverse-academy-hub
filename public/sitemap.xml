@@ -24,4 +24,5 @@
   <url><loc>https://oxverse.academy/contact</loc><priority>0.7</priority></url>
   <url><loc>https://oxverse.academy/connect</loc><priority>0.6</priority></url>
   <url><loc>https://oxverse.academy/waitlist</loc><priority>0.5</priority></url>
+  <url><loc>https://oxverse.academy/careers</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>
