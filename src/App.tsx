@@ -15,6 +15,7 @@ import WaitlistPage from "./pages/Waitlist";
 import ApplicationsPage from "./pages/Applications";
 import DashboardPage from "./pages/Dashboard";
 import ConnectPage from "./pages/Connect";
+import CareersPage from "./pages/Careers";
 import NotFoundPage from "./pages/NotFound";
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
       <Route path="/applications" element={<ApplicationsPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/connect" element={<ConnectPage />} />
+      <Route path="/careers" element={<CareersPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
