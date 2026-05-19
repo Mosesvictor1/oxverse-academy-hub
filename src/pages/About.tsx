@@ -82,7 +82,7 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-
+      {/* 
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="max-w-3xl mb-14">
           <SectionEyebrow>Leadership team</SectionEyebrow>
@@ -117,7 +117,7 @@ export default function AboutPage() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section className="border-t border-border bg-ink text-background">
         <div className="mx-auto max-w-7xl px-6 py-24 grid lg:grid-cols-2 gap-12 items-center">
@@ -154,3 +154,4 @@ export default function AboutPage() {
     </SiteLayout>
   );
 }
+ 
