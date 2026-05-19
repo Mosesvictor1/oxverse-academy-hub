@@ -20,10 +20,12 @@ const XIcon = ({ className = "" }: { className?: string }) => (
 const WhatsAppFullLogo = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 360 90" className={className} aria-hidden xmlns="http://www.w3.org/2000/svg">
     <g fill="#25D366">
-      <path d="M45 8C24.6 8 8 24.6 8 45c0 7.3 2.1 14.1 5.7 19.8L8 82l17.7-5.6C31.2 79.9 38 82 45 82c20.4 0 37-16.6 37-37S65.4 8 45 8zm21.5 52.4c-.9 2.5-5.2 4.9-7.2 5.1-1.8.2-4.2.3-6.7-.4-1.5-.5-3.5-1.1-6-2.2-10.6-4.6-17.6-15.3-18.1-16-.5-.7-4.3-5.7-4.3-10.9s2.7-7.7 3.7-8.8c1-1.1 2.2-1.3 2.9-1.3.7 0 1.5 0 2.1 0 .7 0 1.6-.3 2.5 1.9.9 2.3 3.1 7.9 3.4 8.5.3.6.4 1.2.1 2-.3.8-.5 1.3-.9 2-.5.7-1 1.5-1.4 2-.5.5-1 1.1-.4 2.1.6 1 2.6 4.3 5.6 7 3.9 3.5 7.2 4.5 8.2 5.1 1 .5 1.6.4 2.2-.3.6-.7 2.5-2.9 3.2-3.9.7-1 1.3-.8 2.2-.5.9.3 5.7 2.7 6.6 3.2.9.5 1.6.7 1.8 1.1.3.4.3 2.4-.6 4.9z"/>
+      <path d="M45 8C24.6 8 8 24.6 8 45c0 7.3 2.1 14.1 5.7 19.8L8 82l17.7-5.6C31.2 79.9 38 82 45 82c20.4 0 37-16.6 37-37S65.4 8 45 8zm21.5 52.4c-.9 2.5-5.2 4.9-7.2 5.1-1.8.2-4.2.3-6.7-.4-1.5-.5-3.5-1.1-6-2.2-10.6-4.6-17.6-15.3-18.1-16-.5-.7-4.3-5.7-4.3-10.9s2.7-7.7 3.7-8.8c1-1.1 2.2-1.3 2.9-1.3.7 0 1.5 0 2.1 0 .7 0 1.6-.3 2.5 1.9.9 2.3 3.1 7.9 3.4 8.5.3.6.4 1.2.1 2-.3.8-.5 1.3-.9 2-.5.7-1 1.5-1.4 2-.5.5-1 1.1-.4 2.1.6 1 2.6 4.3 5.6 7 3.9 3.5 7.2 4.5 8.2 5.1 1 .5 1.6.4 2.2-.3.6-.7 2.5-2.9 3.2-3.9.7-1 1.3-.8 2.2-.5.9.3 5.7 2.7 6.6 3.2.9.5 1.6.7 1.8 1.1.3.4.3 2.4-.6 4.9z" />
     </g>
     <g fill="#1F1F1F">
-      <text x="100" y="60" fontFamily="Helvetica, Arial, sans-serif" fontWeight="700" fontSize="48">WhatsApp</text>
+      <text x="100" y="60" fontFamily="Helvetica, Arial, sans-serif" fontWeight="700" fontSize="48">
+        WhatsApp
+      </text>
     </g>
   </svg>
 );
@@ -37,11 +39,41 @@ type LinkItem = {
 };
 
 const links: LinkItem[] = [
-  { label: "Instagram", href: "https://www.instagram.com/0xverse.acad", Icon: Instagram, iconBg: "bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5]", iconColor: "text-white" },
-  { label: "TikTok", href: "https://www.tiktok.com/@0xverse_academy", Icon: TikTokIcon, iconBg: "bg-black", iconColor: "text-white" },
-  { label: "YouTube", href: "https://www.youtube.com/@0xVerseAcademy", Icon: Youtube, iconBg: "bg-[#FF0000]", iconColor: "text-white" },
-  { label: "X (Twitter)", href: "https://x.com/0xvrs", Icon: XIcon, iconBg: "bg-black", iconColor: "text-white" },
-  { label: "Facebook", href: "https://www.facebook.com/0xverse.acad", Icon: Facebook, iconBg: "bg-[#1877F2]", iconColor: "text-white" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/0xverseacademy?igsh=MWYzczhoaDYzMDVy",
+    Icon: Instagram,
+    iconBg: "bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5]",
+    iconColor: "text-white",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@0xverse_academy",
+    Icon: TikTokIcon,
+    iconBg: "bg-black",
+    iconColor: "text-white",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@0xVerseAcademy",
+    Icon: Youtube,
+    iconBg: "bg-[#FF0000]",
+    iconColor: "text-white",
+  },
+  {
+    label: "X (Twitter)",
+    href: "https://x.com/0xvrs",
+    Icon: XIcon,
+    iconBg: "bg-black",
+    iconColor: "text-white",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/18tFTQK6Dn/",
+    Icon: Facebook,
+    iconBg: "bg-[#1877F2]",
+    iconColor: "text-white",
+  },
 ];
 
 export default function ConnectPage() {
@@ -77,23 +109,43 @@ export default function ConnectPage() {
 
             {/* Top social row */}
             <div className="mt-5 flex items-center gap-5 text-primary-foreground">
-              <a href="https://www.instagram.com/0xverse.acad" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
-              <a href={waHref} target="_blank" rel="noreferrer" aria-label="WhatsApp">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.6-1.4 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5.2.6.8 2.1.9 2.2.1.2.1.3 0 .5-.1.2-.1.3-.2.5l-.4.5c-.1.1-.3.3-.1.6.2.3.7 1.1 1.5 1.8 1 .9 1.9 1.2 2.2 1.4.3.1.4.1.6-.1.2-.2.7-.8.8-1 .2-.3.3-.2.6-.1.2.1 1.5.7 1.8.8.3.1.4.2.5.3 0 .1 0 .6-.2 1.2Z"/></svg>
+              <a
+                href="https://www.instagram.com/0xverse.acad"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
               </a>
-              <a href="https://www.tiktok.com/@0xverse_academy" target="_blank" rel="noreferrer" aria-label="TikTok"><TikTokIcon className="h-5 w-5" /></a>
-              <a href="https://www.youtube.com/@0xVerseAcademy" target="_blank" rel="noreferrer" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
-              <a href="https://x.com/0xvrs" target="_blank" rel="noreferrer" aria-label="X"><XIcon className="h-5 w-5" /></a>
+              <a href={waHref} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden>
+                  <path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.6-1.4 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5.2.6.8 2.1.9 2.2.1.2.1.3 0 .5-.1.2-.1.3-.2.5l-.4.5c-.1.1-.3.3-.1.6.2.3.7 1.1 1.5 1.8 1 .9 1.9 1.2 2.2 1.4.3.1.4.1.6-.1.2-.2.7-.8.8-1 .2-.3.3-.2.6-.1.2.1 1.5.7 1.8.8.3.1.4.2.5.3 0 .1 0 .6-.2 1.2Z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.tiktok.com/@0xverse_academy"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="TikTok"
+              >
+                <TikTokIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.youtube.com/@0xVerseAcademy"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-5 w-5" />
+              </a>
+              <a href="https://x.com/0xvrs" target="_blank" rel="noreferrer" aria-label="X">
+                <XIcon className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
           {/* Featured WhatsApp card */}
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 block group"
-          >
+          <a href={waHref} target="_blank" rel="noreferrer" className="mt-8 block group">
             <div className="rounded-3xl bg-white/95 p-4 shadow-xl transition-transform group-hover:-translate-y-0.5">
               <div className="rounded-2xl bg-[#FFF6E2] aspect-[16/10] flex items-center justify-center px-6">
                 <WhatsAppFullLogo className="w-3/4 max-w-xs h-auto" />
@@ -117,7 +169,9 @@ export default function ConnectPage() {
                 className="group block rounded-full bg-white/95 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
                 <div className="flex items-center justify-between px-3 py-3">
-                  <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${iconBg ?? "bg-muted"} ${iconColor ?? "text-foreground"}`}>
+                  <span
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${iconBg ?? "bg-muted"} ${iconColor ?? "text-foreground"}`}
+                  >
                     <Icon className="h-5 w-5" />
                   </span>
                   <span className="font-display text-base font-semibold text-black">{label}</span>
@@ -135,7 +189,9 @@ export default function ConnectPage() {
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
                   <img src={oxverseIcon} alt="" className="h-6 w-6 object-contain" />
                 </span>
-                <span className="font-display text-base font-semibold text-black">OxVerse Academy</span>
+                <span className="font-display text-base font-semibold text-black">
+                  OxVerse Academy
+                </span>
                 <MoreVertical className="h-4 w-4 text-black/40" />
               </div>
             </a>
