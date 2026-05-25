@@ -217,6 +217,7 @@ export default function WaitlistPage() {
                 courseSlug: "",
                 experience: "None",
                 reason: "",
+                referralCode: "",
               });
             }}
             className="mt-8 text-sm text-ink-muted hover:text-ink underline underline-offset-4"
