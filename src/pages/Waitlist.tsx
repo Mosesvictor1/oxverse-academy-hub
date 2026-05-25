@@ -331,6 +331,28 @@ export default function WaitlistPage() {
                 maxLength={500}
               />
             </Field>
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+              <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                <Tag className="size-4" /> Unlock 20% OFF + referral bonus
+              </div>
+              <p className="mt-1.5 text-xs text-ink-muted">
+                Have a referral code? Enter it below — both you and your referrer benefit.
+                After registering you'll receive <strong>your own referral link by email</strong> and
+                earn <strong>5% bonus</strong> for every friend who signs up with it.
+              </p>
+              <div className="mt-4">
+                <Field label="Referral code (optional)" error={errors.referralCode}>
+                  <input
+                    className="input uppercase tracking-wider"
+                    value={form.referralCode}
+                    onChange={(e) => update("referralCode", e.target.value.toUpperCase())}
+                    placeholder="e.g. VICTOR-OX24"
+                    maxLength={40}
+                    autoComplete="off"
+                  />
+                </Field>
+              </div>
+            </div>
             <button
               type="submit"
               disabled={isSubmitting}
