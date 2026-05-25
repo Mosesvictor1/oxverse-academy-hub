@@ -17,7 +17,7 @@ const nav = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export function Header() {
+export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -32,7 +32,8 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+      style={{ top: topOffset }}
+      className={`fixed inset-x-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/60" : "bg-transparent"
       } ${onDark ? "text-white" : ""}`}
     >
