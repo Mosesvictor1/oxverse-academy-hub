@@ -258,9 +258,14 @@ export default function CoursesPage() {
                     <span className="inline-flex items-center gap-1 rounded-full bg-white/95 backdrop-blur px-3 py-1 text-[11px] font-semibold text-primary uppercase tracking-wider">
                       {c.category}
                     </span>
-                    <span className="size-9 rounded-full bg-white/95 backdrop-blur grid place-items-center text-lg shrink-0">
-                      {c.emoji}
-                    </span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="inline-flex items-center rounded-full bg-gradient-to-r from-primary to-purple-700 text-primary-foreground px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider shadow-md">
+                        20% OFF
+                      </span>
+                      <span className="size-9 rounded-full bg-white/95 backdrop-blur grid place-items-center text-lg">
+                        {c.emoji}
+                      </span>
+                    </div>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-1.5">
                     <Badge tone="solid">{c.level}</Badge>
