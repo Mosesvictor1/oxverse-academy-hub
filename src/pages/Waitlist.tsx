@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { z } from "zod";
-import { Check, Sparkles, Users, Bell, ArrowRight } from "lucide-react";
+import { Check, Sparkles, Users, Bell, ArrowRight, Gift, Tag } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
@@ -21,6 +21,7 @@ type WaitlistEntry = {
   courseTitle: string;
   experience: "None" | "Beginner" | "Intermediate" | "Advanced";
   reason: string;
+  referralCode: string;
   joinedAt: string;
   position: number;
 };
@@ -32,6 +33,13 @@ const schema = z.object({
   courseSlug: z.string().min(1, "Pick a course"),
   experience: z.enum(["None", "Beginner", "Intermediate", "Advanced"]),
   reason: z.string().trim().max(500).optional().default(""),
+  referralCode: z
+    .string()
+    .trim()
+    .max(40)
+    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers, dashes only")
+    .optional()
+    .default(""),
 });
 
 function getList(): WaitlistEntry[] {
@@ -52,6 +60,7 @@ export default function WaitlistPage() {
     courseSlug: "",
     experience: "None" as WaitlistEntry["experience"],
     reason: "",
+    referralCode: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<WaitlistEntry | null>(null);
@@ -100,6 +109,7 @@ export default function WaitlistPage() {
       courseTitle: course?.title ?? "OxVerse cohort",
       experience: parsed.data.experience,
       reason: parsed.data.reason ?? "",
+      referralCode: (parsed.data.referralCode ?? "").toUpperCase(),
       joinedAt: new Date().toISOString(),
       position: list.length + 1,
     };
@@ -118,6 +128,8 @@ export default function WaitlistPage() {
           courseTitle: entry.courseTitle,
           experience: entry.experience,
           reason: entry.reason,
+          referralCode: entry.referralCode,
+          discount: "20%",
           joinedAt: entry.joinedAt,
         }),
       });
