@@ -172,6 +172,21 @@ export default function WaitlistPage() {
             <p className="mt-2 text-sm font-mono text-primary-foreground/60">
               Ref: {success.id.slice(0, 8).toUpperCase()}
             </p>
+            <div className="mt-6 rounded-2xl bg-white/10 backdrop-blur p-5 border border-white/20">
+              <div className="flex items-center gap-2 font-semibold">
+                <Gift className="size-5" /> Your 20% discount is locked in
+              </div>
+              <p className="mt-2 text-sm text-primary-foreground/85">
+                We'll email <strong>your personal referral link</strong> to{" "}
+                <strong>{success.email}</strong> shortly. Share it with friends — you earn{" "}
+                <strong>5% bonus</strong> on every signup that uses it.
+              </p>
+              {success.referralCode && (
+                <p className="mt-2 text-xs text-primary-foreground/75">
+                  Referral code applied: <span className="font-mono font-semibold">{success.referralCode}</span>
+                </p>
+              )}
+            </div>
             {remoteError && (
               <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-700">
                 {remoteError}
