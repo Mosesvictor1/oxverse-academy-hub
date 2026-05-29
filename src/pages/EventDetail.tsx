@@ -31,8 +31,6 @@ const schema = z.object({
 export default function EventDetailPage() {
   const { slug = "" } = useParams();
   const event = useMemo(() => getEvent(slug), [slug]);
-  if (!event) return <Navigate to="/events" replace />;
-
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -44,6 +42,8 @@ export default function EventDetailPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [remoteError, setRemoteError] = useState("");
+
+  if (!event) return <Navigate to="/events" replace />;
 
   function update<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((f) => ({ ...f, [k]: v }));
