@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { MapPin, Calendar, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { MapPin, Calendar, Clock, ArrowRight, Video, Sparkles } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
+import { getFeaturedEvent } from "@/lib/events";
 
 const events = [
   {
@@ -49,6 +51,7 @@ const events = [
 ];
 
 export default function EventsPage() {
+  const featured = getFeaturedEvent();
   return (
     <SiteLayout>
       <SEO
@@ -68,7 +71,55 @@ export default function EventsPage() {
         </div>
       </section>
 
+      {featured && (
+        <section className="mx-auto max-w-7xl px-6 pb-4">
+          <Link
+            to={`/events/${featured.slug}`}
+            className="group block rounded-3xl overflow-hidden border border-border bg-gradient-to-br from-primary/10 via-background to-background hover:border-primary transition shadow-xl"
+          >
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="relative overflow-hidden bg-muted">
+                <img
+                  src={featured.flyer}
+                  alt={`${featured.title} flyer`}
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+              <div className="p-8 lg:p-10 flex flex-col justify-center">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+                  <Sparkles className="size-3.5" /> Featured • {featured.type}
+                </span>
+                <h2 className="mt-3 font-display text-3xl md:text-4xl font-bold tracking-tight">
+                  {featured.title}
+                </h2>
+                <p className="mt-3 text-ink-muted">{featured.tagline}</p>
+                <div className="mt-5 grid sm:grid-cols-2 gap-2 text-sm">
+                  <span className="inline-flex items-center gap-1.5 text-ink-muted">
+                    <Calendar className="size-4" /> {featured.date}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-ink-muted">
+                    <Clock className="size-4" /> {featured.time}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-ink-muted">
+                    <Video className="size-4" /> {featured.location}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 font-semibold">
+                    {featured.price}
+                  </span>
+                </div>
+                <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-ink text-background px-5 py-2.5 text-sm font-semibold group-hover:bg-primary transition">
+                  View & Register <ArrowRight className="size-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
       <section className="mx-auto max-w-7xl px-6 py-16">
+        <h2 className="font-display text-2xl font-bold tracking-tight mb-6">
+          Upcoming events
+        </h2>
         <div className="grid md:grid-cols-2 gap-6">
           {events.map((e, i) => (
             <motion.div
