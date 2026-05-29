@@ -68,9 +68,9 @@ export default function EventDetailPage() {
         method: "POST",
         body: new URLSearchParams({
           formType: "event-registration",
-          eventSlug: event.slug,
-          eventTitle: event.title,
-          eventDate: event.date,
+          eventSlug: event?.slug ?? "",
+          eventTitle: event?.title ?? "",
+          eventDate: event?.date ?? "",
           fullName: parsed.data.fullName,
           email: parsed.data.email,
           phone: parsed.data.phone,
