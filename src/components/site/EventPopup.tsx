@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { X, ArrowRight, Calendar, Clock, Video } from "lucide-react";
+import { X, ArrowRight, Calendar, Clock, Video, MessageCircle } from "lucide-react";
 import { getFeaturedEvent } from "@/lib/events";
 
 export function EventPopup() {
@@ -75,12 +75,21 @@ export function EventPopup() {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href={event.whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={dismiss}
+              className="inline-flex items-center gap-2 rounded-full bg-[#25D366] text-white px-6 py-3 text-sm font-semibold hover:opacity-90 transition"
+            >
+              <MessageCircle className="size-4" /> Join WhatsApp Community
+            </a>
             <Link
               to={`/events/${event.slug}`}
               onClick={dismiss}
-              className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-semibold hover:border-ink transition"
             >
-              Register Now <ArrowRight className="size-4" />
+              Event details <ArrowRight className="size-4" />
             </Link>
             <button
               onClick={dismiss}
