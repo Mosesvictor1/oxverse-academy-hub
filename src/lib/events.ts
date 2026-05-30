@@ -13,6 +13,7 @@ export type FeaturedEvent = {
   platform?: string;
   price: string;
   flyer: string;
+  whatsappUrl: string;
   speakers: { name: string; role: string }[];
   description: string;
   highlights: string[];
@@ -25,14 +26,15 @@ export const events: FeaturedEvent[] = [
     title: "How to Build an App & Website in 2 Hours with AI",
     tagline: "Ship real software in a single evening — no prior coding required.",
     type: "Online Tech Event",
-    date: "Saturday, 30 May 2026",
-    dateISO: "2026-05-30T18:00:00+01:00",
+    date: "Sunday, 31 May 2026",
+    dateISO: "2026-05-31T18:00:00+01:00",
     time: "6:00 PM WAT",
     location: "Online via Google Meet",
     mode: "Online",
     platform: "Google Meet",
     price: "Free",
     flyer: eventFlyer,
+    whatsappUrl: "https://chat.whatsapp.com/JtRCwluCa1KFDaZvKKVyKJ",
     speakers: [
       { name: "Victor Moses", role: "Tech Instructor & Software Developer" },
       { name: "Igwilo Victor", role: "Tech Instructor & Web3 Systems Architect" },
