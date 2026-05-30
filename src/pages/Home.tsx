@@ -15,6 +15,7 @@ import {
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
+import { EventPopup } from "@/components/site/EventPopup";
 import { courses } from "@/lib/courses";
 import heroImg from "@/assets/hero-oxverse-student2.png";
 import campusImg from "@/assets/campus.jpg";
@@ -76,6 +77,7 @@ function HomePage() {
         jsonLd={jsonLd}
       />
       <Hero />
+      <EventPopup />
       <Marquee />
       <Stats />
       <WhyOxVerse />

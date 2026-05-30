@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { z } from "zod";
-import { Check, Sparkles, Users, Bell, ArrowRight } from "lucide-react";
+import { Check, Sparkles, Users, Bell, ArrowRight, Gift, Tag } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
@@ -21,6 +21,7 @@ type WaitlistEntry = {
   courseTitle: string;
   experience: "None" | "Beginner" | "Intermediate" | "Advanced";
   reason: string;
+  referralCode: string;
   joinedAt: string;
   position: number;
 };
@@ -32,6 +33,13 @@ const schema = z.object({
   courseSlug: z.string().min(1, "Pick a course"),
   experience: z.enum(["None", "Beginner", "Intermediate", "Advanced"]),
   reason: z.string().trim().max(500).optional().default(""),
+  referralCode: z
+    .string()
+    .trim()
+    .max(40)
+    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers, dashes only")
+    .optional()
+    .default(""),
 });
 
 function getList(): WaitlistEntry[] {
@@ -52,6 +60,7 @@ export default function WaitlistPage() {
     courseSlug: "",
     experience: "None" as WaitlistEntry["experience"],
     reason: "",
+    referralCode: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<WaitlistEntry | null>(null);
@@ -100,6 +109,7 @@ export default function WaitlistPage() {
       courseTitle: course?.title ?? "OxVerse cohort",
       experience: parsed.data.experience,
       reason: parsed.data.reason ?? "",
+      referralCode: (parsed.data.referralCode ?? "").toUpperCase(),
       joinedAt: new Date().toISOString(),
       position: list.length + 1,
     };
@@ -118,6 +128,8 @@ export default function WaitlistPage() {
           courseTitle: entry.courseTitle,
           experience: entry.experience,
           reason: entry.reason,
+          referralCode: entry.referralCode,
+          discount: "20%",
           joinedAt: entry.joinedAt,
         }),
       });
@@ -160,6 +172,21 @@ export default function WaitlistPage() {
             <p className="mt-2 text-sm font-mono text-primary-foreground/60">
               Ref: {success.id.slice(0, 8).toUpperCase()}
             </p>
+            <div className="mt-6 rounded-2xl bg-white/10 backdrop-blur p-5 border border-white/20">
+              <div className="flex items-center gap-2 font-semibold">
+                <Gift className="size-5" /> Your 20% discount is locked in
+              </div>
+              <p className="mt-2 text-sm text-primary-foreground/85">
+                We'll email <strong>your personal referral link</strong> to{" "}
+                <strong>{success.email}</strong> shortly. Share it with friends — you earn{" "}
+                <strong>5% bonus</strong> on every signup that uses it.
+              </p>
+              {success.referralCode && (
+                <p className="mt-2 text-xs text-primary-foreground/75">
+                  Referral code applied: <span className="font-mono font-semibold">{success.referralCode}</span>
+                </p>
+              )}
+            </div>
             {remoteError && (
               <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-700">
                 {remoteError}
@@ -205,6 +232,7 @@ export default function WaitlistPage() {
                 courseSlug: "",
                 experience: "None",
                 reason: "",
+                referralCode: "",
               });
             }}
             className="mt-8 text-sm text-ink-muted hover:text-ink underline underline-offset-4"
@@ -318,6 +346,28 @@ export default function WaitlistPage() {
                 maxLength={500}
               />
             </Field>
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+              <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                <Tag className="size-4" /> Unlock 20% OFF + referral bonus
+              </div>
+              <p className="mt-1.5 text-xs text-ink-muted">
+                Have a referral code? Enter it below — both you and your referrer benefit.
+                After registering you'll receive <strong>your own referral link by email</strong> and
+                earn <strong>5% bonus</strong> for every friend who signs up with it.
+              </p>
+              <div className="mt-4">
+                <Field label="Referral code (optional)" error={errors.referralCode}>
+                  <input
+                    className="input uppercase tracking-wider"
+                    value={form.referralCode}
+                    onChange={(e) => update("referralCode", e.target.value.toUpperCase())}
+                    placeholder="e.g. VICTOR-OX24"
+                    maxLength={40}
+                    autoComplete="off"
+                  />
+                </Field>
+              </div>
+            </div>
             <button
               type="submit"
               disabled={isSubmitting}

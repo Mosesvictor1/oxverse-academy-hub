@@ -14,6 +14,7 @@
   <url><loc>https://oxverse.academy/courses/web3-blockchain</loc><priority>0.8</priority></url>
   <url><loc>https://oxverse.academy/courses/digital-marketing</loc><priority>0.8</priority></url>
   <url><loc>https://oxverse.academy/events</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://oxverse.academy/events/build-app-website-2hrs-ai</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://oxverse.academy/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://oxverse.academy/blog/1</loc><priority>0.6</priority></url>
   <url><loc>https://oxverse.academy/blog/2</loc><priority>0.6</priority></url>
