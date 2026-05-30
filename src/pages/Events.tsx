@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Calendar, Clock, ArrowRight, Video, Sparkles } from "lucide-react";
+import { MapPin, Calendar, Clock, ArrowRight, Video, Sparkles, MessageCircle } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { getFeaturedEvent } from "@/lib/events";
@@ -107,8 +107,8 @@ export default function EventsPage() {
                     {featured.price}
                   </span>
                 </div>
-                <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-ink text-background px-5 py-2.5 text-sm font-semibold group-hover:bg-primary transition">
-                  View & Register <ArrowRight className="size-4" />
+                <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[#25D366] text-white px-5 py-2.5 text-sm font-semibold group-hover:opacity-90 transition">
+                  <MessageCircle className="size-4" /> Join WhatsApp Community
                 </span>
               </div>
             </div>
