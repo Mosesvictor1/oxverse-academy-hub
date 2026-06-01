@@ -72,7 +72,7 @@ export default function CourseRoadmapPage() {
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-      pdf.save(`OxVerse-${roadmap.slug}-roadmap.pdf`);
+      pdf.save(`OxVerse-${roadmap!.slug}-roadmap.pdf`);
     } catch (e) {
       console.error(e);
       alert("Couldn't generate PDF. Please try again.");
