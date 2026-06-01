@@ -7,8 +7,7 @@ import { SEO } from "@/components/site/SEO";
 import { Link } from "react-router-dom";
 import { SITE, whatsappLink } from "@/lib/site";
 
-const ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbzNzrXtFYODhEIk3FsL2CaLH-IXyl3zmb3uovjG7JV6sLyaQGoGslI1S1NaT7vW_k93/exec";
+const ENDPOINT =  "https://script.google.com/macros/s/AKfycbx75LbVspkpBk_Ok1TQ6y46y1TI2IocWuqV2Wx8Aup4iHdn6f39rBXxPBMwWiYmEVYGLg/exec";
 
 const ROLES = [
   "Office Assistant",
