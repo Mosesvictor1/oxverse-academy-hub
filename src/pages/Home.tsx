@@ -77,7 +77,7 @@ function HomePage() {
         jsonLd={jsonLd}
       />
       <Hero />
-      <EventPopup />
+      {/* <EventPopup /> */}
       <Marquee />
       <Stats />
       <WhyOxVerse />
