@@ -155,6 +155,12 @@ export default function CourseDetailPage() {
                 >
                   Join Waitlist for this course <ArrowRight className="size-4" />
                 </Link>
+                <Link
+                  to={`/courses/${course.slug}/roadmap`}
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-primary text-primary bg-background px-7 py-4 font-semibold hover:bg-primary hover:text-primary-foreground transition"
+                >
+                  View Course Roadmap <ArrowUpRight className="size-4" />
+                </Link>
                 {/* 
                 <Link
                   to={`/enroll/${course.slug}`}
