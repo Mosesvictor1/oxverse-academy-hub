@@ -341,6 +341,34 @@ export default function WaitlistPage() {
                 ))}
               </div>
             </Field>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Field label="Location" error={errors.location}>
+                <select
+                  className="input"
+                  value={form.location}
+                  onChange={(e) => update("location", e.target.value)}
+                  required
+                >
+                  <option value="">Select your state…</option>
+                  {NIGERIAN_STATES.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="How did you hear about us?" error={errors.heardFrom}>
+                <select
+                  className="input"
+                  value={form.heardFrom}
+                  onChange={(e) => update("heardFrom", e.target.value)}
+                  required
+                >
+                  <option value="">Select an option…</option>
+                  {HEARD_FROM_OPTIONS.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </Field>
+            </div>
             <Field label="Why do you want to join? (optional)" error={errors.reason}>
               <textarea
                 className="input resize-none"
