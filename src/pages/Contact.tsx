@@ -3,9 +3,34 @@ import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { SITE, whatsappLink } from "@/lib/site";
+import { submitToSheet } from "@/lib/formOptions";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+    try {
+      await submitToSheet({ type: "Contact Us", ...form });
+      setSent(true);
+    } catch (err) {
+      console.error(err);
+      setError("We couldn't send your message. Please try again or WhatsApp us directly.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
   return (
     <SiteLayout>
       <SEO title="Contact — OxVerse Academy" description="Visit our Agor campus, call us, or send a message. We respond within 24 hours." />
@@ -38,7 +63,7 @@ export default function ContactPage() {
           </a>
         </div>
         <form
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+          onSubmit={handleSubmit}
           className="rounded-3xl border border-border p-8 bg-background space-y-4"
         >
           {sent ? (
@@ -48,11 +73,20 @@ export default function ContactPage() {
             </div>
           ) : (
             <>
-              <input className="input" placeholder="Full name" required maxLength={100} />
-              <input className="input" type="email" placeholder="Email" required maxLength={255} />
-              <input className="input" placeholder="Phone" maxLength={20} />
-              <textarea className="input resize-none" rows={5} placeholder="Your message" required maxLength={1000} />
-              <button className="w-full rounded-full bg-ink text-background py-3 font-semibold hover:bg-primary transition">Send message</button>
+              <input className="input" placeholder="Full name" required maxLength={100}
+                value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} />
+              <input className="input" type="email" placeholder="Email" required maxLength={255}
+                value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <input className="input" placeholder="Phone" maxLength={20}
+                value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+              <input className="input" placeholder="Subject" required maxLength={150}
+                value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} />
+              <textarea className="input resize-none" rows={5} placeholder="Your message" required maxLength={1000}
+                value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+              {error && <p className="text-sm text-red-600">{error}</p>}
+              <button disabled={submitting} className="w-full rounded-full bg-ink text-background py-3 font-semibold hover:bg-primary transition disabled:opacity-60">
+                {submitting ? "Sending..." : "Send message"}
+              </button>
             </>
           )}
         </form>
