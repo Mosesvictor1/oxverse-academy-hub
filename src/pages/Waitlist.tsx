@@ -7,10 +7,9 @@ import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
 import { SITE, whatsappLink } from "@/lib/site";
+import { HEARD_FROM_OPTIONS, NIGERIAN_STATES, submitToSheet } from "@/lib/formOptions";
 
 const KEY = "oxverse.waitlist.v1";
-const WAITLIST_ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbzNzrXtFYODhEIk3FsL2CaLH-IXyl3zmb3uovjG7JV6sLyaQGoGslI1S1NaT7vW_k93/exec";
 
 type WaitlistEntry = {
   id: string;
@@ -20,6 +19,8 @@ type WaitlistEntry = {
   courseSlug: string;
   courseTitle: string;
   experience: "None" | "Beginner" | "Intermediate" | "Advanced";
+  location: string;
+  heardFrom: string;
   reason: string;
   referralCode: string;
   joinedAt: string;
@@ -32,6 +33,8 @@ const schema = z.object({
   phone: z.string().trim().min(7, "Enter a valid phone number").max(20),
   courseSlug: z.string().min(1, "Pick a course"),
   experience: z.enum(["None", "Beginner", "Intermediate", "Advanced"]),
+  location: z.string().min(1, "Select your location"),
+  heardFrom: z.string().min(1, "Let us know how you heard about us"),
   reason: z.string().trim().max(500).optional().default(""),
   referralCode: z
     .string()
@@ -59,6 +62,8 @@ export default function WaitlistPage() {
     phone: "",
     courseSlug: "",
     experience: "None" as WaitlistEntry["experience"],
+    location: "",
+    heardFrom: "",
     reason: "",
     referralCode: "",
   });
@@ -108,6 +113,8 @@ export default function WaitlistPage() {
       courseSlug: parsed.data.courseSlug,
       courseTitle: course?.title ?? "OxVerse cohort",
       experience: parsed.data.experience,
+      location: parsed.data.location,
+      heardFrom: parsed.data.heardFrom,
       reason: parsed.data.reason ?? "",
       referralCode: (parsed.data.referralCode ?? "").toUpperCase(),
       joinedAt: new Date().toISOString(),
@@ -117,26 +124,21 @@ export default function WaitlistPage() {
     localStorage.setItem(KEY, JSON.stringify(list));
     console.log("Waitlist entry saved locally:", entry);
     try {
-      const response = await fetch(WAITLIST_ENDPOINT, {
-        method: "POST",
-       
-        body: new URLSearchParams({
-          fullName: entry.fullName,
-          email: entry.email,
-          phone: entry.phone,
-          courseSlug: entry.courseSlug,
-          courseTitle: entry.courseTitle,
-          experience: entry.experience,
-          reason: entry.reason,
-          referralCode: entry.referralCode,
-          discount: "20%",
-          joinedAt: entry.joinedAt,
-        }),
+      await submitToSheet({
+        type: "Waitlist",
+        fullName: entry.fullName,
+        email: entry.email,
+        phone: entry.phone,
+        courseSlug: entry.courseSlug,
+        courseTitle: entry.courseTitle,
+        experience: entry.experience,
+        location: entry.location,
+        heardFrom: entry.heardFrom,
+        reason: entry.reason,
+        referralCode: entry.referralCode,
+        discount: "20%",
+        joinedAt: entry.joinedAt,
       });
-      console.log("Waitlist submit response:", response);
-      if (!response.ok) {
-        throw new Error(`Waitlist submit failed: ${response.status}`);
-      }
     } catch (error) {
       console.error(error);
       setRemoteError(
@@ -231,6 +233,8 @@ export default function WaitlistPage() {
                 phone: "",
                 courseSlug: "",
                 experience: "None",
+                location: "",
+                heardFrom: "",
                 reason: "",
                 referralCode: "",
               });
