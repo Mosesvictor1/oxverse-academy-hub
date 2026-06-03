@@ -1,7 +1,7 @@
-import flyer3 from "@/assets/event_countdown_3.png.asset.json";
-import flyer2 from "@/assets/event_countdown_2.png.asset.json";
-import flyer1 from "@/assets/event_countdown_1.png.asset.json";
-import flyerFinal from "@/assets/event_countdown_final.png.asset.json";
+const flyer3 = { url: "/event_countdown_3.png" };
+const flyer2 = { url: "/event_countdown_2.png" };
+const flyer1 = { url: "/event_countdown_1.png" };
+const flyerFinal = { url: "/event_countdown_final.png" };
 
 export type FeaturedEvent = {
   slug: string;
