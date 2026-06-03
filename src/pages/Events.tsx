@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Calendar, Clock, ArrowRight, Video, Sparkles, MessageCircle } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
-import { getFeaturedEvent } from "@/lib/events";
+import { getFeaturedEvent, useCountdownFlyer } from "@/lib/events";
 
 const events = [
   {
