@@ -64,6 +64,25 @@ export function getCountdownLabel(dateISO: string, now: Date = new Date()): stri
   }
 }
 
+import { useEffect, useState } from "react";
+
+/**
+ * Returns the current countdown flyer URL and refreshes automatically
+ * every 12 hours so the flyer rotates as the event approaches.
+ */
+export function useCountdownFlyer(dateISO: string) {
+  const [now, setNow] = useState<Date>(() => new Date());
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 12 * 60 * 60 * 1000);
+    return () => window.clearInterval(id);
+  }, []);
+  return {
+    flyer: getCountdownFlyer(dateISO, now),
+    stage: getCountdownStage(dateISO, now),
+    label: getCountdownLabel(dateISO, now),
+  };
+}
+
 export const events: FeaturedEvent[] = [
   {
     slug: "build-app-website-2hrs-ai",
