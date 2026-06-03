@@ -1,4 +1,7 @@
-import eventFlyer from "@/assets/event_build_app_ai.png";
+import flyer3 from "@/assets/event_countdown_3.png.asset.json";
+import flyer2 from "@/assets/event_countdown_2.png.asset.json";
+import flyer1 from "@/assets/event_countdown_1.png.asset.json";
+import flyerFinal from "@/assets/event_countdown_final.png.asset.json";
 
 export type FeaturedEvent = {
   slug: string;
@@ -12,7 +15,6 @@ export type FeaturedEvent = {
   mode: "Online" | "In-person" | "Hybrid";
   platform?: string;
   price: string;
-  flyer: string;
   whatsappUrl: string;
   speakers: { name: string; role: string }[];
   description: string;
@@ -20,20 +22,61 @@ export type FeaturedEvent = {
   featured: boolean;
 };
 
+export type CountdownStage = "3days" | "2days" | "1day" | "final" | "past";
+
+/**
+ * Returns the current countdown stage based on days remaining until the event.
+ * Refreshes naturally as the browser re-evaluates (rendered every load + 12h interval).
+ */
+export function getCountdownStage(dateISO: string, now: Date = new Date()): CountdownStage {
+  const event = new Date(dateISO);
+  // Compare calendar days in local time
+  const startOfDay = (d: Date) =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const diffDays = Math.round((startOfDay(event) - startOfDay(now)) / 86400000);
+  if (diffDays >= 3) return "3days";
+  if (diffDays === 2) return "2days";
+  if (diffDays === 1) return "1day";
+  if (diffDays === 0) return "final";
+  return "past";
+}
+
+const FLYER_MAP: Record<CountdownStage, { url: string }> = {
+  "3days": flyer3,
+  "2days": flyer2,
+  "1day": flyer1,
+  final: flyerFinal,
+  past: flyerFinal,
+};
+
+export function getCountdownFlyer(dateISO: string, now: Date = new Date()): string {
+  return FLYER_MAP[getCountdownStage(dateISO, now)].url;
+}
+
+export function getCountdownLabel(dateISO: string, now: Date = new Date()): string {
+  const stage = getCountdownStage(dateISO, now);
+  switch (stage) {
+    case "3days": return "3 days to go";
+    case "2days": return "2 days to go";
+    case "1day": return "1 day to go";
+    case "final": return "Final day — it's happening today!";
+    case "past": return "Event in progress";
+  }
+}
+
 export const events: FeaturedEvent[] = [
   {
     slug: "build-app-website-2hrs-ai",
     title: "How to Build an App & Website in 2 Hours with AI",
     tagline: "Ship real software in a single evening — no prior coding required.",
     type: "Online Tech Event",
-    date: "Sunday, 31 May 2026",
-    dateISO: "2026-05-31T18:00:00+01:00",
+    date: "Saturday, 6 June 2026",
+    dateISO: "2026-06-06T18:00:00+01:00",
     time: "6:00 PM WAT",
     location: "Online via Google Meet",
     mode: "Online",
     platform: "Google Meet",
     price: "Free",
-    flyer: eventFlyer,
     whatsappUrl: "https://chat.whatsapp.com/JtRCwluCa1KFDaZvKKVyKJ",
     speakers: [
       { name: "Victor Moses", role: "Tech Instructor & Software Developer" },
