@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { X, ArrowRight, Calendar, Clock, Video, MessageCircle } from "lucide-react";
-import { getFeaturedEvent } from "@/lib/events";
+import { getFeaturedEvent, useCountdownFlyer, getCountdownStage } from "@/lib/events";
 
 export function EventPopup() {
   const event = getFeaturedEvent();
-  const storageKey = event ? `oxverse.event-popup.${event.slug}` : "";
+  const { flyer, label, stage } = useCountdownFlyer(event?.dateISO ?? "");
+  // Storage key includes the countdown stage so the popup re-opens
+  // every time the flyer changes (3days → 2days → 1day → final).
+  const storageKey = event ? `oxverse.event-popup.${event.slug}.${stage}` : "";
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export function EventPopup() {
 
         <Link to={`/events/${event.slug}`} onClick={dismiss} className="block">
           <img
-            src={event.flyer}
+            src={flyer}
             alt={`${event.title} flyer`}
             className="w-full h-auto"
           />
@@ -57,7 +60,7 @@ export function EventPopup() {
 
         <div className="p-6 sm:p-8">
           <p className="text-xs uppercase tracking-wider font-semibold text-primary">
-            {event.type} • {event.price}
+            {event.type} • {event.price} • {label}
           </p>
           <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold tracking-tight">
             {event.title}

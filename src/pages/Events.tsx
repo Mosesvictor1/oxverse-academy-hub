@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Calendar, Clock, ArrowRight, Video, Sparkles, MessageCircle } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
-import { getFeaturedEvent } from "@/lib/events";
+import { getFeaturedEvent, useCountdownFlyer } from "@/lib/events";
 
 const events = [
   {
@@ -52,6 +52,7 @@ const events = [
 
 export default function EventsPage() {
   const featured = getFeaturedEvent();
+  const { flyer: countdownFlyer } = useCountdownFlyer(featured?.dateISO ?? "");
   return (
     <SiteLayout>
       <SEO
@@ -80,7 +81,7 @@ export default function EventsPage() {
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative overflow-hidden bg-muted">
                 <img
-                  src={featured.flyer}
+                  src={countdownFlyer}
                   alt={`${featured.title} flyer`}
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                 />
