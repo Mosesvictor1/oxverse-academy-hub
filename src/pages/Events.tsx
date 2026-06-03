@@ -52,6 +52,7 @@ const events = [
 
 export default function EventsPage() {
   const featured = getFeaturedEvent();
+  const { flyer: countdownFlyer } = useCountdownFlyer(featured?.dateISO ?? "");
   return (
     <SiteLayout>
       <SEO
@@ -80,7 +81,7 @@ export default function EventsPage() {
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative overflow-hidden bg-muted">
                 <img
-                  src={featured.flyer}
+                  src={countdownFlyer}
                   alt={`${featured.title} flyer`}
                   className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                 />
