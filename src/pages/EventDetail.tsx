@@ -14,11 +14,12 @@ import {
 } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
-import { getEvent } from "@/lib/events";
+import { getEvent, useCountdownFlyer } from "@/lib/events";
 
 export default function EventDetailPage() {
   const { slug = "" } = useParams();
   const event = useMemo(() => getEvent(slug), [slug]);
+  const { flyer, label } = useCountdownFlyer(event?.dateISO ?? "");
 
   if (!event) return <Navigate to="/events" replace />;
 
@@ -31,7 +32,7 @@ export default function EventDetailPage() {
     eventAttendanceMode:
       "https://schema.org/OnlineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    image: [`https://oxverse.academy${event.flyer}`],
+    image: [`https://oxverse.academy${flyer}`],
     location: {
       "@type": "VirtualLocation",
       url: `https://oxverse.academy/events/${event.slug}`,
@@ -56,7 +57,7 @@ export default function EventDetailPage() {
       <SEO
         title={`${event.title} — OxVerse Academy`}
         description={event.description}
-        image={event.flyer}
+        image={flyer}
         canonical={`https://oxverse.academy/events/${event.slug}`}
         type="article"
         jsonLd={jsonLd}
@@ -73,6 +74,9 @@ export default function EventDetailPage() {
             </h1>
             <p className="mt-5 max-w-xl text-lg text-ink-muted text-pretty">
               {event.tagline}
+            </p>
+            <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider">
+              <Sparkles className="size-3.5" /> {label}
             </p>
 
             <div className="mt-8 grid sm:grid-cols-3 gap-3">
@@ -104,7 +108,7 @@ export default function EventDetailPage() {
               className="rounded-3xl overflow-hidden shadow-2xl shadow-primary/30 border border-border"
             >
               <img
-                src={event.flyer}
+                src={flyer}
                 alt={`${event.title} flyer`}
                 className="w-full h-auto"
               />
