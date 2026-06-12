@@ -1,7 +1,4 @@
-const flyer3 = { url: "/event_countdown_3.png" };
-const flyer2 = { url: "/event_countdown_2.png" };
-const flyer1 = { url: "/event_countdown_1.png" };
-const flyerFinal = { url: "/event_countdown_final.png" };
+const freeClassFlyer = { url: "/free_class_flyer.jpg" };
 
 export type FeaturedEvent = {
   slug: string;
@@ -42,11 +39,11 @@ export function getCountdownStage(dateISO: string, now: Date = new Date()): Coun
 }
 
 const FLYER_MAP: Record<CountdownStage, { url: string }> = {
-  "3days": flyer3,
-  "2days": flyer2,
-  "1day": flyer1,
-  final: flyerFinal,
-  past: flyerFinal,
+  "3days": freeClassFlyer,
+  "2days": freeClassFlyer,
+  "1day": freeClassFlyer,
+  final: freeClassFlyer,
+  past: freeClassFlyer,
 };
 
 export function getCountdownFlyer(dateISO: string, now: Date = new Date()): string {
@@ -59,8 +56,8 @@ export function getCountdownLabel(dateISO: string, now: Date = new Date()): stri
     case "3days": return "3 days to go";
     case "2days": return "2 days to go";
     case "1day": return "1 day to go";
-    case "final": return "Final day — it's happening today!";
-    case "past": return "Event in progress";
+    case "final": return "It's happening today!";
+    case "past": return "Happening now — Day 2!";
   }
 }
 
@@ -85,13 +82,14 @@ export function useCountdownFlyer(dateISO: string) {
 
 export const events: FeaturedEvent[] = [
   {
-    slug: "build-app-website-2hrs-ai",
-    title: "How to Build an App & Website in 2 Hours with AI",
-    tagline: "Ship real software in a single evening — no prior coding required.",
-    type: "Online Tech Event",
-    date: "Saturday, 6 June 2026",
-    dateISO: "2026-06-06T18:00:00+01:00",
-    time: "6:00 PM WAT",
+    slug: "free-tech-class-june-2026",
+    title: "Start Your Tech Career for FREE — 2-Day Free Class",
+    tagline:
+      "A 2-day free tech class to help you discover, learn and start your journey in tech.",
+    type: "Free Class",
+    date: "Friday & Saturday, 12–13 June 2026",
+    dateISO: "2026-06-12T09:00:00+01:00",
+    time: "9:00 AM WAT",
     location: "Online via Google Meet",
     mode: "Online",
     platform: "Google Meet",
@@ -102,12 +100,13 @@ export const events: FeaturedEvent[] = [
       { name: "Igwilo Victor", role: "Tech Instructor & Web3 Systems Architect" },
     ],
     description:
-      "Join two of 0xVerse Academy's lead instructors for a live, hands-on session showing exactly how to design, build and deploy a working app and website in under two hours using modern AI tools.",
+      "It's finally here — your 2-day free tech class starts now. Join 0xVerse Academy to discover in-demand tech skills, see how AI is changing the game, and get step-by-step guidance to start your tech career.",
     highlights: [
-      "Live demo: idea → deployed product in under 2 hours",
-      "The exact AI stack our instructors use daily",
-      "Q&A with Victor Moses & Igwilo Victor",
-      "Free recording sent to all registrants",
+      "Start your tech career on the right path",
+      "Discover in-demand tech skills",
+      "Learn how AI is changing the game",
+      "Step-by-step guidance from real instructors",
+      "Real opportunities await you",
     ],
     featured: true,
   },
