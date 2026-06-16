@@ -73,7 +73,7 @@ export default function RegisterPage() {
     const course = courses.find((c) => c.slug === parsed.data.courseSlug);
     try {
       await submitToSheet({
-        type: "Register",
+        type: "Free Class",
         fullName: parsed.data.fullName,
         email: parsed.data.email,
         phone: parsed.data.phone,

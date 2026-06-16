@@ -44,9 +44,9 @@ export function ReferralPopup() {
   if (!open) return null;
 
   const steps = [
-    { i: UserPlus, t: "Register", d: "Sign up on OxVerse — takes under a minute." },
+    { i: UserPlus, t: "Register", d: "Sign up on OxVerse takes under a minute." },
     { i: Mail, t: "Get your link", d: "Your personal referral code & link are emailed to you instantly." },
-    { i: Share2, t: "Share with friends", d: "Drop your link on WhatsApp, X, Instagram — anywhere." },
+    { i: Share2, t: "Share with friends", d: "Drop your link on WhatsApp, X, Instagram anywhere." },
     { i: Wallet, t: "Earn 5% cash", d: "When they enrol & pay, you earn 5% instantly to your email." },
   ];
 
@@ -79,7 +79,7 @@ export function ReferralPopup() {
           </h2>
           <p className="mt-3 text-primary-foreground/85 text-pretty">
             Register on OxVerse, share your personal link, and earn 5% of the tuition every time
-            someone enrols and pays through you — paid out immediately.
+            someone enrols and pays through you paid out immediately.
           </p>
         </div>
 
