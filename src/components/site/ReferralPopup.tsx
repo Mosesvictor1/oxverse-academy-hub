@@ -4,6 +4,18 @@ import { X, ArrowRight, Gift, Share2, Mail, Wallet, UserPlus } from "lucide-reac
 
 const STORAGE_KEY = "oxverse.referral-popup.v1";
 
+function useLockBodyScroll(lock: boolean) {
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (!lock) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [lock]);
+}
+
 /**
  * Marketing popup that pitches the OxVerse referral program on the home page.
  * Shows once per browser (dismissible). Appears a few seconds after page load
@@ -11,6 +23,7 @@ const STORAGE_KEY = "oxverse.referral-popup.v1";
  */
 export function ReferralPopup() {
   const [open, setOpen] = useState(false);
+  useLockBodyScroll(open);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
