@@ -14,7 +14,8 @@ import ContactPage from "./pages/Contact";
 import FAQPage from "./pages/FAQ";
 import TestimonialsPage from "./pages/Testimonials";
 import WaitlistPage from "./pages/Waitlist";
-import FreeClassPage from "./pages/FreeClass";
+import RegisterPage from "./pages/Register";
+import { Navigate } from "react-router-dom";
 import ApplicationsPage from "./pages/Applications";
 import DashboardPage from "./pages/Dashboard";
 import ConnectPage from "./pages/Connect";
@@ -39,7 +40,9 @@ export default function App() {
       <Route path="/faq" element={<FAQPage />} />
       <Route path="/testimonials" element={<TestimonialsPage />} />
       <Route path="/waitlist" element={<WaitlistPage />} />
-      <Route path="/free-class" element={<FreeClassPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/register/:ref" element={<RegisterPage />} />
+      <Route path="/free-class" element={<Navigate to="/register" replace />} />
       <Route path="/applications" element={<ApplicationsPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/connect" element={<ConnectPage />} />

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { Check, Sparkles, Users, Bell, ArrowRight, Gift, Tag } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
@@ -8,6 +8,7 @@ import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
 import { SITE, whatsappLink } from "@/lib/site";
 import { HEARD_FROM_OPTIONS, NIGERIAN_STATES, submitToSheet } from "@/lib/formOptions";
+import { getReferralCodeFromUrl, saveReferralCode } from "@/lib/referral";
 
 const KEY = "oxverse.waitlist.v1";
 
@@ -73,6 +74,11 @@ export default function WaitlistPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const totalOnList = useMemo(() => getList().length, [success]);
 
+  useEffect(() => {
+    const code = getReferralCodeFromUrl();
+    if (code) setForm((f) => (f.referralCode ? f : { ...f, referralCode: code }));
+  }, []);
+
   function update<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((f) => ({ ...f, [k]: v }));
     if (errors[k as string]) setErrors((e) => ({ ...e, [k as string]: "" }));
@@ -136,9 +142,11 @@ export default function WaitlistPage() {
         heardFrom: entry.heardFrom,
         reason: entry.reason,
         referralCode: entry.referralCode,
+        ref: entry.referralCode,
         discount: "20%",
         joinedAt: entry.joinedAt,
       });
+      if (entry.referralCode) saveReferralCode(entry.referralCode);
     } catch (error) {
       console.error(error);
       setRemoteError(

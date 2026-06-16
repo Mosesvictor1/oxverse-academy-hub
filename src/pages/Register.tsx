@@ -1,13 +1,14 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
-import { Sparkles, ArrowRight, GraduationCap, Gift, Check } from "lucide-react";
+import { Sparkles, ArrowRight, GraduationCap, Gift, Check, Tag } from "lucide-react";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
 import { HEARD_FROM_OPTIONS, NIGERIAN_STATES, submitToSheet } from "@/lib/formOptions";
 import { whatsappLink } from "@/lib/site";
+import { getReferralCodeFromUrl, saveReferralCode } from "@/lib/referral";
 
 const schema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(100),
@@ -18,10 +19,18 @@ const schema = z.object({
   location: z.string().min(1, "Select your location"),
   heardFrom: z.string().min(1, "Let us know how you heard about us"),
   reason: z.string().trim().max(500).optional().default(""),
+  ref: z
+    .string()
+    .trim()
+    .max(40)
+    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers, dashes only")
+    .optional()
+    .default(""),
 });
 
-export default function FreeClassPage() {
+export default function RegisterPage() {
   const [params] = useSearchParams();
+  const routeParams = useParams();
   const initialCourse = params.get("course") || "";
   const [form, setForm] = useState({
     fullName: "",
@@ -32,7 +41,14 @@ export default function FreeClassPage() {
     location: "",
     heardFrom: "",
     reason: "",
+    ref: "",
   });
+
+  useEffect(() => {
+    const code = getReferralCodeFromUrl(routeParams.ref);
+    if (code) setForm((f) => (f.ref ? f : { ...f, ref: code }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routeParams.ref]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<typeof form | null>(null);
@@ -57,18 +73,20 @@ export default function FreeClassPage() {
     const course = courses.find((c) => c.slug === parsed.data.courseSlug);
     try {
       await submitToSheet({
-        type: "Free Class",
+        type: "Register",
         fullName: parsed.data.fullName,
         email: parsed.data.email,
         phone: parsed.data.phone,
         courseSlug: parsed.data.courseSlug,
-        courseTitle: course?.title ?? "OxVerse Free Class",
+        courseTitle: course?.title ?? "OxVerse Registration",
         experience: parsed.data.experience,
         location: parsed.data.location,
         heardFrom: parsed.data.heardFrom,
         reason: parsed.data.reason ?? "",
+        ref: (parsed.data.ref ?? "").toUpperCase(),
         registeredAt: new Date().toISOString(),
       });
+      if (parsed.data.ref) saveReferralCode(parsed.data.ref);
       setSuccess(parsed.data as typeof form);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
@@ -80,10 +98,10 @@ export default function FreeClassPage() {
   }
 
   if (success) {
-    const courseTitle = courses.find((c) => c.slug === success.courseSlug)?.title ?? "your free class";
+    const courseTitle = courses.find((c) => c.slug === success.courseSlug)?.title ?? "your registration";
     return (
       <SiteLayout>
-        <SEO title="You're registered for the Free Class — OxVerse Academy" />
+        <SEO title="You're registered — OxVerse Academy" />
         <section className="mx-auto max-w-3xl px-6 pt-32 pb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -95,11 +113,18 @@ export default function FreeClassPage() {
               You're in, {success.fullName.split(" ")[0]}!
             </h1>
             <p className="mt-4 text-primary-foreground/85 text-pretty">
-              Your seat for the <strong>{courseTitle}</strong> free class is reserved. We'll email{" "}
-              <strong>{success.email}</strong> with the date, joining link, and prep materials.
+              Your registration for <strong>{courseTitle}</strong> is confirmed. We'll email{" "}
+              <strong>{success.email}</strong> with the next steps, plus{" "}
+              <strong>your personal referral link</strong> so you can earn{" "}
+              <strong>5% bonus</strong> on every friend who registers and pays through it.
             </p>
+            {success.ref && (
+              <p className="mt-3 text-xs text-primary-foreground/75">
+                Referral code applied: <span className="font-mono font-semibold">{success.ref}</span>
+              </p>
+            )}
             <a
-              href={whatsappLink(`Hi OxVerse, I just registered for the free class on ${courseTitle}.`)}
+              href={whatsappLink(`Hi OxVerse, I just registered for ${courseTitle}.`)}
               target="_blank" rel="noreferrer"
               className="mt-6 inline-flex items-center gap-2 rounded-full bg-white text-primary px-6 py-3 font-semibold"
             >
@@ -117,20 +142,21 @@ export default function FreeClassPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Register for a Free Tech Class — OxVerse Academy"
-        description="Get a taste of OxVerse — register for a free intro class in your chosen course and meet the instructors."
+        title="Register — OxVerse Academy"
+        description="Register for OxVerse Academy — pick a course, meet the instructors, and unlock your personal referral link."
       />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-10">
-          <SectionEyebrow>Free tech class</SectionEyebrow>
+          <SectionEyebrow>Registration</SectionEyebrow>
           <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance max-w-3xl">
-            Try OxVerse <span className="gradient-text">free of charge.</span>
+            Register with <span className="gradient-text">OxVerse Academy.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-ink-muted text-pretty">
-            Register for a free intro class in your favourite course. Meet the instructors, see the
-            campus, and decide if OxVerse is right for you — no payment required.
+            Pick the course you want to take, tell us a bit about you, and we'll guide you through
+            the next steps. You'll also receive your personal <strong>referral link</strong> by email
+            — earn <strong>5%</strong> on every paid enrollment that comes through it.
           </p>
         </div>
       </section>
@@ -149,7 +175,7 @@ export default function FreeClassPage() {
             <Field label="Phone / WhatsApp" error={errors.phone}>
               <input className="input" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+234 …" maxLength={20} required />
             </Field>
-            <Field label="Which course free class?" error={errors.courseSlug}>
+            <Field label="Which course are you registering for?" error={errors.courseSlug}>
               <select className="input" value={form.courseSlug} onChange={(e) => update("courseSlug", e.target.value)} required>
                 <option value="">Select a course…</option>
                 {courses.map((c) => (
@@ -181,26 +207,48 @@ export default function FreeClassPage() {
                 </select>
               </Field>
             </div>
-            <Field label="What do you want to get out of this class? (optional)" error={errors.reason}>
+            <Field label="What do you hope to achieve? (optional)" error={errors.reason}>
               <textarea className="input resize-none" rows={4} value={form.reason} onChange={(e) => update("reason", e.target.value)} maxLength={500} />
             </Field>
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+              <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                <Tag className="size-4" /> Referral code (optional)
+              </div>
+              <p className="mt-1.5 text-xs text-ink-muted">
+                Were you referred by someone? Enter their code — both you and your referrer benefit.
+                If you clicked a personal link (e.g. <span className="font-mono">/register/VICTOR-OXVERSE023</span>),
+                we filled it in automatically.
+              </p>
+              <div className="mt-4">
+                <Field label="Referral code" error={errors.ref}>
+                  <input
+                    className="input uppercase tracking-wider"
+                    value={form.ref}
+                    onChange={(e) => update("ref", e.target.value.toUpperCase())}
+                    placeholder="e.g. VICTOR-OXVERSE023"
+                    maxLength={40}
+                    autoComplete="off"
+                  />
+                </Field>
+              </div>
+            </div>
             {remoteError && <p className="text-sm text-red-600">{remoteError}</p>}
             <button type="submit" disabled={submitting}
               className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition disabled:opacity-60">
-              {submitting ? "Registering..." : <>Register for free class <ArrowRight className="size-4" /></>}
+              {submitting ? "Registering..." : <>Complete registration <ArrowRight className="size-4" /></>}
             </button>
           </form>
         </div>
 
         <aside className="lg:col-span-5 space-y-4">
           <div className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-8">
-            <p className="text-sm uppercase tracking-wider text-primary-foreground/70 font-semibold">Why attend a free class?</p>
+            <p className="text-sm uppercase tracking-wider text-primary-foreground/70 font-semibold">Why register with OxVerse?</p>
             <ul className="mt-5 space-y-4">
               {[
-                { i: GraduationCap, t: "Meet the instructor", d: "Live Q&A with the lead instructor of your course." },
+                { i: GraduationCap, t: "Talk to instructors", d: "Direct line to the lead instructor of your course." },
                 { i: Check, t: "See the curriculum", d: "Walk through modules, projects, and what you'll ship." },
-                { i: Gift, t: "Exclusive discount", d: "Free class attendees unlock special tuition offers." },
-                { i: Sparkles, t: "Zero pressure", d: "100% free — no payment details required." },
+                { i: Gift, t: "Earn 5% on referrals", d: "Get your personal referral link by email — earn on every paid signup." },
+                { i: Sparkles, t: "Priority admission", d: "Registered students are reviewed first when seats open." },
               ].map((b) => (
                 <li key={b.t} className="flex gap-3">
                   <span className="size-9 grid place-items-center rounded-xl bg-white/15 shrink-0">

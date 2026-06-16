@@ -16,6 +16,7 @@ import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
 import { EventPopup } from "@/components/site/EventPopup";
+import { ReferralPopup } from "@/components/site/ReferralPopup";
 import { courses } from "@/lib/courses";
 import heroImg from "@/assets/hero-oxverse-student2.png";
 import campusImg from "@/assets/campus.jpg";
@@ -78,6 +79,7 @@ function HomePage() {
       />
       <Hero />
       <EventPopup />
+      <ReferralPopup />
       <Marquee />
       <Stats />
       <WhyOxVerse />
@@ -133,10 +135,10 @@ function Hero() {
               className="mt-10 flex flex-wrap items-center gap-4"
             >
               <Link
-                to="/free-class"
+                to="/register"
                 className="group inline-flex items-center gap-2 rounded-full bg-ink text-background px-7 py-4 text-base font-semibold hover:bg-primary transition-colors"
               >
-                Join the free class
+                Register now
                 <ArrowRight className="size-4 group-hover:translate-x-0.5 transition" />
               </Link>
               <Link
