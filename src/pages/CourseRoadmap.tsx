@@ -245,8 +245,8 @@ export default function CourseRoadmapPage() {
             <Link to="/waitlist" className="inline-flex items-center gap-2 rounded-full bg-background text-foreground px-6 py-3 font-semibold">
               Join Waitlist <ArrowRight className="size-4" />
             </Link>
-            <Link to={`/free-class?course=${roadmap.slug}`} className="inline-flex items-center gap-2 rounded-full border border-background/30 px-6 py-3 font-semibold">
-              Attend Free Class
+            <Link to={`/register?course=${roadmap.slug}`} className="inline-flex items-center gap-2 rounded-full border border-background/30 px-6 py-3 font-semibold">
+              Register now
             </Link>
           </div>
         </div>
