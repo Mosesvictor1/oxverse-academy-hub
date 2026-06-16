@@ -108,7 +108,7 @@ export const events: FeaturedEvent[] = [
       "Step-by-step guidance from real instructors",
       "Real opportunities await you",
     ],
-    featured: true,
+    featured: false,
   },
 ];
 
