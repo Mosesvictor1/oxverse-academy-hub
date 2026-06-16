@@ -112,5 +112,5 @@ export const events: FeaturedEvent[] = [
   },
 ];
 
-export const getFeaturedEvent = () => events.find((e) => e.featured) ?? null;
+export const getFeaturedEvent = () => null;
 export const getEvent = (slug: string) => events.find((e) => e.slug === slug) ?? null;
