@@ -16,6 +16,7 @@ import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { AnimatedNumber } from "@/components/site/AnimatedNumber";
 import { EventPopup } from "@/components/site/EventPopup";
+import { ReferralPopup } from "@/components/site/ReferralPopup";
 import { courses } from "@/lib/courses";
 import heroImg from "@/assets/hero-oxverse-student2.png";
 import campusImg from "@/assets/campus.jpg";
@@ -78,6 +79,7 @@ function HomePage() {
       />
       <Hero />
       <EventPopup />
+      <ReferralPopup />
       <Marquee />
       <Stats />
       <WhyOxVerse />
