@@ -57,7 +57,25 @@ export const HEARD_FROM_OPTIONS = [
   "Other",
 ] as const;
 
-export type SubmissionType = "Waitlist" | "Contact Us" | "Free Class" | "Register" | "event-registration";
+export type SubmissionType =
+  | "Waitlist"
+  | "Contact Us"
+  | "Free Class"
+  | "Register"
+  | "event-registration"
+  | "Ambassador"
+  | "Ambassador Onboarding";
+
+export const AMBASSADOR_CATEGORIES = [
+  "NYSC",
+  "University",
+  "Polytechnic",
+  "JAMB Centre",
+  "Community Group",
+  "Religious Organization",
+  "Tech Community",
+  "Other",
+] as const;
 
 /**
  * Submit a form payload to the shared Google Apps Script endpoint.
