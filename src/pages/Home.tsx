@@ -260,6 +260,58 @@ function Marquee() {
   );
 }
 
+function AmbassadorBanner() {
+  return (
+    <section className="mx-auto max-w-7xl px-6 pt-16">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-purple-700 to-purple-900 text-primary-foreground p-8 md:p-12 shadow-2xl shadow-primary/30">
+        <div className="absolute inset-0 grid-pattern opacity-20" />
+        <div className="relative grid md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-8">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
+              <Sparkles className="size-3.5" /> Ambassador Program
+            </div>
+            <h2 className="mt-4 font-display text-3xl md:text-5xl font-bold tracking-tighter text-balance">
+              Become an OxVerse Ambassador. Earn up to{" "}
+              <span className="underline decoration-white/40">12% commission.</span>
+            </h2>
+            <p className="mt-4 max-w-xl text-primary-foreground/85 text-pretty">
+              Promote quality tech education in your community, school, NYSC camp, or online — and
+              earn tiered commissions on every verified paid enrollment you refer.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                to="/ambassador"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-primary px-6 py-3 text-sm font-semibold hover:bg-white/90 transition"
+              >
+                Apply now <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                to="/ambassador"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
+              >
+                See rewards & tiers
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-4 grid grid-cols-2 gap-3 text-sm">
+            {[
+              { v: "5%", l: "1–10 refs" },
+              { v: "7%", l: "11–25 refs" },
+              { v: "10%", l: "26–50 refs" },
+              { v: "12%", l: "51+ refs" },
+            ].map((t) => (
+              <div key={t.v} className="rounded-2xl bg-white/10 border border-white/20 p-4 text-center">
+                <p className="font-display text-2xl font-bold">{t.v}</p>
+                <p className="text-xs text-primary-foreground/75 mt-0.5">{t.l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Stats() {
   const stats = [
     { v: 50, s: "+", l: "Students trained" },
