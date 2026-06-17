@@ -262,7 +262,7 @@ function Marquee() {
 
 function AmbassadorBanner() {
   return (
-    <section className="mx-auto max-w-7xl px-6 pt-16">
+    <section className="mx-auto max-w-7xl px-6 pt-16 mb-14">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-purple-700 to-purple-900 text-primary-foreground p-8 md:p-12 shadow-2xl shadow-primary/30">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="relative grid md:grid-cols-12 gap-8 items-center">

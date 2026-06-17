@@ -30,7 +30,7 @@ function suggestCode(name: string) {
     .split(/\s+/)[0]
     .slice(0, 12) || "AMB";
   const rand = Math.floor(100 + Math.random() * 899);
-  return `${base}-OX${rand}`;
+  return `${base}-AMB-0X${rand}`;
 }
 
 export default function AmbassadorOnboardPage() {
