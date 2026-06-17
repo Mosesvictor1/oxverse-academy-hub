@@ -81,6 +81,7 @@ function HomePage() {
       <EventPopup />
       <ReferralPopup />
       <Marquee />
+      <AmbassadorBanner />
       <Stats />
       <WhyOxVerse />
       <FeaturedCourses />
