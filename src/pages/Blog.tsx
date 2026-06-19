@@ -8,7 +8,7 @@ export default function BlogPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Blog — OxVerse Academy"
+        title="Blog, OxVerse Academy"
         description="Stories, tutorials, and insights from Africa's premium tech academy."
       />
       <section className="mx-auto max-w-5xl px-6 pt-24 pb-12">
