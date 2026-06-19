@@ -1,0 +1,42 @@
+WEBVTT
+
+1
+00:00:00.400 --> 00:00:05.000
+If you've ever tried Ethereum, you've paid a gas fee.
+
+2
+00:00:08.500 --> 00:00:14.000
+Most people assume it's a tax the blockchain charges.
+
+3
+00:00:14.167 --> 00:00:17.667
+It's not. Here's what's actually happening.
+
+4
+00:00:19.333 --> 00:00:24.000
+Every action on Ethereum requires computation.
+
+5
+00:00:35.000 --> 00:00:41.000
+Validators run the computers that process and validate every tx.
+
+6
+00:00:41.333 --> 00:00:46.000
+Gas fee = your payment to them for that work.
+
+7
+00:00:46.333 --> 00:00:52.667
+High demand = everyone competing for block space = fees spike.
+
+8
+00:00:54.000 --> 00:01:00.000
+Layer 2s bundle transactions to make fees dramatically cheaper.
+
+9
+00:01:00.167 --> 00:01:05.000
+Gas fees are not a bug. They are a feature of decentralization.
+
+10
+00:01:05.333 --> 00:01:08.667
+Learn Web3 fundamentals at 0xverse Academy.
+
