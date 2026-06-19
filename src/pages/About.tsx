@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <SiteLayout>
       <SEO
-        title="About OxVerse Academy — Our Story"
+        title="About OxVerse Academy, Our Story"
         description="OxVerse Academy is a physical tech training institute building Africa's next generation of engineers, designers, and creators."
         image={campusImg}
       />
@@ -55,7 +55,7 @@ export default function AboutPage() {
             {
               eyebrow: "Our Mission",
               title: "Train Africa's most capable tech talent.",
-              body: "We exist to bridge the gap between raw potential and global opportunity through world-class, hands-on training.",
+              body: "We exist to bridge the gap between raw potential and global opportunity through world class, hands on training.",
             },
             {
               eyebrow: "Our Vision",
