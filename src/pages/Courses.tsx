@@ -17,7 +17,7 @@ const categories = ["All", "Engineering", "Design", "Data & AI", "Web3", "Market
 const levels = ["All levels", "Beginner", "Intermediate", "Advanced"] as const;
 const schedules = ["Any", "Weekday", "Weekend"] as const;
 const durations = ["Any", "≤ 3 months", "4 months", "5+ months"] as const;
-const sorts = ["Featured", "A–Z", "Duration"] as const;
+const sorts = ["Featured", "A to Z", "Duration"] as const;
 
 export default function CoursesPage() {
   const [q, setQ] = useState("");
@@ -47,9 +47,9 @@ export default function CoursesPage() {
         (dur === "5+ months" && months >= 5);
       return matchesQ && matchesCat && matchesLevel && matchesSched && matchesDur;
     });
-    if (sort === "A–Z") list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === "A to Z") list = [...list].sort((a, b) => a.title.localeCompare(b.title));
     if (sort === "Duration")
-      list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
+      list = [...list].sort((a, b) => parseInt(a.duration), parseInt(b.duration));
     return list;
   }, [q, cat, level, sched, dur, sort]);
 
@@ -63,7 +63,7 @@ export default function CoursesPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Courses — OxVerse Academy"
+        title="Courses, OxVerse Academy"
         description="10 premium tech courses across Engineering, Design, Data & AI, Web3, and Marketing."
       />
       <section className="relative">
@@ -75,7 +75,7 @@ export default function CoursesPage() {
             Pick your path. <span className="gradient-text">Build your future.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-ink-muted text-pretty">
-            Cohort-based, project-driven training taught in person at our Lagos campus. Choose your
+            Cohort based, project driven training taught in person at our Lagos campus. Choose your
             level, your schedule, and your future.
           </p>
         </div>
