@@ -9,6 +9,20 @@ import { courses } from "@/lib/courses";
 import { SITE, whatsappLink } from "@/lib/site";
 import { HEARD_FROM_OPTIONS, NIGERIAN_STATES, submitToSheet } from "@/lib/formOptions";
 import { getReferralCodeFromUrl, saveReferralCode } from "@/lib/referral";
+import {
+  SuccessScreen,
+  SuccessCard,
+  SuccessDetail,
+  SuccessParagraph,
+  SuccessInset,
+  SuccessActionGrid,
+  SuccessActionCard,
+  SuccessFooterLink,
+  formCardClass,
+  formGridClass,
+  pageHeroClass,
+} from "@/components/site/SuccessScreen";
+import { BenefitsPanel, FormAside, InfoStatCard } from "@/components/site/BenefitsPanel";
 
 const KEY = "oxverse.waitlist.v1";
 
@@ -41,7 +55,7 @@ const schema = z.object({
     .string()
     .trim()
     .max(40)
-    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers, dashes only")
+    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers and underscores only")
     .optional()
     .default(""),
 });
@@ -56,7 +70,6 @@ function getList(): WaitlistEntry[] {
 }
 
 export default function WaitlistPage() {
-  console.log("Rendering WaitlistPage");
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -86,7 +99,6 @@ export default function WaitlistPage() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Waitlist submit handler called", form);
     setRemoteError("");
     setIsSubmitting(true);
     const parsed = schema.safeParse(form);
@@ -128,7 +140,6 @@ export default function WaitlistPage() {
     };
     list.unshift(entry);
     localStorage.setItem(KEY, JSON.stringify(list));
-    console.log("Waitlist entry saved locally:", entry);
     try {
       await submitToSheet({
         type: "Waitlist",
@@ -161,78 +172,71 @@ export default function WaitlistPage() {
   }
 
   if (success) {
+    const firstName = success.fullName.split(" ")[0];
+    const displayEmail = success.email.toLowerCase();
+
     return (
       <SiteLayout>
-        <SEO title="You're on the waitlist — OxVerse Academy" />
-        <section className="mx-auto max-w-3xl px-6 pt-32 pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-10 shadow-2xl shadow-primary/30"
-          >
-            <Sparkles className="size-10" />
-            <h1 className="mt-5 font-display text-4xl md:text-5xl font-bold tracking-tight">
-              You're on the list, {success.fullName.split(" ")[0]}!
-            </h1>
-            <p className="mt-4 text-primary-foreground/85 text-pretty">
-              You're <strong>#{success.position}</strong> on the waitlist for{" "}
-              <strong>{success.courseTitle}</strong>. We'll email <strong>{success.email}</strong>{" "}
-              the moment applications open.
-            </p>
-            <p className="mt-2 text-sm font-mono text-primary-foreground/60">
-              Ref: {success.id.slice(0, 8).toUpperCase()}
-            </p>
-            <div className="mt-6 rounded-2xl bg-white/10 backdrop-blur p-5 border border-white/20">
-              <div className="flex items-center gap-2 font-semibold">
-                <Gift className="size-5" /> Your 20% discount is locked in
+        <SEO title="You're on the waitlist, OxVerse Academy" />
+        <SuccessScreen>
+          <SuccessCard eyebrow="Waitlist confirmed" title={`You're on the list, ${firstName}!`}>
+            <SuccessDetail label="Course">
+              #{success.position} on the waitlist for {success.courseTitle}
+            </SuccessDetail>
+            <SuccessParagraph>
+              We&apos;ll email <strong className="font-semibold break-all">{displayEmail}</strong> the moment
+              applications open.
+            </SuccessParagraph>
+            <SuccessDetail label="Reference" mono>
+              {success.id.slice(0, 8).toUpperCase()}
+            </SuccessDetail>
+            <SuccessInset>
+              <div className="flex items-center gap-2 font-semibold text-sm sm:text-base">
+                <Gift className="size-5 shrink-0" /> Your 20% discount is locked in
               </div>
-              <p className="mt-2 text-sm text-primary-foreground/85">
-                We'll email <strong>your personal referral link</strong> to{" "}
-                <strong>{success.email}</strong> shortly. Share it with friends — you earn{" "}
+              <p className="text-sm text-primary-foreground/85 text-pretty">
+                We&apos;ll email <strong>your personal referral link</strong> to{" "}
+                <strong className="break-all">{displayEmail}</strong> shortly. Share it with friends, you earn{" "}
                 <strong>5% bonus</strong> on every signup that uses it.
               </p>
               {success.referralCode && (
-                <p className="mt-2 text-xs text-primary-foreground/75">
-                  Referral code applied: <span className="font-mono font-semibold">{success.referralCode}</span>
+                <p className="text-xs sm:text-sm text-primary-foreground/75">
+                  Referral code applied:{" "}
+                  <span className="font-mono font-semibold break-all">{success.referralCode}</span>
                 </p>
               )}
-            </div>
+            </SuccessInset>
             {remoteError && (
-              <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-700">
+              <div className="rounded-xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-100">
                 {remoteError}
               </div>
             )}
-          </motion.div>
+          </SuccessCard>
 
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
-            <a
-              href={whatsappLink(
-                `Hi OxVerse, I just joined the waitlist for ${success.courseTitle}.`,
-              )}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-border p-6 hover:border-primary transition"
-            >
-              <p className="font-display text-lg font-semibold">Chat on WhatsApp</p>
-              <p className="mt-1 text-sm text-ink-muted">
-                Skip the queue — DM admissions directly.
-              </p>
-              <p className="mt-3 text-sm font-semibold text-primary inline-flex items-center gap-1">
-                {SITE.phoneDisplay} <ArrowRight className="size-4" />
-              </p>
-            </a>
-            <Link
+          <SuccessActionGrid>
+            <SuccessActionCard
+              title="Chat on WhatsApp"
+              description="Skip the queue, DM admissions directly."
+              footer={
+                <>
+                  {SITE.phoneDisplay} <ArrowRight className="size-4" />
+                </>
+              }
+              href={whatsappLink(`Hi OxVerse, I just joined the waitlist for ${success.courseTitle}.`)}
+            />
+            <SuccessActionCard
+              title="Explore other courses"
+              description="Join more than one waitlist, no limit."
+              footer={
+                <>
+                  Browse all <ArrowRight className="size-4" />
+                </>
+              }
               to="/courses"
-              className="rounded-2xl border border-border p-6 hover:border-primary transition"
-            >
-              <p className="font-display text-lg font-semibold">Explore other courses</p>
-              <p className="mt-1 text-sm text-ink-muted">Join more than one waitlist — no limit.</p>
-              <p className="mt-3 text-sm font-semibold text-primary inline-flex items-center gap-1">
-                Browse all <ArrowRight className="size-4" />
-              </p>
-            </Link>
-          </div>
-          <button
+            />
+          </SuccessActionGrid>
+
+          <SuccessFooterLink
             onClick={() => {
               setSuccess(null);
               setForm({
@@ -247,11 +251,10 @@ export default function WaitlistPage() {
                 referralCode: "",
               });
             }}
-            className="mt-8 text-sm text-ink-muted hover:text-ink underline underline-offset-4"
           >
             Add another person to the waitlist
-          </button>
-        </section>
+          </SuccessFooterLink>
+        </SuccessScreen>
       </SiteLayout>
     );
   }
@@ -259,13 +262,13 @@ export default function WaitlistPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Join the Waitlist - 0xVerse Academy"
+        title="Join the Waitlist, 0xVerse Academy"
         description="Reserve your seat for the next OxVerse cohort."
       />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
-        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-10">
+        <div className={`relative ${pageHeroClass}`}>
           <SectionEyebrow>Limited cohort seats</SectionEyebrow>
           <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance max-w-3xl">
             Join the <span className="gradient-text">OxVerse waitlist.</span>
@@ -277,15 +280,12 @@ export default function WaitlistPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-12 gap-10">
+      <section className={formGridClass}>
         <div className="lg:col-span-7">
           <form
-            onSubmit={(e) => {
-              console.log("form onSubmit event");
-              onSubmit(e);
-            }}
+            onSubmit={onSubmit}
             noValidate
-            className="rounded-3xl border border-border bg-background p-8 lg:p-10 space-y-5"
+            className={formCardClass}
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Full name" error={errors.fullName}>
@@ -330,7 +330,7 @@ export default function WaitlistPage() {
                 <option value="">Select a course…</option>
                 {courses.map((c) => (
                   <option key={c.slug} value={c.slug}>
-                    {c.title} — {c.duration}
+                    {c.title}, {c.duration}
                   </option>
                 ))}
               </select>
@@ -391,7 +391,7 @@ export default function WaitlistPage() {
                 <Tag className="size-4" /> Unlock 20% OFF + referral bonus
               </div>
               <p className="mt-1.5 text-xs text-ink-muted">
-                Have a referral code? Enter it below — both you and your referrer benefit.
+                Have a referral code? Enter it below, both you and your referrer benefit.
                 After registering you'll receive <strong>your own referral link by email</strong> and
                 earn <strong>5% bonus</strong> for every friend who signs up with it.
               </p>
@@ -401,7 +401,7 @@ export default function WaitlistPage() {
                     className="input uppercase tracking-wider"
                     value={form.referralCode}
                     onChange={(e) => update("referralCode", e.target.value.toUpperCase())}
-                    placeholder="e.g. VICTOR-OX24"
+                    placeholder="e.g. VICTOROX24"
                     maxLength={40}
                     autoComplete="off"
                   />
@@ -411,7 +411,6 @@ export default function WaitlistPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              onClick={() => console.log("submit button clicked")}
               className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? (
@@ -428,45 +427,18 @@ export default function WaitlistPage() {
           </form>
         </div>
 
-        <aside className="lg:col-span-5 space-y-4">
-          <div className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-8">
-            <p className="text-sm uppercase tracking-wider text-primary-foreground/70 font-semibold">
-              Why join the waitlist?
-            </p>
-            <ul className="mt-5 space-y-4">
-              {[
-                { i: Bell, t: "Be first to know", d: "Email + SMS the day applications open." },
-                { i: Check, t: "Priority admission", d: "Waitlist members get reviewed first." },
-                {
-                  i: Users,
-                  t: "Cohort previews",
-                  d: "Meet your future classmates before day one.",
-                },
-                {
-                  i: Sparkles,
-                  t: "Early-bird perks",
-                  d: "Exclusive discounts and payment plans.",
-                },
-              ].map((b) => (
-                <li key={b.t} className="flex gap-3">
-                  <span className="size-9 grid place-items-center rounded-xl bg-white/15 shrink-0">
-                    <b.i className="size-4" />
-                  </span>
-                  <div>
-                    <p className="font-semibold">{b.t}</p>
-                    <p className="text-sm text-primary-foreground/80">{b.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-3xl border border-border p-6 bg-background">
-            <p className="text-sm text-ink-muted">Already on the list</p>
-            <p className="font-display text-4xl font-bold tracking-tighter mt-1">
-              {50 + totalOnList}+ students
-            </p>
-          </div>
-        </aside>
+        <FormAside>
+          <BenefitsPanel
+            heading="Why join the waitlist?"
+            items={[
+              { icon: Bell, title: "Be first to know", description: "Email + SMS the day applications open." },
+              { icon: Check, title: "Priority admission", description: "Waitlist members get reviewed first." },
+              { icon: Users, title: "Cohort previews", description: "Meet your future classmates before day one." },
+              { icon: Sparkles, title: "Early bird perks", description: "Exclusive discounts and payment plans." },
+            ]}
+          />
+          <InfoStatCard label="Already on the list" value={`${50 + totalOnList}+ students`} />
+        </FormAside>
       </section>
     </SiteLayout>
   );
@@ -482,10 +454,10 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
+    <div className="block">
       <span className="text-sm font-medium text-ink">{label}</span>
       <div className="mt-2">{children}</div>
       {error && <p className="mt-1.5 text-xs text-red-600">{error}</p>}
-    </label>
+    </div>
   );
 }
