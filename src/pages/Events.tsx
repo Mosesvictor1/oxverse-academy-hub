@@ -9,7 +9,7 @@ const events = [
   {
     type: "Bootcamp",
     title: "Weekend AI Bootcamp",
-    date: "Aug 8–9, 2026",
+    date: "Aug 8 to 9, 2026",
     desc: "Build a working LLM-powered app in 48 hours.",
     price: "Free",
   },
@@ -17,7 +17,7 @@ const events = [
     type: "Workshop",
     title: "Figma Foundations",
     date: "Aug 15, 2026",
-    desc: "Half-day workshop for designers starting with Figma.",
+    desc: "Half day workshop for designers starting with Figma.",
     price: "₦15,000",
   },
   {
@@ -37,7 +37,7 @@ const events = [
   {
     type: "Bootcamp",
     title: "Web3 Hacker House",
-    date: "Sep 5–7, 2026",
+    date: "Sep 5 to 7, 2026",
     desc: "3-day intensive: build & ship a dApp.",
     price: "₦25,000",
   },
@@ -45,7 +45,7 @@ const events = [
     type: "Workshop",
     title: "Intro to Data Analysis",
     date: "Sep 12, 2026",
-    desc: "Hands-on SQL & Python for absolute beginners.",
+    desc: "Hands on SQL & Python for absolute beginners.",
     price: "₦10,000",
   },
 ];
@@ -56,7 +56,7 @@ export default function EventsPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Events — OxVerse Academy"
+        title="Events, OxVerse Academy"
         description="Bootcamps, workshops, open house events, and seminars at OxVerse Academy Lagos."
       />
       <section className="relative">
