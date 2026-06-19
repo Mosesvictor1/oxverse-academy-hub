@@ -39,21 +39,21 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/60" : "bg-transparent"
       } ${onDark ? "text-white" : ""}`}
     >
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center gap-3 sm:gap-4">
+        <Link to="/" className="flex shrink-0 items-center gap-2 group">
           <img src={oxverseLogo} alt="OxVerse Academy logo" className="h-8 w-auto block dark:hidden" />
           <img src={oxverseLogoWhite} alt="OxVerse Academy logo" className="h-8 w-auto hidden dark:block" />
           {/* <span className="sr-only">OxVerse Academy</span> */}
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden xl:flex min-w-0 flex-1 items-center justify-center gap-0.5">
           {nav.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.to === "/"}
               className={({ isActive }) =>
-                `relative px-4 py-2 text-sm font-medium transition-colors ${
+                `relative shrink-0 px-3 py-2 text-sm font-medium transition-colors ${
                   onDark
                     ? isActive
                       ? "text-white"
@@ -69,7 +69,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden xl:flex shrink-0 items-center gap-3">
           <ThemeToggle />
           {/* <Link
             to="/applications"
@@ -79,7 +79,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
           </Link> */}
           <Link
             to="/waitlist"
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+            className={`inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors ${
               onDark ? "bg-white text-primary hover:bg-white/90" : "bg-ink text-background hover:bg-primary"
             }`}
           >
@@ -87,7 +87,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
           </Link>
         </div>
 
-        <div className="lg:hidden flex items-center gap-2">
+        <div className="xl:hidden ml-auto flex shrink-0 items-center gap-2">
           <ThemeToggle />
           <button
             onClick={() => setOpen((o) => !o)}
@@ -100,7 +100,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
       </div>
 
       {open && (
-        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border">
+        <div className="xl:hidden bg-background/95 backdrop-blur-xl border-b border-border">
           <div className="px-6 py-4 flex flex-col gap-1">
             {nav.map((n) => (
               <Link
