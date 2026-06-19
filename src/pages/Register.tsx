@@ -1,5 +1,4 @@
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Sparkles, ArrowRight, GraduationCap, Gift, Check, Tag } from "lucide-react";
@@ -9,6 +8,18 @@ import { courses } from "@/lib/courses";
 import { HEARD_FROM_OPTIONS, NIGERIAN_STATES, submitToSheet } from "@/lib/formOptions";
 import { whatsappLink } from "@/lib/site";
 import { getReferralCodeFromUrl, saveReferralCode } from "@/lib/referral";
+import {
+  SuccessScreen,
+  SuccessCard,
+  SuccessDetail,
+  SuccessParagraph,
+  SuccessCta,
+  SuccessFooterLink,
+  formCardClass,
+  formGridClass,
+  pageHeroClass,
+} from "@/components/site/SuccessScreen";
+import { BenefitsPanel, FormAside } from "@/components/site/BenefitsPanel";
 
 const schema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(100),
@@ -23,7 +34,7 @@ const schema = z.object({
     .string()
     .trim()
     .max(40)
-    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers, dashes only")
+    .regex(/^[A-Za-z0-9_-]*$/, "Letters, numbers and underscores only")
     .optional()
     .default(""),
 });
@@ -99,42 +110,33 @@ export default function RegisterPage() {
 
   if (success) {
     const courseTitle = courses.find((c) => c.slug === success.courseSlug)?.title ?? "your registration";
+    const firstName = success.fullName.split(" ")[0];
+    const displayEmail = success.email.toLowerCase();
+
     return (
       <SiteLayout>
-        <SEO title="You're registered — OxVerse Academy" />
-        <section className="mx-auto max-w-3xl px-6 pt-32 pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-10 shadow-2xl shadow-primary/30"
-          >
-            <Sparkles className="size-10" />
-            <h1 className="mt-5 font-display text-4xl md:text-5xl font-bold tracking-tight">
-              You're in, {success.fullName.split(" ")[0]}!
-            </h1>
-            <p className="mt-4 text-primary-foreground/85 text-pretty">
-              Your registration for <strong>{courseTitle}</strong> is confirmed. We'll email{" "}
-              <strong>{success.email}</strong> with the next steps, plus{" "}
-              <strong>your personal referral link</strong> so you can earn{" "}
+        <SEO title="You're registered, OxVerse Academy" />
+        <SuccessScreen>
+          <SuccessCard eyebrow="Registration confirmed" title={`You're in, ${firstName}!`}>
+            <SuccessDetail label="Course registered">{courseTitle}</SuccessDetail>
+            <SuccessParagraph>
+              We&apos;ll email <strong className="font-semibold break-all">{displayEmail}</strong> with your next steps.
+            </SuccessParagraph>
+            <SuccessParagraph>
+              You&apos;ll also receive <strong>your personal referral link</strong>, earn a{" "}
               <strong>5% bonus</strong> on every friend who registers and pays through it.
-            </p>
+            </SuccessParagraph>
             {success.ref && (
-              <p className="mt-3 text-xs text-primary-foreground/75">
-                Referral code applied: <span className="font-mono font-semibold">{success.ref}</span>
-              </p>
+              <SuccessDetail label="Referral code applied" mono>
+                {success.ref}
+              </SuccessDetail>
             )}
-            <a
-              href={whatsappLink(`Hi OxVerse, I just registered for ${courseTitle}.`)}
-              target="_blank" rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-white text-primary px-6 py-3 font-semibold"
-            >
-              Join our WhatsApp community <ArrowRight className="size-4" />
-            </a>
-          </motion.div>
-          <Link to="/courses" className="mt-8 inline-block text-sm underline text-ink-muted">
-            ← Explore other courses
-          </Link>
-        </section>
+            <SuccessCta href={whatsappLink(`Hi OxVerse, I just registered for ${courseTitle}.`)}>
+              Join our WhatsApp community
+            </SuccessCta>
+          </SuccessCard>
+          <SuccessFooterLink to="/courses">← Explore other courses</SuccessFooterLink>
+        </SuccessScreen>
       </SiteLayout>
     );
   }
@@ -142,13 +144,13 @@ export default function RegisterPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Register — OxVerse Academy"
-        description="Register for OxVerse Academy — pick a course, meet the instructors, and unlock your personal referral link."
+        title="Register, OxVerse Academy"
+        description="Register for OxVerse Academy, pick a course, meet the instructors, and unlock your personal referral link."
       />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
-        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-10">
+        <div className={`relative ${pageHeroClass}`}>
           <SectionEyebrow>Registration</SectionEyebrow>
           <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance max-w-3xl">
             Register with <span className="gradient-text">OxVerse Academy.</span>
@@ -156,14 +158,14 @@ export default function RegisterPage() {
           <p className="mt-6 max-w-2xl text-lg text-ink-muted text-pretty">
             Pick the course you want to take, tell us a bit about you, and we'll guide you through
             the next steps. You'll also receive your personal <strong>referral link</strong> by email
-            — earn <strong>5%</strong> on every paid enrollment that comes through it.
+           , earn <strong>5%</strong> on every paid enrollment that comes through it.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-12 gap-10">
+      <section className={formGridClass}>
         <div className="lg:col-span-7">
-          <form onSubmit={onSubmit} noValidate className="rounded-3xl border border-border bg-background p-8 lg:p-10 space-y-5">
+          <form onSubmit={onSubmit} noValidate className={formCardClass}>
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Full name" error={errors.fullName}>
                 <input className="input" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="John Smith" maxLength={100} required />
@@ -215,8 +217,8 @@ export default function RegisterPage() {
                 <Tag className="size-4" /> Referral code (optional)
               </div>
               <p className="mt-1.5 text-xs text-ink-muted">
-                Were you referred by someone? Enter their code — both you and your referrer benefit.
-                If you clicked a personal link (e.g. <span className="font-mono">/register/VICTOR-OXVERSE023</span>),
+                Were you referred by someone? Enter their code, both you and your referrer benefit.
+                If you clicked a personal link (e.g. <span className="font-mono">/register/VICTOROXVERSE023</span>),
                 we filled it in automatically.
               </p>
               <div className="mt-4">
@@ -225,7 +227,7 @@ export default function RegisterPage() {
                     className="input uppercase tracking-wider"
                     value={form.ref}
                     onChange={(e) => update("ref", e.target.value.toUpperCase())}
-                    placeholder="e.g. VICTOR-OXVERSE023"
+                    placeholder="e.g. VICTOROXVERSE023"
                     maxLength={40}
                     autoComplete="off"
                   />
@@ -240,29 +242,17 @@ export default function RegisterPage() {
           </form>
         </div>
 
-        <aside className="lg:col-span-5 space-y-4">
-          <div className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-8">
-            <p className="text-sm uppercase tracking-wider text-primary-foreground/70 font-semibold">Why register with OxVerse?</p>
-            <ul className="mt-5 space-y-4">
-              {[
-                { i: GraduationCap, t: "Talk to instructors", d: "Direct line to the lead instructor of your course." },
-                { i: Check, t: "See the curriculum", d: "Walk through modules, projects, and what you'll ship." },
-                { i: Gift, t: "Earn 5% on referrals", d: "Get your personal referral link by email — earn on every paid signup." },
-                { i: Sparkles, t: "Priority admission", d: "Registered students are reviewed first when seats open." },
-              ].map((b) => (
-                <li key={b.t} className="flex gap-3">
-                  <span className="size-9 grid place-items-center rounded-xl bg-white/15 shrink-0">
-                    <b.i className="size-4" />
-                  </span>
-                  <div>
-                    <p className="font-semibold">{b.t}</p>
-                    <p className="text-sm text-primary-foreground/80">{b.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
+        <FormAside>
+          <BenefitsPanel
+            heading="Why register with OxVerse?"
+            items={[
+              { icon: GraduationCap, title: "Talk to instructors", description: "Direct line to the lead instructor of your course." },
+              { icon: Check, title: "See the curriculum", description: "Walk through modules, projects, and what you'll ship." },
+              { icon: Gift, title: "Earn 5% on referrals", description: "Get your personal referral link by email, earn on every paid signup." },
+              { icon: Sparkles, title: "Priority admission", description: "Registered students are reviewed first when seats open." },
+            ]}
+          />
+        </FormAside>
       </section>
     </SiteLayout>
   );
@@ -270,10 +260,10 @@ export default function RegisterPage() {
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
-    <label className="block">
+    <div className="block">
       <span className="text-sm font-medium text-ink">{label}</span>
       <div className="mt-2">{children}</div>
       {error && <p className="mt-1.5 text-xs text-red-600">{error}</p>}
-    </label>
+    </div>
   );
 }
