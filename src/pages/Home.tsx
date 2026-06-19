@@ -39,7 +39,7 @@ function HomePage() {
       url: "https://oxverse.academy",
       logo: "https://oxverse.academy/oxverseIcon.png",
       description:
-        "Africa's premium physical tech academy offering cohort-based, hands-on training in software engineering, design, AI, data, Web3, and digital marketing.",
+        "Africa's premium physical tech academy offering cohort based, hands on training in software engineering, design, AI, data, Web3, and digital marketing.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "No 82, Century Bus Stop, Ago Palace Way, Okota",
@@ -71,8 +71,8 @@ function HomePage() {
   return (
     <SiteLayout>
       <SEO
-        title="OxVerse Academy — Learn Tech in Lagos. Build a Global Career."
-        description="Africa's premium physical tech academy in Lagos. Cohort-based, hands-on training in software engineering, UI/UX, AI, data, Web3, and digital marketing."
+        title="OxVerse Academy, Learn Tech in Lagos. Build a Global Career."
+        description="Africa's premium physical tech academy in Lagos. Cohort based, hands on training in software engineering, UI/UX, AI, data, Web3, and digital marketing."
         keywords="tech academy Lagos, coding bootcamp Nigeria, learn programming Africa, frontend bootcamp, UI UX course, AI course Lagos, Web3 academy, OxVerse"
         canonical="https://oxverse.academy/"
         jsonLd={jsonLd}
@@ -126,8 +126,8 @@ function Hero() {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="mt-6 max-w-xl text-lg text-ink-muted text-pretty"
             >
-              Africa's premium physical tech academy. Hands-on, cohort-based training in
-              engineering, design, and AI — taught by world-class instructors at our Lagos campus.
+              Africa's premium physical tech academy. Hands on, cohort based training in
+              engineering, design, and AI, taught by world class instructors at our Lagos campus.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -275,7 +275,7 @@ function AmbassadorBanner() {
               <span className="underline decoration-white/40">12% commission.</span>
             </h2>
             <p className="mt-4 max-w-xl text-primary-foreground/85 text-pretty">
-              Promote quality tech education in your community, school, NYSC camp, or online — and
+              Promote quality tech education in your community, school, NYSC camp, or online, and
               earn tiered commissions on every verified paid enrollment you refer.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -295,9 +295,9 @@ function AmbassadorBanner() {
           </div>
           <div className="md:col-span-4 grid grid-cols-2 gap-3 text-sm">
             {[
-              { v: "5%", l: "1–10 refs" },
-              { v: "7%", l: "11–25 refs" },
-              { v: "10%", l: "26–50 refs" },
+              { v: "5%", l: "1 to 10 refs" },
+              { v: "7%", l: "11 to 25 refs" },
+              { v: "10%", l: "26 to 50 refs" },
               { v: "12%", l: "51+ refs" },
             ].map((t) => (
               <div key={t.v} className="rounded-2xl bg-white/10 border border-white/20 p-4 text-center">
@@ -366,8 +366,8 @@ function WhyOxVerse() {
     },
     {
       icon: Zap,
-      title: "Project-based",
-      desc: "Ship 4–6 portfolio-grade projects per course. No fluff.",
+      title: "Project based",
+      desc: "Ship 4 to 6 portfolio grade projects per course. No fluff.",
     },
     {
       icon: GraduationCap,
@@ -377,11 +377,11 @@ function WhyOxVerse() {
     {
       icon: Sparkles,
       title: "Modern campus",
-      desc: "High-spec workstations, fast internet, designed for focus.",
+      desc: "High spec workstations, fast internet, designed for focus.",
     },
     {
       icon: MapPin,
-      title: "Lagos-based",
+      title: "Lagos based",
       desc: "No 82, Century Bus Stop Ago Palace Way, Okota, Lagos",
     },
   ];
@@ -429,7 +429,7 @@ function FeaturedCourses() {
             Pick the path that <span className="gradient-text">builds your future.</span>
           </h2>
           <p className="mt-4 max-w-xl text-ink-muted text-pretty">
-            Six flagship programs — from frontend engineering to AI — designed to take you from
+            Six flagship programs, from frontend engineering to AI, designed to take you from
             curious beginner to hireable professional.
           </p>
         </div>
@@ -517,7 +517,7 @@ function Campus() {
             <div className="mt-10 grid grid-cols-2 gap-6">
               {[
                 { l: "Mentorship hrs/mo", v: "200+" },
-                { l: "Open hours", v: "8am–5pm" },
+                { l: "Open hours", v: "8am to 5pm" },
               ].map((s) => (
                 <div key={s.l}>
                   <p className="font-display text-3xl font-bold">{s.v}</p>
@@ -610,13 +610,13 @@ function Testimonials() {
   const t = [
     {
       quote:
-        "OxVerse didn't just teach me to code — they taught me to think like an engineer. Six months in, I landed a remote role at a YC startup.",
+        "OxVerse didn't just teach me to code, they taught me to think like an engineer. Six months in, I landed a remote role at a YC startup.",
       name: "Tobi Adelaja",
       role: "Frontend Engineer @ Plana",
     },
     {
       quote:
-        "The instructors are working professionals who actually care. The mentorship in-person made all the difference for me.",
+        "The instructors are working professionals who actually care. The mentorship in person made all the difference for me.",
       name: "Amara Nwosu",
       role: "Product Designer @ Flutterwave",
     },
@@ -685,8 +685,8 @@ function Careers() {
             <span className="gradient-text">For the Long Term.</span>
           </h2>
           <p className="mt-6 text-ink-muted text-lg max-w-lg text-pretty">
-            We don’t just teach tech — we prepare you for real careers that last. Our programs are
-            built around practical skills, real-world projects, and industry-relevant experience
+            We don’t just teach tech, we prepare you for real careers that last. Our programs are
+            built around practical skills, real world projects, and industry relevant experience
             that employers value.
           </p>
           <div className="mt-10 grid grid-cols-2 gap-4">
@@ -716,20 +716,20 @@ function FAQ() {
   const faqs = [
     {
       q: "Is OxVerse a physical academy or online?",
-      a: "Strictly physical. All classes are held at our Agor, Lagos campus. We believe in-person mentorship compounds faster than any online program.",
+      a: "Strictly physical. All classes are held at our Agor, Lagos campus. We believe in person mentorship compounds faster than any online program.",
     },
 
     {
       q: "What are the entry requirements?",
-      a: "Most courses require no prior experience. You'll need a laptop (8GB RAM minimum), stable internet, and the ability to commit 12–15 hours per week.",
+      a: "Most courses require no prior experience. You'll need a laptop (8GB RAM minimum), stable internet, and the ability to commit 12 to 15 hours per week.",
     },
     {
       q: "Will I get a certificate?",
-      a: "Yes - every graduate receives an 0xVerse Certificate of Completion plus portfolio reviews and career support.",
+      a: "Yes, every graduate receives an 0xVerse Certificate of Completion plus portfolio reviews and career support.",
     },
     {
-      q: "Can I work full-time and study?",
-      a: "Yes - we offer weekend cohorts (Sat) designed for working professionals.",
+      q: "Can I work full time and study?",
+      a: "Yes, we offer weekend cohorts (Sat) designed for working professionals.",
     },
     {
       q: "Do you guarantee a job?",
