@@ -6,6 +6,14 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { getCourse } from "@/lib/courses";
 import { INTAKES, CLASS_TIMES, saveApplication, type Application } from "@/lib/enrollment";
+import {
+  SuccessCard,
+  SuccessDetail,
+  SuccessParagraph,
+  SuccessActionGrid,
+  enrollGridClass,
+  pageHeroClass,
+} from "@/components/site/SuccessScreen";
 
 const STEPS = ["Personal", "Education", "Course", "Goals", "Documents", "Review", "Done"] as const;
 
@@ -35,7 +43,7 @@ export default function EnrollPage() {
   if (!course) {
     return (
       <SiteLayout>
-        <SEO title="Course not found — OxVerse Academy" />
+        <SEO title="Course not found, OxVerse Academy" />
         <div className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">Course not found</h1>
           <Link to="/courses" className="mt-6 inline-block text-primary font-semibold">View all courses</Link>
@@ -100,13 +108,13 @@ export default function EnrollPage() {
 
   return (
     <SiteLayout>
-      <SEO title={`Enroll — ${course.title} | OxVerse Academy`} description={`Apply for ${course.title} at OxVerse Academy.`} noIndex />
+      <SEO title={`Enroll, ${course.title} | OxVerse Academy`} description={`Apply for ${course.title} at OxVerse Academy.`} noIndex />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">
+        <div className={`relative ${pageHeroClass} pb-6 sm:pb-8`}>
           <Link to={`/courses/${course.slug}`} className="text-sm text-ink-muted hover:text-ink">← Back to {course.title}</Link>
           <h1 className="mt-4 font-display text-4xl md:text-5xl font-bold tracking-tighter">Reserve your seat</h1>
-          <p className="mt-2 text-ink-muted">Apply for {course.title} — physical classes at our Lagos campus.</p>
+          <p className="mt-2 text-ink-muted">Apply for {course.title}, physical classes at our Lagos campus.</p>
 
           <div className="mt-8 flex items-center gap-1 overflow-x-auto pb-2">
             {STEPS.map((label, i) => (
@@ -122,7 +130,7 @@ export default function EnrollPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-3 gap-10">
+      <section className={enrollGridClass}>
         <motion.div key={step} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="lg:col-span-2">
           {step === 0 && (
             <Card title="Personal information" desc="Tell us a bit about yourself.">
@@ -153,7 +161,7 @@ export default function EnrollPage() {
                 <Field label="School / University" error={errors.school}><input className="input" value={form.school} onChange={(e) => set("school", e.target.value)} maxLength={120} /></Field>
                 <Field label="Employment status">
                   <select className="input" value={form.employmentStatus} onChange={(e) => set("employmentStatus", e.target.value as Application["employmentStatus"])}>
-                    {(["Student", "Employed", "Self-employed", "Unemployed", "Other"] as const).map((o) => <option key={o}>{o}</option>)}
+                    {(["Student", "Employed", "Self employed", "Unemployed", "Other"] as const).map((o) => <option key={o}>{o}</option>)}
                   </select>
                 </Field>
                 <Field label="Current skill level">
@@ -232,7 +240,7 @@ export default function EnrollPage() {
           )}
 
           {step === 5 && (
-            <Card title="Review & submit" desc="Double-check everything before sending.">
+            <Card title="Review and submit" desc="Double check everything before sending.">
               <div className="rounded-3xl border border-border divide-y">
                 <Row k="Course" v={course.title} />
                 <Row k="Intake" v={intake.label} />
@@ -242,7 +250,7 @@ export default function EnrollPage() {
                 <Row k="Phone" v={form.phone} />
                 <Row k="Gender" v={form.gender} />
                 <Row k="Address" v={form.address} />
-                <Row k="Education" v={`${form.educationLevel} — ${form.school}`} />
+                <Row k="Education" v={`${form.educationLevel}, ${form.school}`} />
                 <Row k="Employment" v={form.employmentStatus} />
                 <Row k="Skill level" v={form.skillLevel} />
                 {form.motivation && <Row k="Motivation" v={form.motivation} />}
@@ -261,24 +269,28 @@ export default function EnrollPage() {
 
           {step === 6 && (
             <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
-              <div className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-10 shadow-2xl shadow-primary/30">
-                <PartyPopper className="size-10" />
-                <h2 className="mt-5 font-display text-4xl font-bold tracking-tight">Congratulations, {form.firstName}!</h2>
-                <p className="mt-3 text-primary-foreground/85 text-pretty">
-                  Your application for <strong>{course.title}</strong> has been received. Reference: <span className="font-mono font-semibold">{appId}</span>
-                </p>
-              </div>
-              <div className="mt-8 grid sm:grid-cols-2 gap-4">
+              <SuccessCard
+                eyebrow="Application submitted"
+                title={`Congratulations, ${form.firstName}!`}
+                icon={PartyPopper}
+              >
+                <SuccessDetail label="Course">{course.title}</SuccessDetail>
+                <SuccessParagraph>
+                  Your application has been received. Reference:{" "}
+                  <span className="font-mono font-semibold break-all">{appId}</span>
+                </SuccessParagraph>
+              </SuccessCard>
+              <SuccessActionGrid>
                 <NextStep title="What happens next" body="Admissions emails you within 48 hours with a confirmation and payment plan options." />
-                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am — No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.`} />
+                <NextStep title="Orientation" body={`On ${intake.label} at 9:00am, No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos.`} />
                 <NextStep title="Join the community" body="Connect with your cohort on WhatsApp before classes start." cta={{ label: "Join WhatsApp group", href: "https://chat.whatsapp.com" }} />
                 <NextStep title="Student dashboard" body="Track your application and complete onboarding tasks." cta={{ label: "Go to dashboard", to: `/dashboard?id=${appId}` }} />
-              </div>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button onClick={() => navigate(`/dashboard?id=${appId}`)} className="inline-flex items-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
+              </SuccessActionGrid>
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
+                <button onClick={() => navigate(`/dashboard?id=${appId}`)} className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition">
                   Open student dashboard <ArrowRight className="size-4" />
                 </button>
-                <Link to="/applications" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:border-ink transition">
+                <Link to="/applications" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-semibold hover:border-ink transition">
                   View all applications
                 </Link>
               </div>
@@ -298,7 +310,7 @@ export default function EnrollPage() {
               <div className="mt-5 pt-5 border-t border-border space-y-2 text-sm">
                 <div className="flex justify-between"><span className="text-ink-muted">Duration</span><span className="font-medium">{course.duration}</span></div>
                 <div className="flex justify-between"><span className="text-ink-muted">Intake</span><span className="font-medium">{intake.label}</span></div>
-                <div className="flex justify-between"><span className="text-ink-muted">Format</span><span className="font-medium">In-person, Lagos</span></div>
+                <div className="flex justify-between"><span className="text-ink-muted">Format</span><span className="font-medium">In person, Lagos</span></div>
               </div>
             </div>
           </div>
@@ -339,9 +351,9 @@ function Nav({ onBack, onNext }: { onBack?: () => void; onNext: () => void }) {
 }
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex justify-between gap-6 px-6 py-4">
+    <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-6 px-4 sm:px-6 py-4">
       <span className="text-sm text-ink-muted">{k}</span>
-      <span className="text-sm font-medium text-right max-w-[60%]">{v}</span>
+      <span className="text-sm font-medium sm:text-right break-words">{v}</span>
     </div>
   );
 }
@@ -361,8 +373,8 @@ function UploadField({ label, filename, onChange, accept }: { label: string; fil
 }
 function NextStep({ title, body, cta }: { title: string; body: string; cta?: { label: string; href?: string; to?: string } }) {
   return (
-    <div className="rounded-2xl border border-border p-5 bg-background">
-      <p className="font-display text-lg font-semibold">{title}</p>
+    <div className="rounded-2xl border border-border p-4 sm:p-5 bg-background">
+      <p className="font-display text-base sm:text-lg font-semibold">{title}</p>
       <p className="mt-1 text-sm text-ink-muted text-pretty">{body}</p>
       {cta?.href && <a href={cta.href} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">{cta.label} <ArrowRight className="size-4" /></a>}
       {cta?.to && <Link to={cta.to} className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">{cta.label} <ArrowRight className="size-4" /></Link>}
