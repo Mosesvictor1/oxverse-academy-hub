@@ -11,7 +11,7 @@ export default function BlogPostPage() {
   if (!post) {
     return (
       <SiteLayout>
-        <SEO title="Post not found — OxVerse Blog" />
+        <SEO title="Post not found, OxVerse Blog" />
         <section className="mx-auto max-w-3xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold tracking-tighter">Post not found</h1>
           <p className="mt-4 text-ink-muted">The article you're looking for doesn't exist.</p>
@@ -29,7 +29,7 @@ export default function BlogPostPage() {
   return (
     <SiteLayout>
       <SEO
-        title={`${post.title} — OxVerse Blog`}
+        title={`${post.title}, OxVerse Blog`}
         description={post.excerpt}
         type="article"
         canonical={`https://oxverse.academy/blog/${post.slug}`}
