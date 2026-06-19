@@ -55,7 +55,7 @@ export default function EventDetailPage() {
   return (
     <SiteLayout>
       <SEO
-        title={`${event.title} — OxVerse Academy`}
+        title={`${event.title}, OxVerse Academy`}
         description={event.description}
         image={flyer}
         canonical={`https://oxverse.academy/events/${event.slug}`}
@@ -175,7 +175,7 @@ export default function EventDetailPage() {
 
             <ul className="mt-5 space-y-2.5 text-sm">
               {[
-                "Instant access — no forms to fill",
+                "Instant access, no forms to fill",
                 "Live Google Meet link before the session",
                 "Q&A and resources shared after the event",
               ].map((t) => (
