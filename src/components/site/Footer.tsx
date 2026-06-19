@@ -15,7 +15,7 @@ export function Footer() {
               <span className="font-display font-semibold text-xl">OxVerse Academy</span>
             </Link>
             <p className="mt-4 text-ink-muted max-w-sm text-pretty">
-              A physical tech academy training Africa's next generation of world-class
+              A physical tech academy training Africa's next generation of world class
               engineers, designers, and creators.
             </p>
             <div className="mt-6 flex items-center gap-3">
