@@ -5,6 +5,16 @@ import { Sparkles, ArrowRight, ShieldCheck, RefreshCw, Copy, Check } from "lucid
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { AMBASSADOR_CATEGORIES, HEARD_FROM_OPTIONS, submitToSheet } from "@/lib/formOptions";
+import {
+  SuccessScreen,
+  SuccessCard,
+  SuccessDetail,
+  SuccessParagraph,
+  SuccessFooterLink,
+  formCardClass,
+  pageHeroNarrowClass,
+  narrowSectionClass,
+} from "@/components/site/SuccessScreen";
 
 const schema = z.object({
   fullName: z.string().trim().min(2, "Enter the full name").max(100),
@@ -106,61 +116,70 @@ export default function AmbassadorOnboardPage() {
     }
     return (
       <SiteLayout>
-        <SEO title="Ambassador onboarded — OxVerse Academy" />
-        <section className="mx-auto max-w-3xl px-6 pt-32 pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-10 shadow-2xl shadow-primary/30"
+        <SEO title="Ambassador onboarded, OxVerse Academy" />
+        <SuccessScreen>
+          <SuccessCard
+            eyebrow="Ambassador onboarded"
+            title={`${success.fullName.split(" ")[0]} is onboarded!`}
           >
-            <Sparkles className="size-10" />
-            <h1 className="mt-5 font-display text-4xl md:text-5xl font-bold tracking-tight">
-              {success.fullName.split(" ")[0]} is onboarded!
-            </h1>
-            <p className="mt-4 text-primary-foreground/85">
-              Referral code created and saved. Share the personal link below — every paid enrollment
+            <SuccessParagraph>
+              Referral code created and saved. Share the personal link below, every paid enrollment
               through it is attributed to this ambassador.
-            </p>
-            <div className="mt-6 rounded-2xl bg-white/10 border border-white/20 p-5">
-              <p className="text-xs uppercase tracking-wider text-primary-foreground/70">Referral code</p>
-              <p className="mt-1 font-mono text-2xl font-bold">{success.referralCode}</p>
-              <div className="mt-4 flex items-center gap-2">
-                <code className="flex-1 truncate rounded-lg bg-black/30 px-3 py-2 text-xs">{link}</code>
-                <button
-                  type="button"
-                  onClick={copy}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-white text-primary px-3 py-2 text-xs font-semibold"
-                >
-                  {copied ? <><Check className="size-3.5" /> Copied</> : <><Copy className="size-3.5" /> Copy</>}
-                </button>
-              </div>
+            </SuccessParagraph>
+            <SuccessDetail label="Referral code" mono>
+              {success.referralCode}
+            </SuccessDetail>
+            <div className="rounded-xl bg-white/10 border border-white/15 p-4 space-y-3">
+              <p className="text-[11px] sm:text-xs text-primary-foreground/70">Personal link</p>
+              <code className="block break-all rounded-lg bg-black/30 px-3 py-2 text-xs sm:text-sm leading-relaxed">
+                {link}
+              </code>
+              <button
+                type="button"
+                onClick={copy}
+                className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white text-primary px-4 py-3 text-sm font-semibold"
+              >
+                {copied ? (
+                  <>
+                    <Check className="size-3.5" /> Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="size-3.5" /> Copy link
+                  </>
+                )}
+              </button>
             </div>
-          </motion.div>
-          <button
-            type="button"
+          </SuccessCard>
+          <SuccessFooterLink
             onClick={() => {
               setSuccess(null);
               setForm({
-                fullName: "", email: "", phone: "", category: "", organization: "",
-                socialReach: "", heardFrom: "", referralCode: "",
+                fullName: "",
+                email: "",
+                phone: "",
+                category: "",
+                organization: "",
+                socialReach: "",
+                heardFrom: "",
+                referralCode: "",
               });
             }}
-            className="mt-8 text-sm text-ink-muted hover:text-ink underline underline-offset-4"
           >
             Onboard another ambassador
-          </button>
-        </section>
+          </SuccessFooterLink>
+        </SuccessScreen>
       </SiteLayout>
     );
   }
 
   return (
     <SiteLayout>
-      <SEO title="Internal Ambassador Onboarding — OxVerse Academy" />
+      <SEO title="Internal Ambassador Onboarding, OxVerse Academy" />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
-        <div className="relative mx-auto max-w-4xl px-6 pt-24 pb-10">
+        <div className={`relative ${pageHeroNarrowClass}`}>
           <SectionEyebrow>Internal · Staff only</SectionEyebrow>
           <h1 className="mt-6 font-display text-4xl md:text-6xl font-bold tracking-tighter">
             Onboard a new <span className="gradient-text">ambassador.</span>
@@ -175,11 +194,11 @@ export default function AmbassadorOnboardPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-24">
+      <section className={`${narrowSectionClass} max-w-4xl pt-0`}>
         <form
           onSubmit={onSubmit}
           noValidate
-          className="rounded-3xl border border-border bg-background p-8 lg:p-10 space-y-5"
+          className={formCardClass}
         >
           <div className="grid sm:grid-cols-2 gap-4">
             <Field label="Full name" error={errors.fullName}>
