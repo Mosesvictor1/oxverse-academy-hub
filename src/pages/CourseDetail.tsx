@@ -33,7 +33,7 @@ const sampleTestimonials = [
     name: "Tobi Adelaja",
     role: "OxVerse Alum",
     quote:
-      "The hands-on projects gave me a portfolio that landed me a job before I even graduated.",
+      "The hands on projects gave me a portfolio that landed me a job before I even graduated.",
   },
   {
     name: "Amara Nwosu",
@@ -56,7 +56,7 @@ export default function CourseDetailPage() {
   if (!course) {
     return (
       <SiteLayout>
-        <SEO title="Course not found — OxVerse Academy" />
+        <SEO title="Course not found, OxVerse Academy" />
         <div className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">Course not found</h1>
           <Link
@@ -79,7 +79,7 @@ export default function CourseDetailPage() {
   return (
     <SiteLayout>
       <SEO
-        title={`${course.title} — OxVerse Academy`}
+        title={`${course.title}, OxVerse Academy`}
         description={course.short}
         image={course.image}
         canonical={`https://oxverse.academy/courses/${course.slug}`}
@@ -378,7 +378,7 @@ export default function CourseDetailPage() {
                   Talk to admissions for tuition details
                 </p>
                 <p className="mt-2 text-ink-muted">
-                  We don't publish tuition online. Reach out via WhatsApp or apply — our admissions
+                  We don't publish tuition online. Reach out via WhatsApp or apply, our admissions
                   team will share the full breakdown, scholarships, and flexible payment plans.
                 </p>
                 <div className="mt-6 grid sm:grid-cols-3 gap-3">
