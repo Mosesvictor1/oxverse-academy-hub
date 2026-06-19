@@ -17,7 +17,7 @@ export default function DashboardPage() {
   if (!active) {
     return (
       <SiteLayout>
-        <SEO title="Student Dashboard — OxVerse Academy" noIndex />
+        <SEO title="Student Dashboard, OxVerse Academy" noIndex />
         <section className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">No applications yet</h1>
           <p className="mt-3 text-ink-muted">Once you apply for a course, your dashboard appears here.</p>
@@ -30,7 +30,7 @@ export default function DashboardPage() {
   const meta = STATUS_META[active.status];
   const tasks: { key: keyof Application["onboarding"]; label: string; desc: string }[] = [
     { key: "welcomeRead", label: "Read welcome guide", desc: "5-minute orientation overview." },
-    { key: "paymentPlanChosen", label: "Choose payment plan", desc: "Select pay-in-full or installments." },
+    { key: "paymentPlanChosen", label: "Choose payment plan", desc: "Select pay in full or installments." },
     { key: "communityJoined", label: "Join WhatsApp community", desc: "Meet your cohort." },
     { key: "orientationConfirmed", label: "Confirm orientation attendance", desc: "RSVP for opening day." },
   ];
@@ -44,7 +44,7 @@ export default function DashboardPage() {
   }
 
   function downloadAdmissionLetter() {
-    const html = `<html><head><title>Admission Letter — OxVerse</title>
+    const html = `<html><head><title>Admission Letter, OxVerse</title>
       <style>body{font-family:Georgia,serif;max-width:720px;margin:60px auto;padding:40px;line-height:1.6;color:#1a1a2e}
       h1{font-size:28px;color:#5B21B6}.brand{font-weight:bold;color:#5B21B6;font-size:20px}.box{border:2px solid #5B21B6;padding:24px;margin:24px 0;border-radius:12px}</style>
       </head><body>
@@ -55,12 +55,12 @@ export default function DashboardPage() {
       <div class="box">
         <p><strong>Reference:</strong> ${active!.id}</p>
         <p><strong>Cohort start:</strong> ${active!.intakeLabel}</p>
-        <p><strong>Schedule:</strong> ${active!.schedule} — ${active!.classTime}</p>
+        <p><strong>Schedule:</strong> ${active!.schedule}, ${active!.classTime}</p>
         <p><strong>Campus:</strong> No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos</p>
       </div>
       <p>Please complete the onboarding tasks in your student dashboard to confirm your seat.</p>
       <p>Welcome to OxVerse. Build something great.</p>
-      <p style="margin-top:48px">— The Admissions Team</p>
+      <p style="margin-top:48px">,  The Admissions Team</p>
       </body></html>`;
     const blob = new Blob([html], { type: "text/html" });
     const url = URL.createObjectURL(blob);
@@ -71,7 +71,7 @@ export default function DashboardPage() {
 
   return (
     <SiteLayout>
-      <SEO title="Student Dashboard — OxVerse Academy" description="Track your application, complete onboarding, and prepare for class." noIndex />
+      <SEO title="Student Dashboard, OxVerse Academy" description="Track your application, complete onboarding, and prepare for class." noIndex />
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-8">
