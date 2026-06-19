@@ -38,8 +38,8 @@ function buildRoadmap(c: Course): CourseRoadmap {
       i === 0
         ? `Establish strong foundations in ${m.module.toLowerCase()}.`
         : i === total - 1
-          ? `Ship production-ready work and prepare for the job market.`
-          : `Deepen your skill set and start building real-world projects.`,
+          ? `Ship production ready work and prepare for the job market.`
+          : `Deepen your skill set and start building real world projects.`,
   }));
 
   return {
