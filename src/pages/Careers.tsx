@@ -6,6 +6,19 @@ import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { Link } from "react-router-dom";
 import { SITE, whatsappLink } from "@/lib/site";
+import {
+  SuccessScreen,
+  SuccessCard,
+  SuccessDetail,
+  SuccessParagraph,
+  SuccessActionGrid,
+  SuccessActionCard,
+  SuccessFooterLink,
+  formCardClass,
+  pageHeroClass,
+  pageSectionClass,
+} from "@/components/site/SuccessScreen";
+import { BenefitsPanel, FormAside } from "@/components/site/BenefitsPanel";
 
 const ENDPOINT =  "https://script.google.com/macros/s/AKfycbx75LbVspkpBk_Ok1TQ6y46y1TI2IocWuqV2Wx8Aup4iHdn6f39rBXxPBMwWiYmEVYGLg/exec";
 
@@ -25,7 +38,7 @@ const ROLES = [
   "Other",
 ] as const;
 
-const WORK_TYPES = ["Full-time", "Part-time", "Contract", "Volunteer"] as const;
+const WORK_TYPES = ["Full time", "Part time", "Contract", "Volunteer"] as const;
 const GENDERS = ["Male", "Female", "Prefer not to say"] as const;
 
 const schema = z.object({
@@ -141,64 +154,55 @@ export default function CareersPage() {
   }
 
   if (success) {
+    const firstName = success.name.split(" ")[0];
+
     return (
       <SiteLayout>
         <SEO
-          title="Application received — OxVerse Academy Careers"
+          title="Application received, OxVerse Academy Careers"
           description="Thanks for applying to join the OxVerse Academy team."
           noIndex
         />
-        <section className="mx-auto max-w-3xl px-6 pt-32 pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-10 shadow-2xl shadow-primary/30"
-          >
-            <CheckCircle2 className="size-10" />
-            <h1 className="mt-5 font-display text-4xl md:text-5xl font-bold tracking-tight">
-              Application received, {success.name.split(" ")[0]}!
-            </h1>
-            <p className="mt-4 text-primary-foreground/85 text-pretty">
-              We've got your application for{" "}
-              <strong>{success.role}</strong>. Our team will review it and reach out within 5–7 working days.
-            </p>
-            <p className="mt-2 text-sm font-mono text-primary-foreground/60">
-              Ref: {success.id.slice(0, 8).toUpperCase()}
-            </p>
-          </motion.div>
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
-            <a
+        <SuccessScreen>
+          <SuccessCard eyebrow="Application received" title={`Application received, ${firstName}!`} icon={CheckCircle2}>
+            <SuccessDetail label="Role applied for">{success.role}</SuccessDetail>
+            <SuccessParagraph>
+              Our team will review your application and reach out within 5 to 7 working days.
+            </SuccessParagraph>
+            <SuccessDetail label="Reference" mono>
+              {success.id.slice(0, 8).toUpperCase()}
+            </SuccessDetail>
+          </SuccessCard>
+
+          <SuccessActionGrid>
+            <SuccessActionCard
+              title="Chat on WhatsApp"
+              description="Follow up directly with the hiring team."
+              footer={
+                <>
+                  {SITE.phoneDisplay} <ArrowRight className="size-4" />
+                </>
+              }
               href={whatsappLink(
                 `Hi OxVerse, I just applied for the ${success.role} role. Ref: ${success.id
                   .slice(0, 8)
                   .toUpperCase()}`,
               )}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-border p-6 hover:border-primary transition"
-            >
-              <p className="font-display text-lg font-semibold">Chat on WhatsApp</p>
-              <p className="mt-1 text-sm text-ink-muted">
-                Follow up directly with the hiring team.
-              </p>
-              <p className="mt-3 text-sm font-semibold text-primary inline-flex items-center gap-1">
-                {SITE.phoneDisplay} <ArrowRight className="size-4" />
-              </p>
-            </a>
-            <Link
+            />
+            <SuccessActionCard
+              title="Back to home"
+              description="Explore courses, events and stories while you wait."
+              footer={
+                <>
+                  Go home <ArrowRight className="size-4" />
+                </>
+              }
               to="/"
-              className="rounded-2xl border border-border p-6 hover:border-primary transition"
-            >
-              <p className="font-display text-lg font-semibold">Back to home</p>
-              <p className="mt-1 text-sm text-ink-muted">
-                Explore courses, events and stories while you wait.
-              </p>
-              <p className="mt-3 text-sm font-semibold text-primary inline-flex items-center gap-1">
-                Go home <ArrowRight className="size-4" />
-              </p>
-            </Link>
-          </div>
-        </section>
+            />
+          </SuccessActionGrid>
+
+          <SuccessFooterLink to="/careers">Submit another application</SuccessFooterLink>
+        </SuccessScreen>
       </SiteLayout>
     );
   }
@@ -206,7 +210,7 @@ export default function CareersPage() {
   return (
     <SiteLayout>
       <SEO
-        title="Careers — Join the 0xVerse Academy team"
+        title="Careers, Join the 0xVerse Academy team"
         description="Apply to teach or work with 0xVerse Academy. Open roles for tutors, designers, marketers and operations staff in Lagos."
         keywords="0xVerse careers, tech tutor jobs Lagos, teaching jobs, frontend tutor, UI UX tutor, work at 0xVerse"
       />
@@ -214,7 +218,7 @@ export default function CareersPage() {
       <section className="relative">
         <div className="absolute inset-0 grid-pattern opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="absolute inset-0 radial-purple" />
-        <div className="relative mx-auto max-w-7xl px-6 pt-28 pb-12">
+        <div className={`relative ${pageHeroClass} pt-24 sm:pt-28`}>
           <SectionEyebrow>We're hiring</SectionEyebrow>
           <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tighter text-balance max-w-4xl">
             Build the next generation of <span className="gradient-text">African tech talent.</span>
@@ -225,9 +229,9 @@ export default function CareersPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {[
-              { i: GraduationCap, t: "World-class tutors" },
-              { i: Briefcase, t: "Hybrid & on-site roles in Lagos" },
-              { i: Sparkles, t: "Mission-driven team" },
+              { i: GraduationCap, t: "World class tutors" },
+              { i: Briefcase, t: "Hybrid & on site roles in Lagos" },
+              { i: Sparkles, t: "Mission driven team" },
             ].map((p) => (
               <span
                 key={p.t}
@@ -241,12 +245,12 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-24 grid lg:grid-cols-12 gap-10">
+      <section className={formGridClass}>
         <div className="lg:col-span-8">
           <form
             onSubmit={onSubmit}
             noValidate
-            className="rounded-3xl border border-border bg-background p-8 lg:p-10 space-y-10"
+            className={`${formCardClass} space-y-10`}
           >
             <FormSection title="Personal information" step="01">
               <div className="grid sm:grid-cols-2 gap-4">
@@ -559,39 +563,28 @@ export default function CareersPage() {
           </form>
         </div>
 
-        <aside className="lg:col-span-4 space-y-4">
-          <div className="rounded-3xl bg-gradient-to-br from-primary to-purple-900 text-primary-foreground p-8 sticky top-24">
-            <p className="text-sm uppercase tracking-wider text-primary-foreground/70 font-semibold">
-              Why join us?
-            </p>
-            <ul className="mt-5 space-y-4">
-              {[
-                { i: Users, t: "Mission-driven team", d: "Shape Africa's tech workforce." },
-                { i: GraduationCap, t: "Teach what you love", d: "Build curriculum with real impact." },
-                { i: Briefcase, t: "Flexible work", d: "Full-time, part-time, contract or volunteer." },
-                { i: Sparkles, t: "Grow with us", d: "Be early in a fast-moving academy." },
-              ].map((b) => (
-                <li key={b.t} className="flex gap-3">
-                  <span className="size-9 grid place-items-center rounded-xl bg-white/15 shrink-0">
-                    <b.i className="size-4" />
-                  </span>
-                  <div>
-                    <p className="font-semibold">{b.t}</p>
-                    <p className="text-sm text-primary-foreground/80">{b.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <a
-              href={whatsappLink("Hi OxVerse, I have a question about the career application.")}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
-            >
-              Questions? Chat with us <ArrowRight className="size-4" />
-            </a>
-          </div>
-        </aside>
+        <FormAside className="lg:col-span-4">
+          <BenefitsPanel
+            heading="Why join us?"
+            className="lg:sticky lg:top-24"
+            items={[
+              { icon: Users, title: "Mission driven team", description: "Shape Africa's tech workforce." },
+              { icon: GraduationCap, title: "Teach what you love", description: "Build curriculum with real impact." },
+              { icon: Briefcase, title: "Flexible work", description: "Full time, part time, contract or volunteer." },
+              { icon: Sparkles, title: "Grow with us", description: "Be early in a fast moving academy." },
+            ]}
+            footer={
+              <a
+                href={whatsappLink("Hi OxVerse, I have a question about the career application.")}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 sm:mt-6 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
+              >
+                Questions? Chat with us <ArrowRight className="size-4" />
+              </a>
+            }
+          />
+        </FormAside>
       </section>
     </SiteLayout>
   );
