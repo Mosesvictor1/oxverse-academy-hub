@@ -1,0 +1,38 @@
+WEBVTT
+
+1
+00:00:00.400 --> 00:00:05.000
+APIs power literally every app you use every day.
+
+2
+00:00:08.333 --> 00:00:13.000
+But most people have no idea what they actually are.
+
+3
+00:00:19.333 --> 00:00:24.667
+The word API stands for Application Programming Interface.
+
+4
+00:00:24.833 --> 00:00:29.667
+Simplest way to understand it? A restaurant analogy.
+
+5
+00:00:35.000 --> 00:00:41.333
+YOU = the app. KITCHEN = the data. API = the waiter in between.
+
+6
+00:00:41.667 --> 00:00:47.333
+You send a request. The API delivers it. The response comes back.
+
+7
+00:00:53.333 --> 00:00:59.333
+Log in with Google? That's an API. Pay with Stripe? That's an API.
+
+8
+00:00:59.500 --> 00:01:04.667
+Without APIs, every app would have to build everything from scratch.
+
+9
+00:01:05.000 --> 00:01:08.667
+Learn full stack development at 0xverse Academy.
+
