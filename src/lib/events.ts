@@ -9,7 +9,7 @@ export type FeaturedEvent = {
   dateISO: string;
   time: string;
   location: string;
-  mode: "Online" | "In-person" | "Hybrid";
+  mode: "Online" | "In person" | "Hybrid";
   platform?: string;
   price: string;
   whatsappUrl: string;
@@ -57,7 +57,7 @@ export function getCountdownLabel(dateISO: string, now: Date = new Date()): stri
     case "2days": return "2 days to go";
     case "1day": return "1 day to go";
     case "final": return "It's happening today!";
-    case "past": return "Happening now — Day 2!";
+    case "past": return "Happening now, Day 2!";
   }
 }
 
@@ -83,11 +83,11 @@ export function useCountdownFlyer(dateISO: string) {
 export const events: FeaturedEvent[] = [
   {
     slug: "free-tech-class-june-2026",
-    title: "Start Your Tech Career for FREE — 2-Day Free Class",
+    title: "Start Your Tech Career for FREE, 2 Day Free Class",
     tagline:
-      "A 2-day free tech class to help you discover, learn and start your journey in tech.",
+      "A 2 day free tech class to help you discover, learn and start your journey in tech.",
     type: "Free Class",
-    date: "Friday & Saturday, 12–13 June 2026",
+    date: "Friday & Saturday, 12 to 13 June 2026",
     dateISO: "2026-06-12T09:00:00+01:00",
     time: "9:00 AM WAT",
     location: "Online via Google Meet",
@@ -100,12 +100,12 @@ export const events: FeaturedEvent[] = [
       { name: "Igwilo Victor", role: "Tech Instructor & Web3 Systems Architect" },
     ],
     description:
-      "It's finally here — your 2-day free tech class starts now. Join 0xVerse Academy to discover in-demand tech skills, see how AI is changing the game, and get step-by-step guidance to start your tech career.",
+      "It's finally here, your 2 day free tech class starts now. Join 0xVerse Academy to discover in demand tech skills, see how AI is changing the game, and get step by step guidance to start your tech career.",
     highlights: [
       "Start your tech career on the right path",
-      "Discover in-demand tech skills",
+      "Discover in demand tech skills",
       "Learn how AI is changing the game",
-      "Step-by-step guidance from real instructors",
+      "Step by step guidance from real instructors",
       "Real opportunities await you",
     ],
     featured: false,
