@@ -81,7 +81,7 @@ export default function ConnectPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <SEO
-        title="Connect — OxVerse Academy"
+        title="Connect, OxVerse Academy"
         description="Follow OxVerse Academy across WhatsApp, Instagram, TikTok, YouTube, X and Facebook."
       />
       <Header />
@@ -199,7 +199,7 @@ export default function ConnectPage() {
             <div className="rounded-full bg-white/95 shadow-md">
               <div className="flex items-center justify-center px-4 py-3">
                 <span className="font-display text-sm font-semibold text-black text-center">
-                  OxVerse Academy — Learn Today. Build Tomorrow.
+                  OxVerse Academy, Learn Today. Build Tomorrow.
                 </span>
               </div>
             </div>
