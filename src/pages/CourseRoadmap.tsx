@@ -34,7 +34,7 @@ export default function CourseRoadmapPage() {
   if (!roadmap || !course) {
     return (
       <SiteLayout>
-        <SEO title="Roadmap not found — OxVerse Academy" />
+        <SEO title="Roadmap not found, OxVerse Academy" />
         <div className="mx-auto max-w-2xl px-6 py-32 text-center">
           <h1 className="font-display text-4xl font-bold">Roadmap not found</h1>
           <Link to="/courses" className="mt-6 inline-flex text-primary font-semibold">View all courses</Link>
@@ -67,7 +67,7 @@ export default function CourseRoadmapPage() {
       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
+        position = heightLeft, imgHeight;
         pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
@@ -84,7 +84,7 @@ export default function CourseRoadmapPage() {
   return (
     <SiteLayout>
       <SEO
-        title={`${roadmap.title} Roadmap — OxVerse Academy`}
+        title={`${roadmap.title} Roadmap, OxVerse Academy`}
         description={`The complete learning journey for ${roadmap.title}: modules, tools, projects, certification and careers.`}
         canonical={`https://oxverse.academy/courses/${roadmap.slug}/roadmap`}
       />
@@ -145,7 +145,7 @@ export default function CourseRoadmapPage() {
         <section className="mx-auto max-w-6xl px-6 py-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight">From beginner to advanced</h2>
           <p className="mt-3 text-ink-muted max-w-2xl">
-            A clear, milestone-driven progression. Each stage builds on the last so you always know what you're working toward.
+            A clear, milestone driven progression. Each stage builds on the last so you always know what you're working toward.
           </p>
           <div className="mt-10 relative">
             <div aria-hidden className="hidden md:block absolute left-6 top-2 bottom-2 w-px bg-gradient-to-b from-primary/60 via-border to-primary/60" />
