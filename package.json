@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "export-captions": "node scripts/export-captions.mjs"
+    "export-captions": "node scripts/export-captions.mjs",
+    "optimize-posters": "node scripts/optimize-posters.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
