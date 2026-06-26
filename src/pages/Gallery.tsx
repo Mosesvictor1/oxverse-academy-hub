@@ -1,24 +1,17 @@
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { VideoPanel } from "@/components/site/VideoPanel";
-import hero from "@/assets/hero-oxverse-student.jpg";
-import promo from "@/assets/promo-student-1.jpg";
-import campus from "@/assets/campus.jpg";
-import students from "@/assets/students-group.jpg";
-import frontend from "@/assets/courses/frontend.jpg";
-import ai from "@/assets/courses/ai.jpg";
-import uiux from "@/assets/courses/uiux.jpg";
-import data from "@/assets/courses/data.jpg";
+import { LazyPoster } from "@/components/site/LazyPoster";
 
 const photos = [
-  { src: hero, alt: "OxVerse student at campus" },
-  { src: promo, alt: "Student learning session" },
-  { src: campus, alt: "OxVerse Lagos campus" },
-  { src: students, alt: "OxVerse student group" },
-  { src: frontend, alt: "Frontend development class" },
-  { src: ai, alt: "AI and machine learning session" },
-  { src: uiux, alt: "UI/UX design workshop" },
-  { src: data, alt: "Data analytics training" },
+  { src: "/gallery/hero-oxverse-student.jpg", alt: "OxVerse student at campus" },
+  { src: "/gallery/promo-student-1.jpg", alt: "Student learning session" },
+  { src: "/gallery/campus.jpg", alt: "OxVerse Lagos campus" },
+  { src: "/gallery/students-group.jpg", alt: "OxVerse student group" },
+  { src: "/gallery/courses-frontend.jpg", alt: "Frontend development class" },
+  { src: "/gallery/courses-ai.jpg", alt: "AI and machine learning session" },
+  { src: "/gallery/courses-uiux.jpg", alt: "UI/UX design workshop" },
+  { src: "/gallery/courses-data.jpg", alt: "Data analytics training" },
 ];
 
 export default function GalleryPage() {
@@ -50,9 +43,19 @@ export default function GalleryPage() {
           Life at OxVerse.
         </h2>
         <div className="mt-10 columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-          {photos.map((photo, i) => (
-            <div key={i} className="mb-4 break-inside-avoid rounded-3xl overflow-hidden border border-border">
-              <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-auto" />
+          {photos.map((photo) => (
+            <div
+              key={photo.src}
+              className="mb-4 break-inside-avoid rounded-3xl overflow-hidden border border-border bg-muted/40"
+            >
+              <LazyPoster
+                src={photo.src}
+                alt={photo.alt}
+                layout="photo"
+                rootMargin="400px"
+                width={960}
+                height={640}
+              />
             </div>
           ))}
         </div>
