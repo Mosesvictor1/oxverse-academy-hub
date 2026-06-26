@@ -37,6 +37,7 @@ export function Footer() {
               <p className="font-display font-semibold mb-4">Academy</p>
               <ul className="space-y-2 text-sm text-ink-muted">
                 <li><Link to="/about" className="hover:text-ink">About</Link></li>
+                <li><Link to="/faculty" className="hover:text-ink">Faculty</Link></li>
                 <li><Link to="/courses" className="hover:text-ink">Courses</Link></li>
                 <li><Link to="/events" className="hover:text-ink">Events</Link></li>
                 <li><Link to="/gallery" className="hover:text-ink">Gallery</Link></li>
