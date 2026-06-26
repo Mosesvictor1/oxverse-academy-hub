@@ -23,7 +23,10 @@ export type Video = {
   series: VideoSeries;
   orientation: VideoOrientation;
   duration: string;
+  /** Small WebP for gallery cards (~320px) */
   poster: string;
+  /** Medium WebP for the video player (~640px) */
+  posterPlay: string;
   src: string;
   /** WebVTT path when captions were exported from Remotion */
   captions?: string;
@@ -99,7 +102,10 @@ import captionSlugs from "./captionSlugs.json";
 
 const captionSlugSet = new Set<string>(captionSlugs);
 
-type VideoSeed = Omit<Video, "slug" | "poster" | "src" | "captions" | "hasCaptions" | "published"> & {
+type VideoSeed = Omit<
+  Video,
+  "slug" | "poster" | "posterPlay" | "src" | "captions" | "hasCaptions" | "published"
+> & {
   file: string;
 };
 
@@ -109,7 +115,8 @@ function remotionVideo({ file, ...meta }: VideoSeed): Video {
   return {
     ...meta,
     slug,
-    poster: `/videos/posters/${slug}.jpg`,
+    poster: `/videos/thumbs/${slug}.jpg`,
+    posterPlay: `/videos/posters/${slug}.jpg`,
     src: `/videos/${file}`,
     captions: hasCaptions ? `/videos/captions/${slug}.vtt` : undefined,
     hasCaptions,
