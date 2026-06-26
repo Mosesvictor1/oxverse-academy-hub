@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { SectionEyebrow } from "@/components/site/SiteLayout";
+import { LazyPoster } from "@/components/site/LazyPoster";
 import {
   categoryOrder,
   gallerySeriesTabs,
@@ -25,6 +26,7 @@ const CARD_CLASS = "w-[148px] sm:w-[160px] shrink-0";
 function VideoPlayer({
   src,
   poster,
+  posterPlay,
   title,
   orientation,
   captions,
@@ -32,6 +34,7 @@ function VideoPlayer({
 }: {
   src: string;
   poster: string;
+  posterPlay: string;
   title: string;
   orientation: VideoOrientation;
   captions?: string;
@@ -61,8 +64,8 @@ function VideoPlayer({
           ref={ref}
           controls
           playsInline
-          preload="metadata"
-          poster={poster}
+          preload="none"
+          poster={posterPlay || poster}
           aria-label={title}
           className="size-full object-contain"
         >
@@ -91,11 +94,10 @@ function CompactVideoCard({ video, onPlay }: { video: Video; onPlay: () => void 
       className={`group text-left rounded-2xl overflow-hidden border border-border/80 bg-background hover:border-primary/30 transition-colors ${CARD_CLASS}`}
     >
       <div className="relative aspect-[9/16] w-full overflow-hidden bg-black">
-        <img
+        <LazyPoster
           src={video.poster}
-          alt=""
-          loading="lazy"
-          className="absolute inset-0 size-full object-contain"
+          width={320}
+          height={569}
         />
         <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
         <div className="absolute top-2 left-2 flex items-center gap-1">
@@ -410,6 +412,7 @@ export function VideoPanel() {
                 <VideoPlayer
                   src={active.src}
                   poster={active.poster}
+                  posterPlay={active.posterPlay}
                   title={active.title}
                   orientation={active.orientation}
                   captions={active.captions}
