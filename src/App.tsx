@@ -22,6 +22,7 @@ import AmbassadorOnboardPage from "./pages/AmbassadorOnboard";
 import DashboardPage from "./pages/Dashboard";
 import ConnectPage from "./pages/Connect";
 import CareersPage from "./pages/Careers";
+import SummerBootcampPage from "./pages/SummerBootcamp";
 import NotFoundPage from "./pages/NotFound";
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/connect" element={<ConnectPage />} />
       <Route path="/careers" element={<CareersPage />} />
+      <Route path="/summer-tech-bootcamp" element={<SummerBootcampPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
