@@ -23,8 +23,9 @@ import DashboardPage from "./pages/Dashboard";
 import ConnectPage from "./pages/Connect";
 import CareersPage from "./pages/Careers";
 import FacultyPage from "./pages/Faculty";
+import SummerBootcampPage from "./pages/SummerBootcamp";
 import NotFoundPage from "./pages/NotFound";
-
+// app
 export default function App() {
   return (
     <Routes>
@@ -53,6 +54,7 @@ export default function App() {
       <Route path="/connect" element={<ConnectPage />} />
       <Route path="/careers" element={<CareersPage />} />
       <Route path="/faculty" element={<FacultyPage />} />
+      <Route path="/summer-tech-bootcamp" element={<SummerBootcampPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

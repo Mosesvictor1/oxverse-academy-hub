@@ -40,7 +40,6 @@ const groups = [
     ],
   },
 ];
-
 export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -138,6 +137,20 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
 
         {/* Right-side actions */}
         <div className="hidden xl:flex shrink-0 items-center gap-2 ml-auto">
+            {/* { to: "/summer-tech-bootcamp", label: "Summer Class" }, */}
+            <NavLink
+            to="/summer-tech-bootcamp"
+            className={({ isActive }) =>
+              cn(
+                "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                onDark
+                  ? isActive ? "text-white font-semibold" : "text-white/80 hover:text-white"
+                  : isActive ? "text-primary font-semibold" : "text-ink-muted hover:text-ink"
+              )
+            }
+          >
+            Summer Class
+          </NavLink>
           <NavLink
             to="/register"
             className={({ isActive }) =>
@@ -151,6 +164,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
           >
             Register
           </NavLink>
+
           <ThemeToggle />
           <Link
             to="/waitlist"
