@@ -59,6 +59,7 @@ export const HEARD_FROM_OPTIONS = [
 
 export type SubmissionType =
   | "Waitlist"
+  | "Newsletter"
   | "Contact Us"
   | "Free Class"
   | "Register"
