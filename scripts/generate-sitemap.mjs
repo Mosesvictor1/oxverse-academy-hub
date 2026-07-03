@@ -45,6 +45,7 @@ const routes = [
   { path: "/connect", changefreq: "monthly", priority: "0.6" },
   { path: "/waitlist", changefreq: "weekly", priority: "0.5" },
   { path: "/register", changefreq: "weekly", priority: "0.7" },
+  { path: "/summer-tech-bootcamp", changefreq: "weekly", priority: "0.8" },
   { path: "/ambassador", changefreq: "monthly", priority: "0.6" },
   { path: "/careers", changefreq: "weekly", priority: "0.7" },
 ];
