@@ -2,6 +2,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Sparkles, ArrowRight, GraduationCap, Gift, Check, Tag } from "lucide-react";
+import { usePrivy } from "@privy-io/react-auth";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
@@ -40,6 +41,7 @@ const schema = z.object({
 });
 
 export default function RegisterPage() {
+  const { authenticated, login } = usePrivy();
   const [params] = useSearchParams();
   const routeParams = useParams();
   const initialCourse = params.get("course") || "";
@@ -58,7 +60,6 @@ export default function RegisterPage() {
   useEffect(() => {
     const code = getReferralCodeFromUrl(routeParams.ref);
     if (code) setForm((f) => (f.ref ? f : { ...f, ref: code }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeParams.ref]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -109,7 +110,8 @@ export default function RegisterPage() {
   }
 
   if (success) {
-    const courseTitle = courses.find((c) => c.slug === success.courseSlug)?.title ?? "your registration";
+    const courseTitle =
+      courses.find((c) => c.slug === success.courseSlug)?.title ?? "your registration";
     const firstName = success.fullName.split(" ")[0];
     const displayEmail = success.email.toLowerCase();
 
@@ -120,7 +122,8 @@ export default function RegisterPage() {
           <SuccessCard eyebrow="Registration confirmed" title={`You're in, ${firstName}!`}>
             <SuccessDetail label="Course registered">{courseTitle}</SuccessDetail>
             <SuccessParagraph>
-              We&apos;ll email <strong className="font-semibold break-all">{displayEmail}</strong> with your next steps.
+              We&apos;ll email <strong className="font-semibold break-all">{displayEmail}</strong>{" "}
+              with your next steps.
             </SuccessParagraph>
             <SuccessParagraph>
               You&apos;ll also receive <strong>your personal referral link</strong>, earn a{" "}
@@ -134,6 +137,14 @@ export default function RegisterPage() {
             <SuccessCta href={whatsappLink(`Hi OxVerse, I just registered for ${courseTitle}.`)}>
               Join our WhatsApp community
             </SuccessCta>
+            {!authenticated && (
+              <button
+                onClick={() => login({ prefill: { type: "email", value: displayEmail } })}
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-3 font-semibold text-ink hover:border-ink transition"
+              >
+                Create your OxVerse Web3 identity <ArrowRight className="size-4" />
+              </button>
+            )}
           </SuccessCard>
           <SuccessFooterLink to="/courses">← Explore other courses</SuccessFooterLink>
         </SuccessScreen>
@@ -157,8 +168,8 @@ export default function RegisterPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-ink-muted text-pretty">
             Pick the course you want to take, tell us a bit about you, and we'll guide you through
-            the next steps. You'll also receive your personal <strong>referral link</strong> by email
-           , earn <strong>5%</strong> on every paid enrollment that comes through it.
+            the next steps. You'll also receive your personal <strong>referral link</strong> by
+            email , earn <strong>5%</strong> on every paid enrollment that comes through it.
           </p>
         </div>
       </section>
@@ -168,28 +179,61 @@ export default function RegisterPage() {
           <form onSubmit={onSubmit} noValidate className={formCardClass}>
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Full name" error={errors.fullName}>
-                <input className="input" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="John Smith" maxLength={100} required />
+                <input
+                  className="input"
+                  value={form.fullName}
+                  onChange={(e) => update("fullName", e.target.value)}
+                  placeholder="John Smith"
+                  maxLength={100}
+                  required
+                />
               </Field>
               <Field label="Email" error={errors.email}>
-                <input className="input" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@email.com" maxLength={255} required />
+                <input
+                  className="input"
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  placeholder="you@email.com"
+                  maxLength={255}
+                  required
+                />
               </Field>
             </div>
             <Field label="Phone / WhatsApp" error={errors.phone}>
-              <input className="input" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+234 …" maxLength={20} required />
+              <input
+                className="input"
+                value={form.phone}
+                onChange={(e) => update("phone", e.target.value)}
+                placeholder="+234 …"
+                maxLength={20}
+                required
+              />
             </Field>
             <Field label="Which course are you registering for?" error={errors.courseSlug}>
-              <select className="input" value={form.courseSlug} onChange={(e) => update("courseSlug", e.target.value)} required>
+              <select
+                className="input"
+                value={form.courseSlug}
+                onChange={(e) => update("courseSlug", e.target.value)}
+                required
+              >
                 <option value="">Select a course…</option>
                 {courses.map((c) => (
-                  <option key={c.slug} value={c.slug}>{c.title}</option>
+                  <option key={c.slug} value={c.slug}>
+                    {c.title}
+                  </option>
                 ))}
               </select>
             </Field>
             <Field label="Your current skill level">
               <div className="flex flex-wrap gap-2">
                 {(["None", "Beginner", "Intermediate", "Advanced"] as const).map((lvl) => (
-                  <button type="button" key={lvl} onClick={() => update("experience", lvl)}
-                    className={`rounded-full px-4 py-2 text-sm font-medium border transition ${form.experience === lvl ? "bg-ink text-background border-ink" : "border-border text-ink-muted hover:border-ink hover:text-ink"}`}>
+                  <button
+                    type="button"
+                    key={lvl}
+                    onClick={() => update("experience", lvl)}
+                    className={`rounded-full px-4 py-2 text-sm font-medium border transition ${form.experience === lvl ? "bg-ink text-background border-ink" : "border-border text-ink-muted hover:border-ink hover:text-ink"}`}
+                  >
                     {lvl}
                   </button>
                 ))}
@@ -197,20 +241,44 @@ export default function RegisterPage() {
             </Field>
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Location" error={errors.location}>
-                <select className="input" value={form.location} onChange={(e) => update("location", e.target.value)} required>
+                <select
+                  className="input"
+                  value={form.location}
+                  onChange={(e) => update("location", e.target.value)}
+                  required
+                >
                   <option value="">Select your state…</option>
-                  {NIGERIAN_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  {NIGERIAN_STATES.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
                 </select>
               </Field>
               <Field label="How did you hear about us?" error={errors.heardFrom}>
-                <select className="input" value={form.heardFrom} onChange={(e) => update("heardFrom", e.target.value)} required>
+                <select
+                  className="input"
+                  value={form.heardFrom}
+                  onChange={(e) => update("heardFrom", e.target.value)}
+                  required
+                >
                   <option value="">Select an option…</option>
-                  {HEARD_FROM_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+                  {HEARD_FROM_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
                 </select>
               </Field>
             </div>
             <Field label="What do you hope to achieve? (optional)" error={errors.reason}>
-              <textarea className="input resize-none" rows={4} value={form.reason} onChange={(e) => update("reason", e.target.value)} maxLength={500} />
+              <textarea
+                className="input resize-none"
+                rows={4}
+                value={form.reason}
+                onChange={(e) => update("reason", e.target.value)}
+                maxLength={500}
+              />
             </Field>
             <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
               <div className="flex items-center gap-2 text-primary font-semibold text-sm">
@@ -218,8 +286,9 @@ export default function RegisterPage() {
               </div>
               <p className="mt-1.5 text-xs text-ink-muted">
                 Were you referred by someone? Enter their code, both you and your referrer benefit.
-                If you clicked a personal link (e.g. <span className="font-mono">/register/VICTOROXVERSE023</span>),
-                we filled it in automatically.
+                If you clicked a personal link (e.g.{" "}
+                <span className="font-mono">/register/VICTOROXVERSE023</span>), we filled it in
+                automatically.
               </p>
               <div className="mt-4">
                 <Field label="Referral code" error={errors.ref}>
@@ -235,9 +304,18 @@ export default function RegisterPage() {
               </div>
             </div>
             {remoteError && <p className="text-sm text-red-600">{remoteError}</p>}
-            <button type="submit" disabled={submitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition disabled:opacity-60">
-              {submitting ? "Registering..." : <>Complete registration <ArrowRight className="size-4" /></>}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-ink text-background px-6 py-4 font-semibold hover:bg-primary transition disabled:opacity-60"
+            >
+              {submitting ? (
+                "Registering..."
+              ) : (
+                <>
+                  Complete registration <ArrowRight className="size-4" />
+                </>
+              )}
             </button>
           </form>
         </div>
@@ -246,10 +324,26 @@ export default function RegisterPage() {
           <BenefitsPanel
             heading="Why register with OxVerse?"
             items={[
-              { icon: GraduationCap, title: "Talk to instructors", description: "Direct line to the lead instructor of your course." },
-              { icon: Check, title: "See the curriculum", description: "Walk through modules, projects, and what you'll ship." },
-              { icon: Gift, title: "Earn 5% on referrals", description: "Get your personal referral link by email, earn on every paid signup." },
-              { icon: Sparkles, title: "Priority admission", description: "Registered students are reviewed first when seats open." },
+              {
+                icon: GraduationCap,
+                title: "Talk to instructors",
+                description: "Direct line to the lead instructor of your course.",
+              },
+              {
+                icon: Check,
+                title: "See the curriculum",
+                description: "Walk through modules, projects, and what you'll ship.",
+              },
+              {
+                icon: Gift,
+                title: "Earn 5% on referrals",
+                description: "Get your personal referral link by email, earn on every paid signup.",
+              },
+              {
+                icon: Sparkles,
+                title: "Priority admission",
+                description: "Registered students are reviewed first when seats open.",
+              },
             ]}
           />
         </FormAside>
@@ -258,7 +352,15 @@ export default function RegisterPage() {
   );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="block">
       <span className="text-sm font-medium text-ink">{label}</span>
