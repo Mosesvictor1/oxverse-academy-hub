@@ -26,6 +26,36 @@ import {
 } from "@/lib/enrollment";
 
 export default function DashboardPage() {
+  if (!hasPrivyAppId) return <DashboardMissingPrivy />;
+  return <DashboardWithPrivy />;
+}
+
+const hasPrivyAppId = Boolean(
+  import.meta.env.VITE_PRIVY_APP_ID && import.meta.env.VITE_PRIVY_APP_ID !== "...",
+);
+
+function DashboardMissingPrivy() {
+  return (
+    <SiteLayout>
+      <SEO title="Student Dashboard, OxVerse Academy" noIndex />
+      <section className="mx-auto max-w-2xl px-6 py-32 text-center">
+        <h1 className="font-display text-4xl font-bold">Web3 identity setup needed</h1>
+        <p className="mt-3 text-ink-muted">
+          Add your Privy app id to `.env.local`, restart the dev server, and the wallet onboarding
+          dashboard will open.
+        </p>
+        <Link
+          to="/courses"
+          className="mt-6 inline-flex rounded-full bg-ink text-background px-6 py-3 font-semibold hover:bg-primary transition"
+        >
+          Explore courses
+        </Link>
+      </section>
+    </SiteLayout>
+  );
+}
+
+function DashboardWithPrivy() {
   const [params] = useSearchParams();
   const id = params.get("id") ?? undefined;
   const [apps, setApps] = useState<Application[]>([]);

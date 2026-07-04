@@ -22,6 +22,12 @@ import {
 } from "@/components/site/SuccessScreen";
 import { BenefitsPanel, FormAside } from "@/components/site/BenefitsPanel";
 
+const hasPrivyAppId = Boolean(
+  import.meta.env.VITE_PRIVY_APP_ID && import.meta.env.VITE_PRIVY_APP_ID !== "...",
+);
+
+type LoginWithEmail = (args: { prefill: { type: "email"; value: string } }) => void;
+
 const schema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(100),
   email: z.string().trim().email("Enter a valid email").max(255),
@@ -41,7 +47,22 @@ const schema = z.object({
 });
 
 export default function RegisterPage() {
+  if (!hasPrivyAppId) return <RegisterPageContent authenticated={false} />;
+  return <RegisterPageWithPrivy />;
+}
+
+function RegisterPageWithPrivy() {
   const { authenticated, login } = usePrivy();
+  return <RegisterPageContent authenticated={authenticated} login={login} />;
+}
+
+function RegisterPageContent({
+  authenticated,
+  login,
+}: {
+  authenticated: boolean;
+  login?: LoginWithEmail;
+}) {
   const [params] = useSearchParams();
   const routeParams = useParams();
   const initialCourse = params.get("course") || "";
@@ -137,7 +158,7 @@ export default function RegisterPage() {
             <SuccessCta href={whatsappLink(`Hi OxVerse, I just registered for ${courseTitle}.`)}>
               Join our WhatsApp community
             </SuccessCta>
-            {!authenticated && (
+            {!authenticated && login && (
               <button
                 onClick={() => login({ prefill: { type: "email", value: displayEmail } })}
                 className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-3 font-semibold text-ink hover:border-ink transition"
