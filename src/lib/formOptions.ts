@@ -84,9 +84,16 @@ export const AMBASSADOR_CATEGORIES = [
  * The endpoint always receives a `type` field so records can be filtered in the sheet.
  */
 export async function submitToSheet(payload: Record<string, string> & { type: SubmissionType }) {
+  try {
+    await submitLead(payload);
+    return new Response(null, { status: 201 });
+  } catch (error) {
+    console.warn("Neon submission failed, falling back to Google Sheets", error);
+  }
   const body = new URLSearchParams();
   Object.entries(payload).forEach(([k, v]) => body.append(k, v ?? ""));
   const res = await fetch(SUBMIT_ENDPOINT, { method: "POST", body });
   if (!res.ok) throw new Error(`Submission failed: ${res.status}`);
   return res;
 }
+import { submitLead } from "@/lib/api";
