@@ -25,12 +25,14 @@ import CareersPage from "./pages/Careers";
 import FacultyPage from "./pages/Faculty";
 import SummerBootcampPage from "./pages/SummerBootcamp";
 import NotFoundPage from "./pages/NotFound";
+import AiEngineeringPage from "./pages/AiEngineering";
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/courses" element={<CoursesPage />} />
+      <Route path="/courses/ai-engineering" element={<AiEngineeringPage />} />
       <Route path="/courses/:slug" element={<CourseDetailPage />} />
       <Route path="/courses/:slug/roadmap" element={<CourseRoadmapPage />} />
       <Route path="/enroll/:slug" element={<EnrollPage />} />
