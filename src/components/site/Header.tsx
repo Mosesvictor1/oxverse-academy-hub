@@ -100,6 +100,11 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
             Courses
           </NavLink>
 
+          {/* Standalone: Tracks */}
+          <NavLink to="/tracks" className={directLinkClass}>
+            Tracks
+          </NavLink>
+
           {/* Grouped dropdowns */}
           <NavigationMenu>
             <NavigationMenuList className="gap-0">
@@ -201,6 +206,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
               {[
                 { to: "/", label: "Home" },
                 { to: "/courses", label: "Courses" },
+                { to: "/tracks", label: "Tracks" },
                 { to: "/register", label: "Register" },
               ].map((n) => (
                 <Link
