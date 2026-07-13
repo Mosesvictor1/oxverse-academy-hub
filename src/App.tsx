@@ -4,6 +4,9 @@ import AboutPage from "./pages/About";
 import CoursesPage from "./pages/Courses";
 import CourseDetailPage from "./pages/CourseDetail";
 import CourseRoadmapPage from "./pages/CourseRoadmap";
+import TracksPage from "./pages/Tracks";
+import TrackDetailPage from "./pages/TrackDetail";
+import TrackPathPage from "./pages/TrackPath";
 import EnrollPage from "./pages/Enroll";
 import EventsPage from "./pages/Events";
 import EventDetailPage from "./pages/EventDetail";
@@ -33,6 +36,9 @@ export default function App() {
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/courses/:slug" element={<CourseDetailPage />} />
       <Route path="/courses/:slug/roadmap" element={<CourseRoadmapPage />} />
+      <Route path="/tracks" element={<TracksPage />} />
+      <Route path="/tracks/:slug" element={<TrackDetailPage />} />
+      <Route path="/tracks/:slug/:pathSlug" element={<TrackPathPage />} />
       <Route path="/enroll/:slug" element={<EnrollPage />} />
       <Route path="/events" element={<EventsPage />} />
       <Route path="/events/:slug" element={<EventDetailPage />} />
