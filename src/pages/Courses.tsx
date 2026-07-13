@@ -49,7 +49,7 @@ export default function CoursesPage() {
     });
     if (sort === "A to Z") list = [...list].sort((a, b) => a.title.localeCompare(b.title));
     if (sort === "Duration")
-      list = [...list].sort((a, b) => parseInt(a.duration), parseInt(b.duration));
+      list = [...list].sort((a, b) => parseInt(a.duration) - parseInt(b.duration));
     return list;
   }, [q, cat, level, sched, dur, sort]);
 

@@ -15,6 +15,7 @@ import {
   SuccessActionCard,
   SuccessFooterLink,
   formCardClass,
+  formGridClass,
   pageHeroClass,
   pageSectionClass,
 } from "@/components/site/SuccessScreen";
