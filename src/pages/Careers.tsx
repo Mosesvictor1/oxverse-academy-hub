@@ -245,7 +245,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className={formGridClass}>
+      <section className={`${pageSectionClass} grid lg:grid-cols-12 gap-8`}>
         <div className="lg:col-span-8">
           <form
             onSubmit={onSubmit}
