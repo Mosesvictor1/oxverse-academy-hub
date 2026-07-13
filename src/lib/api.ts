@@ -17,7 +17,7 @@ export type UserSync = {
 
 export type LeadSubmission = Record<string, string> & { type: string };
 
-async function authHeaders() {
+async function authHeaders(): Promise<Record<string, string>> {
   const token = await getAccessToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
