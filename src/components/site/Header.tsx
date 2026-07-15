@@ -100,6 +100,11 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
             Courses
           </NavLink>
 
+          {/* Standalone: Curriculum */}
+          <NavLink to="/curriculum" className={directLinkClass}>
+            Curriculum
+          </NavLink>
+
           {/* Standalone: Tracks */}
           <NavLink to="/tracks" className={directLinkClass}>
             Tracks
@@ -206,6 +211,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
               {[
                 { to: "/", label: "Home" },
                 { to: "/courses", label: "Courses" },
+                { to: "/curriculum", label: "Curriculum" },
                 { to: "/tracks", label: "Tracks" },
                 { to: "/register", label: "Register" },
               ].map((n) => (

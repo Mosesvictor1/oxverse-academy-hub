@@ -29,6 +29,8 @@ import FacultyPage from "./pages/Faculty";
 import SummerBootcampPage from "./pages/SummerBootcamp";
 import NotFoundPage from "./pages/NotFound";
 import AiEngineeringPage from "./pages/AiEngineering";
+import CurriculumIndexPage from "./pages/CurriculumIndex";
+import CurriculumDetailPage from "./pages/CurriculumDetail";
 export default function App() {
   return (
     <Routes>
@@ -38,6 +40,8 @@ export default function App() {
       <Route path="/courses/ai-engineering" element={<AiEngineeringPage />} />
       <Route path="/courses/:slug" element={<CourseDetailPage />} />
       <Route path="/courses/:slug/roadmap" element={<CourseRoadmapPage />} />
+      <Route path="/curriculum" element={<CurriculumIndexPage />} />
+      <Route path="/curriculum/:slug" element={<CurriculumDetailPage />} />
       <Route path="/tracks" element={<TracksPage />} />
       <Route path="/tracks/:slug" element={<TrackDetailPage />} />
       <Route path="/tracks/:slug/:pathSlug" element={<TrackPathPage />} />
