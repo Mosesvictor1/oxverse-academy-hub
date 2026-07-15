@@ -174,6 +174,19 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
           >
             Register
           </NavLink>
+          <NavLink
+            to="/it-registration"
+            className={({ isActive }) =>
+              cn(
+                "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                onDark
+                  ? isActive ? "text-white font-semibold" : "text-white/80 hover:text-white"
+                  : isActive ? "text-primary font-semibold" : "text-ink-muted hover:text-ink"
+              )
+            }
+          >
+            IT Registration
+          </NavLink>
 
           <ThemeToggle />
           <Link
@@ -214,6 +227,7 @@ export function Header({ topOffset = 0 }: { topOffset?: number } = {}) {
                 { to: "/curriculum", label: "Curriculum" },
                 { to: "/tracks", label: "Tracks" },
                 { to: "/register", label: "Register" },
+                { to: "/it-registration", label: "IT Registration" },
               ].map((n) => (
                 <Link
                   key={n.to}

@@ -66,7 +66,8 @@ export type SubmissionType =
   | "event-registration"
   | "Ambassador"
   | "Ambassador Onboarding"
-  | "Summer Bootcamp";
+  | "Summer Bootcamp"
+  | "IT";
 
 export const AMBASSADOR_CATEGORIES = [
   "NYSC",

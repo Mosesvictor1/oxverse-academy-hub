@@ -18,6 +18,7 @@ import FAQPage from "./pages/FAQ";
 import TestimonialsPage from "./pages/Testimonials";
 import WaitlistPage from "./pages/Waitlist";
 import RegisterPage from "./pages/Register";
+import ITRegistrationPage from "./pages/ITRegistration";
 import { Navigate } from "react-router-dom";
 import ApplicationsPage from "./pages/Applications";
 import AmbassadorPage from "./pages/Ambassador";
@@ -57,6 +58,7 @@ export default function App() {
       <Route path="/waitlist" element={<WaitlistPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/register/:ref" element={<RegisterPage />} />
+      <Route path="/it-registration" element={<ITRegistrationPage />} />
       <Route path="/free-class" element={<Navigate to="/register" replace />} />
       <Route path="/applications" element={<ApplicationsPage />} />
       <Route path="/ambassador" element={<AmbassadorPage />} />
