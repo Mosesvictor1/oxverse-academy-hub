@@ -6,13 +6,9 @@ import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
 import { submitToSheet } from "@/lib/formOptions";
 import { uploadToCloudinary } from "@/lib/cloudinary";
-import { whatsappLink } from "@/lib/site";
+import { getCoursePrice } from "@/lib/coursePricing";
+import { PaymentInstructions } from "@/components/site/PaymentInstructions";
 import {
-  SuccessScreen,
-  SuccessCard,
-  SuccessDetail,
-  SuccessParagraph,
-  SuccessCta,
   SuccessFooterLink,
   formCardClass,
   formGridClass,
