@@ -6,13 +6,9 @@ import { SEO } from "@/components/site/SEO";
 import { courses } from "@/lib/courses";
 import { submitToSheet } from "@/lib/formOptions";
 import { uploadToCloudinary } from "@/lib/cloudinary";
-import { whatsappLink } from "@/lib/site";
+import { getCoursePrice } from "@/lib/coursePricing";
+import { PaymentInstructions } from "@/components/site/PaymentInstructions";
 import {
-  SuccessScreen,
-  SuccessCard,
-  SuccessDetail,
-  SuccessParagraph,
-  SuccessCta,
   SuccessFooterLink,
   formCardClass,
   formGridClass,
@@ -153,30 +149,25 @@ export default function ITRegistrationPage() {
   }
 
   if (success) {
-    const courseTitle =
-      courses.find((c) => c.slug === success.courseSlug)?.title ?? "your placement";
-    const firstName = success.fullName.split(" ")[0];
+    const course = courses.find((c) => c.slug === success.courseSlug);
+    const courseTitle = course?.title ?? "your placement";
+    const price = getCoursePrice(success.courseSlug) ?? 0;
     return (
       <SiteLayout>
-        <SEO title="IT application received, OxVerse Academy" />
-        <SuccessScreen>
-          <SuccessCard eyebrow="IT application received" title={`Thanks, ${firstName}!`}>
-            <SuccessDetail label="Placement track">{courseTitle}</SuccessDetail>
-            <SuccessDetail label="Institution">{success.institutionName}</SuccessDetail>
-            <SuccessDetail label="Duration">{success.itDuration}</SuccessDetail>
-            <SuccessParagraph>
-              Our IT coordinator will review your application and reach out on{" "}
-              <strong>{success.email}</strong> within 2 working days.
-            </SuccessParagraph>
-            <SuccessCta href={whatsappLink(`Hi OxVerse, I just applied for IT (${courseTitle}).`)}>
-              Message the IT coordinator on WhatsApp
-            </SuccessCta>
-          </SuccessCard>
+        <SEO title="Complete your payment, OxVerse Academy" />
+        <PaymentInstructions
+          courseTitle={courseTitle}
+          price={price}
+          applicantName={success.fullName}
+          applicantEmail={success.email}
+        />
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 -mt-8 pb-16 text-center">
           <SuccessFooterLink to="/">← Back to home</SuccessFooterLink>
-        </SuccessScreen>
+        </div>
       </SiteLayout>
     );
   }
+
 
   return (
     <SiteLayout>
