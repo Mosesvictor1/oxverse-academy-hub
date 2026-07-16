@@ -32,6 +32,7 @@ import NotFoundPage from "./pages/NotFound";
 import AiEngineeringPage from "./pages/AiEngineering";
 import CurriculumIndexPage from "./pages/CurriculumIndex";
 import CurriculumDetailPage from "./pages/CurriculumDetail";
+// app
 export default function App() {
   return (
     <Routes>
