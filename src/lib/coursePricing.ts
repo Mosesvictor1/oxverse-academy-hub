@@ -12,9 +12,9 @@ export const COURSE_PRICES_NGN: Record<string, number> = {
   "digital-marketing": 200_000,
   "full-stack-development": 400_000,
   "artificial-intelligence": 450_000,
-  "ai-engineering": 450_000,
-  "ai-automation": 450_000,
-  "ai-vibe-coding": 450_000,
+  "ai-engineering": 200_000,
+  "ai-automation": 150_000,
+  "ai-vibe-coding": 150_000,
 };
 
 export const BANK_DETAILS = {
