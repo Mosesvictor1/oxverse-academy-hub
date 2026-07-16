@@ -16,7 +16,7 @@ import {
 } from "@/components/site/SuccessScreen";
 import { BenefitsPanel, FormAside } from "@/components/site/BenefitsPanel";
 
-const IT_DURATIONS = ["3 Months", "4 Months", "6 Months", "12 Months"] as const;
+const IT_DURATIONS = ["2 month", "3 Months", "4 Months", "6 Months", "12 Months"] as const;
 const CURRENT_LEVELS = [
   "100 Level", "200 Level", "300 Level", "400 Level", "500 Level",
   "ND1", "ND2", "HND1", "HND2", "Other",
