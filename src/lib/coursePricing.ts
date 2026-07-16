@@ -2,7 +2,7 @@
 // after a successful registration submission, never listed publicly.
 
 export const COURSE_PRICES_NGN: Record<string, number> = {
-  "frontend-development": 150_000,
+  "frontend-development": 200_000,
   "backend-development": 200_000,
   "graphics-design": 150_000,
   "mobile-development": 200_000,
