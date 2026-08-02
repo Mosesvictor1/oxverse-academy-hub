@@ -13,6 +13,7 @@ import {
   ClipboardList,
   Rocket,
   GraduationCap,
+  Download,
 } from "lucide-react";
 import {
   Dialog,
@@ -22,7 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { SiteLayout, SectionEyebrow } from "@/components/site/SiteLayout";
 import { SEO } from "@/components/site/SEO";
-import { getCurriculum, type CurriculumWeek } from "@/lib/curriculum";
+import { getCurriculum, curriculumPdfPath, type CurriculumWeek } from "@/lib/curriculum";
 
 export default function CurriculumDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -85,6 +86,14 @@ export default function CurriculumDetailPage() {
                   </div>
                 </div>
               </div>
+
+              <a
+                href={curriculumPdfPath(course.slug)}
+                download
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition"
+              >
+                <Download className="size-4" /> Download full curriculum (PDF)
+              </a>
             </div>
 
             <div className="relative rounded-3xl overflow-hidden aspect-square border border-border shadow-2xl shadow-primary/10">
