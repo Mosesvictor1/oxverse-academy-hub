@@ -46,7 +46,8 @@ li {{ margin-bottom:3px; }}
 .section .stitle {{ font-weight:700; font-size:11.5px; color:{PURPLE}; }}
 .topics {{ margin-top:6px; display:flex; flex-wrap:wrap; gap:4px; }}
 .topics span {{ border:1px solid #ded6f3; background:#f6f2ff; border-radius:5px; padding:2.5px 7px; font-size:9.5px; }}
-.two {{ display:flex; gap:14px; }} .two > div {{ flex:1; }}
+.two {{ display:flex; gap:14px; page-break-inside:avoid; }} .two > div {{ flex:1; }}
+.sec-title {{ page-break-after:avoid; }}
 .footer-note {{ margin-top:26px; font-size:9px; color:#777; text-align:center; }}
 """
 
