@@ -97,7 +97,7 @@ def course_html(c):
   <div class="meta">{meta_html}</div>
   <div class="box"><h4>Programme Goal</h4>{html.escape(c["goal"])}</div>
   <div class="box"><h4>Overview</h4>{html.escape(c["overview"])}</div>
-  <div class="footer-note">No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos &middot; +234 913 869 1147</div>
+  <div class="footer-note">No 82, Century Bus Stop, Ago Palace Way, Okota, Lagos &middot; +234 814 846 2776</div>
 </div>
 <div class="toc"><h2>Course Outline</h2><div class="rule"></div><ol>{toc}</ol></div>
 {weeks}
