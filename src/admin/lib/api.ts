@@ -40,7 +40,9 @@ const listeners = new Set<Listener>();
 
 export function onApiError(fn: Listener) {
   listeners.add(fn);
-  return () => listeners.delete(fn);
+  return () => {
+    listeners.delete(fn);
+  };
 }
 
 let sessionToken: string | null = null;
