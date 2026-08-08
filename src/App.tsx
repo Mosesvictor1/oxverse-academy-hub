@@ -32,6 +32,7 @@ import NotFoundPage from "./pages/NotFound";
 import AiEngineeringPage from "./pages/AiEngineering";
 import CurriculumIndexPage from "./pages/CurriculumIndex";
 import CurriculumDetailPage from "./pages/CurriculumDetail";
+import AdminApp from "./admin/AdminApp";
 // app
 export default function App() {
   return (
@@ -69,6 +70,7 @@ export default function App() {
       <Route path="/careers" element={<CareersPage />} />
       <Route path="/faculty" element={<FacultyPage />} />
       <Route path="/summer-tech-bootcamp" element={<SummerBootcampPage />} />
+      <Route path="/admin/*" element={<AdminApp />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
