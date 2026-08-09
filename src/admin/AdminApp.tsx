@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminAuthProvider, useAdminAuth } from "@/admin/lib/auth";
-import { canAccess, type NavKey } from "@/admin/lib/roles";
+import { canAccessNav, type NavKey } from "@/admin/lib/roles";
 import { AdminShell } from "@/admin/components/AdminShell";
 import AdminLoginPage from "@/admin/pages/Login";
 import AdminDashboardPage from "@/admin/pages/Dashboard";
@@ -11,6 +11,8 @@ import AdminReportsPage from "@/admin/pages/Reports";
 import AdminCoursesPage from "@/admin/pages/Courses";
 import AdminAdminsPage from "@/admin/pages/Admins";
 import AdminSettingsPage from "@/admin/pages/Settings";
+import AdminRegistrantsPage from "@/admin/pages/Registrants";
+import AdminNewsletterPage from "@/admin/pages/Newsletter";
 
 function Protected() {
   const { admin, loading } = useAdminAuth();
@@ -27,7 +29,7 @@ function Protected() {
 
 function Guard({ nav, children }: { nav: NavKey; children: React.ReactNode }) {
   const { admin } = useAdminAuth();
-  if (!canAccess(admin?.role, nav)) return <Navigate to="/admin" replace />;
+  if (!canAccessNav(admin, nav)) return <Navigate to="/admin" replace />;
   return <>{children}</>;
 }
 
@@ -43,6 +45,8 @@ export default function AdminApp() {
           <Route path="payments" element={<Guard nav="payments"><AdminPaymentsPage /></Guard>} />
           <Route path="reports" element={<Guard nav="reports"><AdminReportsPage /></Guard>} />
           <Route path="registrations" element={<Guard nav="registrations"><AdminReportsPage /></Guard>} />
+          <Route path="registrants" element={<Guard nav="registrants"><AdminRegistrantsPage /></Guard>} />
+          <Route path="newsletter" element={<Guard nav="newsletter"><AdminNewsletterPage /></Guard>} />
           <Route path="courses" element={<Guard nav="courses"><AdminCoursesPage /></Guard>} />
           <Route path="admins" element={<Guard nav="admins"><AdminAdminsPage /></Guard>} />
           <Route path="settings" element={<Guard nav="settings"><AdminSettingsPage /></Guard>} />

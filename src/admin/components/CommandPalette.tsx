@@ -16,6 +16,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
   const debounced = useDebounced(query, 350);
   const [students, setStudents] = useState<Row[]>([]);
   const [payments, setPayments] = useState<Row[]>([]);
+  const [registrants, setRegistrants] = useState<Row[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,6 +25,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
       setQuery("");
       setStudents([]);
       setPayments([]);
+      setRegistrants([]);
     }
   }, [open]);
 
@@ -32,11 +34,12 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
     if (!open || q.length < 2) return;
     let cancelled = false;
     setLoading(true);
-    callApi<{ students: Row[]; payments: Row[] }>("search", { query: q })
+    callApi<{ students: Row[]; payments: Row[]; registrants: Row[] }>("search", { query: q })
       .then((res) => {
         if (cancelled) return;
         setStudents(res.students ?? []);
         setPayments(res.payments ?? []);
+        setRegistrants(res.registrants ?? []);
       })
       .catch(() => undefined)
       .finally(() => !cancelled && setLoading(false));
@@ -49,7 +52,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <CommandInput placeholder="Search students, payments…" value={query} onValueChange={setQuery} />
       <CommandList>
-        {!loading && query.length >= 2 && !students.length && !payments.length ? (
+        {!loading && query.length >= 2 && !students.length && !payments.length && !registrants.length ? (
           <CommandEmpty>No results found.</CommandEmpty>
         ) : null}
         {loading ? <div className="p-4 text-sm text-muted-foreground">Searching…</div> : null}
@@ -89,6 +92,28 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
                 </span>
               </CommandItem>
             ))}
+          </CommandGroup>
+        ) : null}
+        {registrants.length ? (
+          <CommandGroup heading="Registrants">
+            {registrants.map((r, i) => {
+              const name = String(r["Full Name"] ?? r["Name"] ?? r["Email"] ?? "");
+              return (
+                <CommandItem
+                  key={`reg-${r["_source"]}-${r["_rowIndex"] ?? i}`}
+                  value={`registrant-${i}-${name}`}
+                  onSelect={() => {
+                    onOpenChange(false);
+                    navigate("/admin/registrants");
+                  }}
+                >
+                  <span className="font-medium">{name}</span>
+                  <span className="ml-2 text-xs text-muted-foreground">
+                    {String(r["_source"] ?? "Registrant")} · {String(r["Email"] ?? "")}
+                  </span>
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
         ) : null}
       </CommandList>

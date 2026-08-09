@@ -1,6 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import { callApi, getToken, setToken, type Admin } from "./api";
+import { callApi, getToken, setToken, type Admin, type Permissions } from "./api";
+
+/** The backend may return permissions alongside the admin object or nested inside it. */
+function merge(admin: Admin, permissions?: Permissions): Admin {
+  return { ...admin, permissions: admin.permissions ?? permissions };
+}
 
 type AuthState = {
   admin: Admin | null;
@@ -23,10 +28,10 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
       return;
     }
-    callApi<{ valid: boolean; admin: Admin }>("validateSession")
+    callApi<{ valid: boolean; admin: Admin; permissions?: Permissions }>("validateSession")
       .then((res) => {
         if (cancelled) return;
-        if (res.valid && res.admin) setAdmin(res.admin);
+        if (res.valid && res.admin) setAdmin(merge(res.admin, res.permissions));
         else setToken(null);
       })
       .catch(() => setToken(null))
@@ -37,9 +42,12 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = useCallback(async (username: string, password: string) => {
-    const res = await callApi<{ token: string; admin: Admin }>("login", { username, password });
+    const res = await callApi<{ token: string; admin: Admin; permissions?: Permissions }>("login", {
+      username,
+      password,
+    });
     setToken(res.token);
-    setAdmin(res.admin);
+    setAdmin(merge(res.admin, res.permissions));
   }, []);
 
   const forceLogout = useCallback(() => {

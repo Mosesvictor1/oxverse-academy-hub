@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Mail, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { callApi, formatDate, formatDateTime, naira, type Row } from "@/admin/lib/api";
 import { useAdminAuth } from "@/admin/lib/auth";
-import { canRecordPayment } from "@/admin/lib/roles";
+import { can, canRecordPayment } from "@/admin/lib/roles";
 import { EmptyState, StatusBadge } from "@/admin/components/primitives";
 import { RecordPaymentDialog } from "@/admin/components/RecordPaymentDialog";
+import { ReceiptLink } from "@/admin/components/ReceiptViewer";
+import { ComposeMessageDialog } from "@/admin/components/ComposeMessageDialog";
 
 const FIELDS = [
   "Email",
@@ -29,6 +31,7 @@ export default function AdminStudentDetailPage() {
   const [payments, setPayments] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
   const [payOpen, setPayOpen] = useState(false);
+  const [messageOpen, setMessageOpen] = useState(false);
   const { admin } = useAdminAuth();
 
   const load = useCallback(() => {
@@ -72,11 +75,18 @@ export default function AdminStudentDetailPage() {
             <StatusBadge status={student["Status"]} />
           </div>
         </div>
-        {canRecordPayment(admin?.role) ? (
-          <Button onClick={() => setPayOpen(true)} className="active:scale-95">
-            <Plus className="mr-2 size-4" /> Record Payment
-          </Button>
-        ) : null}
+        <div className="flex flex-wrap gap-2">
+          {can(admin, "send_messages") && student["Email"] ? (
+            <Button variant="outline" onClick={() => setMessageOpen(true)} className="active:scale-95">
+              <Mail className="mr-2 size-4" /> Message
+            </Button>
+          ) : null}
+          {canRecordPayment(admin?.role) ? (
+            <Button onClick={() => setPayOpen(true)} className="active:scale-95">
+              <Plus className="mr-2 size-4" /> Record Payment
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -125,14 +135,9 @@ export default function AdminStudentDetailPage() {
                 </div>
                 <span className="text-sm text-muted-foreground tabular-nums">Bal {naira(p["Balance Remaining"])}</span>
                 {p["Bank Receipt URL"] ? (
-                  <a
-                    href={String(p["Bank Receipt URL"])}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm text-primary underline underline-offset-4"
-                  >
-                    View receipt
-                  </a>
+                  <span className="text-sm">
+                    <ReceiptLink url={String(p["Bank Receipt URL"])} />
+                  </span>
                 ) : null}
               </li>
             ))}
@@ -148,6 +153,13 @@ export default function AdminStudentDetailPage() {
         presetEmail={String(student["Email"] ?? "")}
         presetStudent={student}
         onRecorded={load}
+      />
+
+      <ComposeMessageDialog
+        open={messageOpen}
+        onOpenChange={setMessageOpen}
+        initialMode="people"
+        initialEmails={[String(student["Email"] ?? "")].filter(Boolean)}
       />
     </div>
   );
