@@ -60,12 +60,12 @@ export default function AdminAdminsPage() {
               <tbody className="divide-y divide-border">
                 {admins.map((a) => (
                   <tr key={String(a["Admin ID"] ?? a["Username"])}>
-                    <td className="whitespace-nowrap px-4 py-3 font-medium">{String(a["Full Name"] ?? "")}</td>
-                    <td className="whitespace-nowrap px-4 py-3">{String(a["Username"] ?? "")}</td>
-                    <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{String(a["Email"] ?? "")}</td>
-                    <td className="whitespace-nowrap px-4 py-3">{String(a["Role"] ?? "")}</td>
-                    <td className="whitespace-nowrap px-4 py-3"><StatusBadge status={a["Status"]} /></td>
-                    <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{formatDateTime(a["Last Login"])}</td>
+                    <td className="whitespace-nowrap px-4 py-3 font-medium">{String(a["fullName"] ?? "")}</td>
+                    <td className="whitespace-nowrap px-4 py-3">{String(a["username"] ?? "")}</td>
+                    <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{String(a["email"] ?? "")}</td>
+                    <td className="whitespace-nowrap px-4 py-3">{String(a["role"] ?? "")}</td>
+                    <td className="whitespace-nowrap px-4 py-3"><StatusBadge status={a["status"]} /></td>
+                    <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{formatDateTime(a["lastLogin"] ?? "")}</td>
                   </tr>
                 ))}
               </tbody>

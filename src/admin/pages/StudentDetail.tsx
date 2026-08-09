@@ -146,6 +146,7 @@ export default function AdminStudentDetailPage() {
         open={payOpen}
         onOpenChange={setPayOpen}
         presetEmail={String(student["Email"] ?? "")}
+        presetStudent={student}
         onRecorded={load}
       />
     </div>

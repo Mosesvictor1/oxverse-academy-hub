@@ -21,7 +21,7 @@ import {
 } from "@/components/site/SuccessScreen";
 import { BenefitsPanel, FormAside } from "@/components/site/BenefitsPanel";
 
-const ENDPOINT =  "https://script.google.com/macros/s/AKfycbx75LbVspkpBk_Ok1TQ6y46y1TI2IocWuqV2Wx8Aup4iHdn6f39rBXxPBMwWiYmEVYGLg/exec";
+const ENDPOINT =  "https://script.google.com/macros/s/AKfycbwXu_A7S5sJN5lYmmnrRKsQGdArcLkxEItiaDp7DddvEMG4tqX36MOVBil0hLjloCJSDA/exec";
 
 const ROLES = [
   "Office Assistant",

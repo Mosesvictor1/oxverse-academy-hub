@@ -4,7 +4,7 @@ import { Check, Loader2, PartyPopper } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { callApi, naira, num } from "@/admin/lib/api";
+import { callApi, naira, num, type Row } from "@/admin/lib/api";
 import { useDebounced } from "./primitives";
 
 type Result = {
@@ -17,6 +17,8 @@ type Result = {
 
 const REGISTRATION_SOURCES = ["", "Waitlist", "Free Class", "Summer Bootcamp", "IT Registrations"];
 const METHODS = ["Bank Transfer", "Cash", "POS", "Other"];
+
+type FormState = typeof empty;
 
 const empty = {
   email: "",
@@ -38,18 +40,57 @@ const empty = {
   remark: "",
 };
 
+function buildFormState(student: Row | null | undefined, payments: Row[] = [], fallback: FormState): FormState {
+  const latestPayment = payments[0] as Row | undefined;
+
+  const pick = (studentKey: string, paymentKey: string, fallbackValue: string) => {
+    const fromStudent = student?.[studentKey];
+    if (fromStudent !== undefined && fromStudent !== null && fromStudent !== "") return String(fromStudent);
+    const fromPayment = latestPayment?.[paymentKey];
+    if (fromPayment !== undefined && fromPayment !== null && fromPayment !== "") return String(fromPayment);
+    return fallbackValue;
+  };
+
+  const balance = num(student?.["Balance Remaining"] ?? latestPayment?.["Balance Remaining"] ?? latestPayment?.["Balance"]);
+  const nextDue = student?.["Next Payment Due"] ?? latestPayment?.["Next Payment Due"];
+  const nextDueValue = nextDue ? String(nextDue).slice(0, 10) : fallback.nextPaymentDue;
+
+  return {
+    ...fallback,
+    email: pick("Email", "Email", fallback.email),
+    fullName: pick("Full Name", "Student Name", fallback.fullName),
+    phone: pick("Phone Number", "Phone Number", fallback.phone),
+    course: pick("Course", "Course", fallback.course),
+    courseFee: pick("Course Fee", "Course Fee", fallback.courseFee),
+    department: pick("Department", "Department", fallback.department),
+    level: pick("Level", "Level", fallback.level),
+    academicSession: pick("Academic Session", "Academic Session", fallback.academicSession),
+    cohort: pick("Cohort", "Cohort", fallback.cohort),
+    residentialAddress: pick("Residential Address", "Residential Address", fallback.residentialAddress),
+    registrationSource: pick("Registration Source", "Registration Source", fallback.registrationSource),
+    amountPaid: balance > 0 ? String(balance) : fallback.amountPaid,
+    paymentMethod: pick("Payment Method", "Payment Method", fallback.paymentMethod),
+    transactionReference: pick("Transaction Reference", "Transaction Reference", fallback.transactionReference),
+    bankReceiptUrl: pick("Bank Receipt URL", "Bank Receipt URL", fallback.bankReceiptUrl),
+    nextPaymentDue: nextDueValue,
+    remark: pick("Remark", "Remark", fallback.remark),
+  };
+}
+
 export function RecordPaymentDialog({
   open,
   onOpenChange,
   presetEmail,
+  presetStudent,
   onRecorded,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
   presetEmail?: string;
+  presetStudent?: Row | null;
   onRecorded?: () => void;
 }) {
-  const [form, setForm] = useState({ ...empty });
+  const [form, setForm] = useState<FormState>({ ...empty });
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [lookup, setLookup] = useState<"idle" | "checking" | "found" | "new">("idle");
@@ -57,11 +98,12 @@ export function RecordPaymentDialog({
 
   useEffect(() => {
     if (open) {
-      setForm({ ...empty, email: presetEmail ?? "" });
+      const initialState = { ...empty, email: presetEmail ?? "" };
+      setForm(buildFormState(presetStudent, [], initialState));
       setResult(null);
       setLookup("idle");
     }
-  }, [open, presetEmail]);
+  }, [open, presetEmail, presetStudent]);
 
   useEffect(() => {
     if (!open) return;
@@ -72,18 +114,11 @@ export function RecordPaymentDialog({
     }
     let cancelled = false;
     setLookup("checking");
-    callApi<{ student: Record<string, unknown> }>("getStudent", { email })
+    callApi<{ student: Row; payments: Row[] }>("getStudent", { email })
       .then((res) => {
         if (cancelled) return;
-        const s = res.student ?? {};
         setLookup("found");
-        setForm((f) => ({
-          ...f,
-          fullName: String(s["Full Name"] ?? f.fullName),
-          phone: String(s["Phone Number"] ?? f.phone),
-          course: String(s["Course"] ?? f.course),
-          courseFee: String(s["Course Fee"] ?? f.courseFee),
-        }));
+        setForm((f) => buildFormState(res.student, res.payments ?? [], f));
       })
       .catch(() => !cancelled && setLookup("new"));
     return () => {
@@ -91,7 +126,7 @@ export function RecordPaymentDialog({
     };
   }, [debouncedEmail, open]);
 
-  const set = (k: keyof typeof empty) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+  const set = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const submit = async (e: React.FormEvent) => {
