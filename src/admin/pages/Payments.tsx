@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { Search } from "lucide-react";
+import { FileText, Search } from "lucide-react";
 import { callApi, formatDate, naira, type Paged, type Row } from "@/admin/lib/api";
 import { EmptyState, PageHeader, Pager, StatusBadge, TableSkeleton, useDebounced } from "@/admin/components/primitives";
+import { ReceiptLink, ReceiptViewer } from "@/admin/components/ReceiptViewer";
 
 export default function AdminPaymentsPage() {
   const [query, setQuery] = useState("");
@@ -13,6 +14,7 @@ export default function AdminPaymentsPage() {
   const [report, setReport] = useState<Paged | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Row | null>(null);
+  const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
 
   const load = useCallback(() => {
     setLoading(true);
@@ -61,7 +63,7 @@ export default function AdminPaymentsPage() {
               <table className="w-full text-sm">
                 <thead className="border-b border-border bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <tr>
-                    {["Receipt", "Student", "Course", "Amount", "Balance", "Status", "Method", "Reference", "Received By", "Date"].map((h) => (
+                    {["Receipt", "Student", "Course", "Amount", "Balance", "Status", "Method", "Reference", "Received By", "Date", "Proof"].map((h) => (
                       <th key={h} className="whitespace-nowrap px-4 py-3 font-medium">{h}</th>
                     ))}
                   </tr>
@@ -79,6 +81,13 @@ export default function AdminPaymentsPage() {
                       <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{String(p["Transaction Reference"] ?? "—")}</td>
                       <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{String(p["Received By"] ?? "—")}</td>
                       <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{formatDate(p["Payment Date"])}</td>
+                      <td className="whitespace-nowrap px-4 py-3">
+                        {p["Bank Receipt URL"] ? (
+                          <ReceiptLink url={String(p["Bank Receipt URL"])} label="View" />
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -95,15 +104,21 @@ export default function AdminPaymentsPage() {
         <div className="fixed inset-0 z-50 flex justify-end bg-black/50" onClick={() => setSelected(null)}>
           <div className="h-full w-full max-w-md overflow-y-auto border-l border-border bg-card p-6" onClick={(e) => e.stopPropagation()}>
             <h2 className="font-display text-xl font-semibold">{String(selected["Receipt Number"] ?? "Payment")}</h2>
+            {selected["Bank Receipt URL"] ? (
+              <button
+                onClick={() => setReceiptUrl(String(selected["Bank Receipt URL"]))}
+                className="mt-3 inline-flex items-center gap-2 rounded-xl border border-border px-3 py-2 text-sm transition hover:bg-muted active:scale-95"
+              >
+                <FileText className="size-4 text-primary" /> Open bank receipt
+              </button>
+            ) : null}
             <dl className="mt-4 space-y-3 text-sm">
               {Object.entries(selected).map(([k, v]) => (
                 <div key={k} className="flex gap-3">
                   <dt className="w-40 shrink-0 text-muted-foreground">{k}</dt>
                   <dd className="break-words">
                     {k === "Bank Receipt URL" && v ? (
-                      <a href={String(v)} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
-                        View receipt
-                      </a>
+                      <ReceiptLink url={String(v)} />
                     ) : (
                       String(v ?? "—") || "—"
                     )}
@@ -117,6 +132,12 @@ export default function AdminPaymentsPage() {
           </div>
         </div>
       ) : null}
+
+      <ReceiptViewer
+        url={receiptUrl ?? ""}
+        open={!!receiptUrl}
+        onOpenChange={(v) => !v && setReceiptUrl(null)}
+      />
     </div>
   );
 }

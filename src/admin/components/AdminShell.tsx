@@ -7,6 +7,8 @@ import {
   CreditCard,
   LayoutDashboard,
   LogOut,
+  Mail,
+  Megaphone,
   Moon,
   PieChart,
   Search,
@@ -21,7 +23,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { onApiError } from "@/admin/lib/api";
 import { useAdminAuth } from "@/admin/lib/auth";
-import { canAccess, type NavKey } from "@/admin/lib/roles";
+import { canAccessNav, type NavKey } from "@/admin/lib/roles";
 import { CommandPalette } from "./CommandPalette";
 
 const NAV: { key: NavKey; label: string; to: string; icon: typeof Users }[] = [
@@ -30,6 +32,8 @@ const NAV: { key: NavKey; label: string; to: string; icon: typeof Users }[] = [
   { key: "payments", label: "Payments", to: "/admin/payments", icon: CreditCard },
   { key: "reports", label: "Reports", to: "/admin/reports", icon: PieChart },
   { key: "registrations", label: "Registrations", to: "/admin/registrations", icon: UserPlus },
+  { key: "registrants", label: "Registrants", to: "/admin/registrants", icon: Mail },
+  { key: "newsletter", label: "Newsletter", to: "/admin/newsletter", icon: Megaphone },
   { key: "courses", label: "Courses", to: "/admin/courses", icon: BookOpen },
   { key: "admins", label: "Admin Management", to: "/admin/admins", icon: Shield },
   { key: "settings", label: "Settings", to: "/admin/settings", icon: Settings },
@@ -93,7 +97,7 @@ export function AdminShell() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const items = NAV.filter((n) => canAccess(admin?.role, n.key));
+  const items = NAV.filter((n) => canAccessNav(admin, n.key));
 
   return (
     <div className="flex min-h-screen w-full bg-background text-foreground">

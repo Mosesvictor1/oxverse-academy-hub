@@ -1,13 +1,16 @@
 export const ADMIN_API_URL =
   "https://script.google.com/macros/s/AKfycbwXu_A7S5sJN5lYmmnrRKsQGdArcLkxEItiaDp7DddvEMG4tqX36MOVBil0hLjloCJSDA/exec";
 
-export type AdminRole = "Super Admin" | "Finance" | "Admissions" | "Tutor" | "Manager";
+export type AdminRole = string;
+
+export type Permissions = Record<string, boolean>;
 
 export type Admin = {
   adminId: string;
   fullName: string;
   username: string;
   role: AdminRole;
+  permissions?: Permissions;
 };
 
 export type ApiError = {
