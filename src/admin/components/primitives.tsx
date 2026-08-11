@@ -196,7 +196,7 @@ export function Pager({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-4 py-3 text-sm">
       <p className="text-muted-foreground">
-        Page {page} of {Math.max(1, totalPages)} · {totalItems.toLocaleString()} records
+        Page {page} of {Math.max(1, totalPages)} · {(totalItems ?? 0).toLocaleString()} records
       </p>
       <div className="flex gap-2">
         <button

@@ -55,8 +55,8 @@ export default function AdminRegistrantsPage() {
 
   const load = useCallback(() => {
     setLoading(true);
-    callApi<Paged>("getRegistrants", { source, page, pageSize: 25, search: debounced.trim() })
-      .then((res) => setData(res))
+    callApi<{ report: Paged }>("getRegistrants", { source, page, pageSize: 25, search: debounced.trim() })
+      .then((res) => setData(res.report))
       .catch(() => setData(null))
       .finally(() => setLoading(false));
   }, [source, page, debounced]);

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Loader2, PartyPopper } from "lucide-react";
+import { Check, Loader2, PartyPopper, User, BookOpen, CreditCard, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { callApi, naira, num, type Row } from "@/admin/lib/api";
 import { useDebounced } from "./primitives";
 
@@ -77,6 +78,121 @@ function buildFormState(student: Row | null | undefined, payments: Row[] = [], f
   };
 }
 
+function paymentStatusVariant(status: string): "default" | "secondary" | "destructive" | "outline" {
+  const s = status?.toLowerCase();
+  if (s === "paid" || s === "full payment") return "default";
+  if (s === "part payment") return "secondary";
+  return "outline";
+}
+
+function StudentInfoCard({ student, payments }: { student: Row; payments: Row[] }) {
+  const latestPayment = payments[0] as Row | undefined;
+
+  const courseFee = num(student["Course Fee"] ?? latestPayment?.["Course Fee"]);
+  const amountPaid = num(student["Amount Paid"] ?? latestPayment?.["Amount Paid"]);
+  const balance = num(student["Balance Remaining"] ?? latestPayment?.["Balance"] ?? latestPayment?.["Balance Remaining"]);
+  const paymentStatus = String(student["Payment Status"] ?? latestPayment?.["Payment Status"] ?? "");
+  const course = String(student["Course"] ?? latestPayment?.["Course"] ?? "");
+  const name = String(student["Full Name"] ?? latestPayment?.["Student Name"] ?? "");
+  const studentId = String(student["Student ID"] ?? "");
+  const phone = String(student["Phone Number"] ?? "");
+  const department = String(student["Department"] ?? "");
+  const installment = String(student["Installment"] ?? "");
+  const nextDue = student["Next Payment Due"] ? String(student["Next Payment Due"]).slice(0, 10) : null;
+  const lastPayment = latestPayment?.["Payment Date"]
+    ? new Date(String(latestPayment["Payment Date"])).toLocaleDateString("en-NG", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : null;
+  const paidPct = courseFee > 0 ? Math.min(100, Math.round((amountPaid / courseFee) * 100)) : 0;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -6 }}
+      className="rounded-xl border border-border bg-muted/40 p-4 sm:col-span-2"
+    >
+      {/* Header row */}
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-3">
+          <div className="grid size-10 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+            <User className="size-5" />
+          </div>
+          <div>
+            <p className="font-semibold leading-tight">{name}</p>
+            <p className="text-xs text-muted-foreground">{studentId} · {phone}</p>
+          </div>
+        </div>
+        <Badge variant={paymentStatusVariant(paymentStatus)} className="text-xs">
+          {paymentStatus || "Unknown"}
+        </Badge>
+      </div>
+
+      {/* Course info */}
+      <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
+        <BookOpen className="size-3.5 shrink-0" />
+        <span className="font-medium text-foreground">{course}</span>
+        {department ? <span className="text-xs">· {department}</span> : null}
+      </div>
+
+      {/* Payment summary */}
+      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+        <div className="rounded-lg bg-background border border-border p-2">
+          <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Course Fee</p>
+          <p className="mt-0.5 text-sm font-semibold">{naira(courseFee)}</p>
+        </div>
+        <div className="rounded-lg bg-background border border-border p-2">
+          <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Paid</p>
+          <p className="mt-0.5 text-sm font-semibold text-emerald-600">{naira(amountPaid)}</p>
+        </div>
+        <div className={`rounded-lg border p-2 ${balance > 0 ? "bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-800" : "bg-background border-border"}`}>
+          <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Balance</p>
+          <p className={`mt-0.5 text-sm font-semibold ${balance > 0 ? "text-amber-600" : "text-emerald-600"}`}>
+            {balance > 0 ? naira(balance) : "Cleared"}
+          </p>
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      {courseFee > 0 && (
+        <div className="mt-3">
+          <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
+            <span>Payment progress</span>
+            <span>{paidPct}%</span>
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-border overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${paidPct}%` }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className={`h-full rounded-full ${paidPct >= 100 ? "bg-emerald-500" : "bg-primary"}`}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Meta row */}
+      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+        {installment === "Yes" && (
+          <span className="flex items-center gap-1">
+            <CreditCard className="size-3" /> Installment plan
+          </span>
+        )}
+        {lastPayment && <span>Last payment: <span className="text-foreground">{lastPayment}</span></span>}
+        {nextDue && balance > 0 && (
+          <span className="flex items-center gap-1 text-amber-600">
+            <AlertCircle className="size-3" />
+            Next due: {new Date(nextDue).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}
+          </span>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export function RecordPaymentDialog({
   open,
   onOpenChange,
@@ -94,14 +210,18 @@ export function RecordPaymentDialog({
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [lookup, setLookup] = useState<"idle" | "checking" | "found" | "new">("idle");
+  const [foundStudent, setFoundStudent] = useState<Row | null>(null);
+  const [foundPayments, setFoundPayments] = useState<Row[]>([]);
   const debouncedEmail = useDebounced(form.email, 600);
 
   useEffect(() => {
     if (open) {
       const initialState = { ...empty, email: presetEmail ?? "" };
       setForm(buildFormState(presetStudent, [], initialState));
+      setFoundStudent(presetStudent ?? null);
+      setFoundPayments([]);
       setResult(null);
-      setLookup("idle");
+      setLookup(presetStudent ? "found" : "idle");
     }
   }, [open, presetEmail, presetStudent]);
 
@@ -110,6 +230,8 @@ export function RecordPaymentDialog({
     const email = debouncedEmail.trim();
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       setLookup("idle");
+      setFoundStudent(null);
+      setFoundPayments([]);
       return;
     }
     let cancelled = false;
@@ -118,9 +240,17 @@ export function RecordPaymentDialog({
       .then((res) => {
         if (cancelled) return;
         setLookup("found");
+        setFoundStudent(res.student);
+        setFoundPayments(res.payments ?? []);
         setForm((f) => buildFormState(res.student, res.payments ?? [], f));
       })
-      .catch(() => !cancelled && setLookup("new"));
+      .catch(() => {
+        if (!cancelled) {
+          setLookup("new");
+          setFoundStudent(null);
+          setFoundPayments([]);
+        }
+      });
     return () => {
       cancelled = true;
     };
@@ -208,11 +338,19 @@ export function RecordPaymentDialog({
                   <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                     {lookup === "checking" && <Loader2 className="size-3 animate-spin" />}
                     {lookup === "checking" && "Checking records…"}
-                    {lookup === "found" && "Existing student found — details prefilled."}
+                    {lookup === "found" && "✓ Existing student found — details prefilled."}
                     {lookup === "new" && "No record found — fill in the new student details below."}
                   </p>
                 </Field>
 
+                {/* Student info card shown when a match is found */}
+                <AnimatePresence>
+                  {lookup === "found" && foundStudent && (
+                    <StudentInfoCard student={foundStudent} payments={foundPayments} />
+                  )}
+                </AnimatePresence>
+
+                {/* New student fields */}
                 <AnimatePresence initial={false}>
                   {isNew && (
                     <motion.div
@@ -266,7 +404,23 @@ export function RecordPaymentDialog({
                   </p>
                 </Field>
                 <Field label="Amount paid (₦)" required>
-                  <input className="input" inputMode="numeric" value={form.amountPaid} onChange={set("amountPaid")} required />
+                  <input
+                    className="input"
+                    inputMode="numeric"
+                    value={form.amountPaid}
+                    onChange={set("amountPaid")}
+                    required
+                    placeholder={
+                      lookup === "found" && foundStudent
+                        ? `Balance: ${naira(num(foundStudent["Balance Remaining"]))}`
+                        : ""
+                    }
+                  />
+                  {lookup === "found" && foundStudent && num(foundStudent["Balance Remaining"]) > 0 && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Pre-filled with outstanding balance. Edit if paying a different amount.
+                    </p>
+                  )}
                 </Field>
                 <Field label="Payment method">
                   <select className="input" value={form.paymentMethod} onChange={set("paymentMethod")}>
